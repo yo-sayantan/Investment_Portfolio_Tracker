@@ -24,7 +24,7 @@ public class MathUtil {
 			x0 = x1;
 		}
 
-		return Math.ceil(x0 * 100 * 10) / 10; //make it to percentage and round up to one decimal 
+		return Math.ceil(x0 * 100 * 10) / 10; 
 	}
 	
 	private static double dateDiff(Date d1, Date d2) {
@@ -60,6 +60,4 @@ public class MathUtil {
 
 		return resf;
 	}
-	
-	
 }

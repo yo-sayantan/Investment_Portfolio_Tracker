@@ -90,7 +90,8 @@ public class OrderController extends BaseController {
 			Path filePath = Paths.get(uploadDirectory, fileName);
 			Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
-			saveOrderService.saveFile(filePath.toFile(), userService.getUserByUsername(getUserName()), password);
+			saveOrderService.saveFile(filePath.toFile(), userService.getUserByUsername
+					(getUserName()), password);
 
 			return ResponseEntity.ok("File uploaded successfully");
 		} catch (Exception e) {

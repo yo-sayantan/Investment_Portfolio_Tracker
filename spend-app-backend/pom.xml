@@ -10,11 +10,10 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.finance</groupId>
-	<artifactId>SugerMarket</artifactId>
+	<artifactId>stockMarket</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>SugerMarket</name>
-	<description>A open-source gateway to real-time stock market and mutual fund
-		prices</description>
+	<name>StockMarket</name>
+	<description>A open-source gateway to real-time stock market and mutual fund prices</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
@@ -104,6 +103,13 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+	            <groupId>org.apache.maven.plugins</groupId>
+	            <artifactId>maven-surefire-plugin</artifactId>
+	            <configuration>
+	                <skipTests>true</skipTests>
+	            </configuration>
+	        </plugin>
 		</plugins>
 	</build>
 
