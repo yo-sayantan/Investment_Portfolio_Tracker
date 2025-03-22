@@ -23,11 +23,11 @@ public class MarketDataUtil {
 
 	public static List<MutualFund> getMFList() {
 		List<MutualFund> data = new ArrayList<>();
+		 
 		try {
 			String apiData = getDataFromURL(BASE_URL);
 			Gson g = new Gson();
-			TypeToken<List<MutualFund>> token = new TypeToken<List<MutualFund>>() {
-			};
+			TypeToken<List<MutualFund>> token = new TypeToken<List<MutualFund>>();
 			data = g.fromJson(apiData, token);
 		} catch (Exception e) {
 			log.error("error in getLatestData() ", e);
@@ -38,6 +38,7 @@ public class MarketDataUtil {
 	public static MarketData getHistoricalData(String schemeCode) {
 		MarketData data = new MarketData();
 		String apiData = null;
+		
 		try {
 			apiData = getDataFromURL(BASE_URL + "/" + schemeCode);
 			data = generateMapData(apiData, schemeCode);
@@ -49,6 +50,7 @@ public class MarketDataUtil {
 
 	public static MarketData getLatestData(String schemeCode) {
 		MarketData data = new MarketData();
+		
 		try {
 			String apiData = getDataFromURL(BASE_URL + "/" + schemeCode + "/latest");
 			data = generateMapData(apiData, schemeCode);
@@ -62,31 +64,21 @@ public class MarketDataUtil {
 		Gson g = new Gson();
 		MarketData fundetails = g.fromJson(apiData, MarketData.class);
 		fundetails.convertToNavData(apiData, schemeCode);
+		
 		return fundetails;
 	}
 
 	private static String getDataFromURL(String apiUrl) throws Exception {
-		// Create a URL object
 		URL url = new URL(apiUrl);
 
-		// Open a connection to the URL
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
-		// Set the request method to GET
 		connection.setRequestMethod("GET");
 
-		// Get the response code
 		int responseCode = connection.getResponseCode();
-
-		// Check if the response code is successful
 		if (responseCode == 200) {
-			// Get the response input stream
 			InputStream inputStream = connection.getInputStream();
-
-			// Create a scanner to read the input stream
 			Scanner scanner = new Scanner(inputStream);
 
-			// Read the data from the input stream
 			String data = scanner.nextLine();
 			scanner.close();
 			return data;

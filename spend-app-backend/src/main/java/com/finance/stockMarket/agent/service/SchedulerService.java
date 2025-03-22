@@ -31,8 +31,7 @@ public class SchedulerService {
 		try {
 			scheduler.start();
 			JobDetail jobDetails = buildJobDetail(UpdateBudgetAgent.class);
-			Trigger trigger = buildTrigger(UpdateBudgetAgent.class, "00 00 00 ? * * *");
-			//run every day at 12
+			Trigger trigger = buildTrigger(UpdateBudgetAgent.class, "00 00 00 ? * * *"); //run every day at 12
 			
 			scheduler.scheduleJob(jobDetails, trigger);
 		} catch (Exception e) {
