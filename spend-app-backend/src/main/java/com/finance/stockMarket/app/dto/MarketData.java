@@ -1,4 +1,4 @@
-package com.finance.SugerMarket.app.dto;
+package com.finance.stockMarket.app.dto;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;

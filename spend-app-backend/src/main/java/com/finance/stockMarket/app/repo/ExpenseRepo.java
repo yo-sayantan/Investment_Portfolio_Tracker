@@ -1,4 +1,4 @@
-package com.finance.SugerMarket.app.repo;
+package com.finance.stockMarket.app.repo;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import com.finance.SugerMarket.app.model.Expense;
+import com.finance.stockMarket.app.model.Expense;
 
 public interface ExpenseRepo extends JpaRepository<Expense, Integer> {
 

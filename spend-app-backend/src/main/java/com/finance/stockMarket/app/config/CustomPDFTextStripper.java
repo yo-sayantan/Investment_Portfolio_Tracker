@@ -1,4 +1,4 @@
-package com.finance.SugerMarket.app.config;
+package com.finance.stockMarket.app.config;
 
 import java.io.IOException;
 import java.util.List;

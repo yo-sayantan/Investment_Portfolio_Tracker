@@ -1,4 +1,4 @@
-package com.finance.SugerMarket.app.service;
+package com.finance.stockMarket.app.service;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -8,6 +8,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.TreeMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -15,19 +19,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.finance.SugerMarket.app.dto.FundData;
-import com.finance.SugerMarket.app.dto.MarketData;
-import com.finance.SugerMarket.app.dto.MutualFundPortfolio;
-import com.finance.SugerMarket.app.model.OrderDetail;
-import com.finance.SugerMarket.app.repo.OrderRepo;
-import com.finance.SugerMarket.app.utils.MarketDataUtil;
-import com.finance.SugerMarket.app.utils.MathUtil;
-import com.finance.SugerMarket.constants.MFConstants;
-
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
+import com.finance.stockMarket.app.dto.FundData;
+import com.finance.stockMarket.app.dto.MarketData;
+import com.finance.stockMarket.app.dto.MutualFundPortfolio;
+import com.finance.stockMarket.app.model.OrderDetail;
+import com.finance.stockMarket.app.repo.OrderRepo;
+import com.finance.stockMarket.app.utils.MarketDataUtil;
+import com.finance.stockMarket.app.utils.MathUtil;
+import com.finance.stockMarket.constants.MFConstants;
 
 @Service
 public class OrderService {

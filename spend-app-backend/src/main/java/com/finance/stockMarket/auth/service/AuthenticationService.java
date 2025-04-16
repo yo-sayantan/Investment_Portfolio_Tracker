@@ -1,4 +1,4 @@
-package com.finance.SugerMarket.auth.service;
+package com.finance.stockMarket.auth.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -6,11 +6,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
-import com.finance.SugerMarket.auth.config.UserPrincipal;
-import com.finance.SugerMarket.auth.dto.AuthenticationRequest;
-import com.finance.SugerMarket.auth.dto.AuthenticationResponse;
-import com.finance.SugerMarket.auth.memory.Tokens;
-import com.finance.SugerMarket.auth.model.Token;
+import com.finance.stockMarket.auth.config.UserPrincipal;
+import com.finance.stockMarket.auth.dto.AuthenticationRequest;
+import com.finance.stockMarket.auth.dto.AuthenticationResponse;
+import com.finance.stockMarket.auth.memory.Tokens;
+import com.finance.stockMarket.auth.model.Token;
 
 
 @Service

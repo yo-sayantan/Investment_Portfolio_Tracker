@@ -1,4 +1,4 @@
-package com.finance.SugerMarket.app.controller;
+package com.finance.stockMarket.app.controller;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.finance.SugerMarket.app.dto.BudgetDto;
-import com.finance.SugerMarket.app.model.BudgetView;
-import com.finance.SugerMarket.app.service.BudgetViewerService;
-import com.finance.SugerMarket.constants.MFConstants;
+import com.finance.stockMarket.app.dto.BudgetDto;
+import com.finance.stockMarket.app.model.BudgetView;
+import com.finance.stockMarket.app.service.BudgetViewerService;
+import com.finance.stockMarket.constants.MFConstants;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController

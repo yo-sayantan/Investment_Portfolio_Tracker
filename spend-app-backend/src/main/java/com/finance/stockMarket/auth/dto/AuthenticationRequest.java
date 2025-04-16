@@ -1,4 +1,4 @@
-package com.finance.SugerMarket.auth.dto;
+package com.finance.stockMarket.auth.dto;
 public class AuthenticationRequest {
 
 	private String username;

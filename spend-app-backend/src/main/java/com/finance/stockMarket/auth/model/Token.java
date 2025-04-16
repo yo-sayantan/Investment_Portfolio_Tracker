@@ -1,4 +1,4 @@
-package com.finance.SugerMarket.auth.model;
+package com.finance.stockMarket.auth.model;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public class Token {

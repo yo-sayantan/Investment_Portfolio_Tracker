@@ -1,11 +1,11 @@
-package com.finance.SugerMarket.app.controller;
+package com.finance.stockMarket.app.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.finance.SugerMarket.auth.service.JwtService;
+import com.finance.stockMarket.auth.service.JwtService;
 
 @RestController
 public class BaseController {

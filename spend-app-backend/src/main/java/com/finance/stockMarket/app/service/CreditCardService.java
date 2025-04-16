@@ -1,14 +1,14 @@
-package com.finance.SugerMarket.app.service;
+package com.finance.stockMarket.app.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.finance.SugerMarket.app.model.CreditCard;
-import com.finance.SugerMarket.app.repo.CreditCardRepo;
-import com.finance.SugerMarket.app.repo.ExpenseRepo;
-import com.finance.SugerMarket.constants.MFConstants;
+import com.finance.stockMarket.app.model.CreditCard;
+import com.finance.stockMarket.app.repo.CreditCardRepo;
+import com.finance.stockMarket.app.repo.ExpenseRepo;
+import com.finance.stockMarket.constants.MFConstants;
 
 @Service
 public class CreditCardService {

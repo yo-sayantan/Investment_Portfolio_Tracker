@@ -1,4 +1,4 @@
-package com.finance.SugerMarket.app.model;
+package com.finance.stockMarket.app.model;
 import java.math.BigDecimal;
 import java.time.LocalTime;
 import java.util.Date;

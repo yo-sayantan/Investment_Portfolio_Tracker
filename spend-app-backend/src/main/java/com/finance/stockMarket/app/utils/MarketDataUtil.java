@@ -1,4 +1,4 @@
-package com.finance.SugerMarket.app.utils;
+package com.finance.stockMarket.app.utils;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -11,8 +11,8 @@ import java.util.Scanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.finance.SugerMarket.app.dto.MarketData;
-import com.finance.SugerMarket.app.model.MutualFund;
+import com.finance.stockMarket.app.dto.MarketData;
+import com.finance.stockMarket.app.model.MutualFund;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -27,7 +27,7 @@ public class MarketDataUtil {
 		try {
 			String apiData = getDataFromURL(BASE_URL);
 			Gson g = new Gson();
-			TypeToken<List<MutualFund>> token = new TypeToken<List<MutualFund>>();
+			TypeToken<List<MutualFund>> token = new TypeToken<List<MutualFund>>() {};
 			data = g.fromJson(apiData, token);
 		} catch (Exception e) {
 			log.error("error in getLatestData() ", e);

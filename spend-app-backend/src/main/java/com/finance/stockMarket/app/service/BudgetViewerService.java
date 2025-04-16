@@ -1,4 +1,4 @@
-package com.finance.SugerMarket.app.service;
+package com.finance.stockMarket.app.service;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
@@ -11,12 +11,12 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.finance.SugerMarket.app.dto.BudgetDto;
-import com.finance.SugerMarket.app.enums.BudgetCalendar;
-import com.finance.SugerMarket.app.model.BudgetView;
-import com.finance.SugerMarket.app.model.CreditCard;
-import com.finance.SugerMarket.app.repo.BudgetViewRepo;
-import com.finance.SugerMarket.app.repo.ExpenseRepo;
+import com.finance.stockMarket.app.dto.BudgetDto;
+import com.finance.stockMarket.app.enums.BudgetCalendar;
+import com.finance.stockMarket.app.model.BudgetView;
+import com.finance.stockMarket.app.model.CreditCard;
+import com.finance.stockMarket.app.repo.BudgetViewRepo;
+import com.finance.stockMarket.app.repo.ExpenseRepo;
 
 import io.micrometer.common.util.StringUtils;
 

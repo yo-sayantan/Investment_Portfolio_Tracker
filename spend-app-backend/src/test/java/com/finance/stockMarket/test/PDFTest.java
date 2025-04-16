@@ -1,7 +1,7 @@
-package com.finance.SugerMarket.test;
+package com.finance.stockMarket.test;
 
 import java.io.File;
-import com.finance.SugerMarket.app.service.CamsKFinTechPDFPerserService;
+import com.finance.stockMarket.app.service.CamsKFinTechPDFPerserService;
 
 public class PDFTest {
 	public static void main(String[] args) {

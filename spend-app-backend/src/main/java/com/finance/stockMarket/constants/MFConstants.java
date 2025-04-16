@@ -1,4 +1,4 @@
-package com.finance.SugerMarket.constants;
+package com.finance.stockMarket.constants;
 
 public class MFConstants {
 	public final static String SUCCESS = "success";

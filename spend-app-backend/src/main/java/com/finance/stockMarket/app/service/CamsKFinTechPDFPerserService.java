@@ -1,4 +1,4 @@
-package com.finance.SugerMarket.app.service;
+package com.finance.stockMarket.app.service;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -15,12 +15,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.finance.SugerMarket.app.config.CustomPDFTextStripper;
-import com.finance.SugerMarket.app.dto.CamsKFinTechDto;
-import com.finance.SugerMarket.app.model.MutualFund;
-import com.finance.SugerMarket.app.model.OrderDetail;
-import com.finance.SugerMarket.auth.model.MFUser;
-import com.finance.SugerMarket.constants.MFConstants;
+import com.finance.stockMarket.app.config.CustomPDFTextStripper;
+import com.finance.stockMarket.app.dto.CamsKFinTechDto;
+import com.finance.stockMarket.app.model.MutualFund;
+import com.finance.stockMarket.app.model.OrderDetail;
+import com.finance.stockMarket.auth.model.MFUser;
+import com.finance.stockMarket.constants.MFConstants;
 
 @Service
 public class CamsKFinTechPDFPerserService extends SaveOrderService {

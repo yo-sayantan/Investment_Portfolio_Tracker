@@ -1,4 +1,4 @@
-package com.finance.SugerMarket.app.model;
+package com.finance.stockMarket.app.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

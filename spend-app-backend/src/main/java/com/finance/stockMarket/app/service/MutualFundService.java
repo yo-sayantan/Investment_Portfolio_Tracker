@@ -1,12 +1,12 @@
-package com.finance.SugerMarket.app.service;
+package com.finance.stockMarket.app.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.finance.SugerMarket.app.model.MutualFund;
-import com.finance.SugerMarket.app.repo.MutualFundRepo;
+import com.finance.stockMarket.app.model.MutualFund;
+import com.finance.stockMarket.app.repo.MutualFundRepo;
 
 @Service
 public class MutualFundService {

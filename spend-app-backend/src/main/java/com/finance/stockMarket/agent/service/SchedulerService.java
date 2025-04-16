@@ -1,4 +1,4 @@
-package com.finance.SugerMarket.agent.service;
+package com.finance.stockMarket.agent.service;
 
 import java.util.Date;
 
@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.finance.SugerMarket.agent.jobs.UpdateBudgetAgent;
+import com.finance.stockMarket.agent.jobs.UpdateBudgetAgent;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;

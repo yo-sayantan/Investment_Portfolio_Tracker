@@ -1,4 +1,4 @@
-package com.finance.SugerMarket.app.controller;
+package com.finance.stockMarket.app.controller;
 
 import java.util.List;
 
@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.finance.SugerMarket.app.dto.LineChartDto;
-import com.finance.SugerMarket.app.service.AnalysisService;
+import com.finance.stockMarket.app.dto.LineChartDto;
+import com.finance.stockMarket.app.service.AnalysisService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController

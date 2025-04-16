@@ -1,4 +1,4 @@
-package com.finance.SugerMarket.auth.dto;
+package com.finance.stockMarket.auth.dto;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public class AuthenticationResponse {

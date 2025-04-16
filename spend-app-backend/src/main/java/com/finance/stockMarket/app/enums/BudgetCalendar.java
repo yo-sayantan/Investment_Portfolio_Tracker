@@ -1,4 +1,4 @@
-package com.finance.SugerMarket.app.enums;
+package com.finance.stockMarket.app.enums;
 
 import java.time.Month;
 import java.time.YearMonth;

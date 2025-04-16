@@ -1,4 +1,4 @@
-package com.finance.SugerMarket.auth.config;
+package com.finance.stockMarket.auth.config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,8 +7,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.stereotype.Service;
 
-import com.finance.SugerMarket.auth.memory.Tokens;
-import com.finance.SugerMarket.auth.model.Token;
+import com.finance.stockMarket.auth.memory.Tokens;
+import com.finance.stockMarket.auth.model.Token;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

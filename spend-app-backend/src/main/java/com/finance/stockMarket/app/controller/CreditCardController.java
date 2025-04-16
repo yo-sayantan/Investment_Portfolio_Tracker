@@ -1,4 +1,4 @@
-package com.finance.SugerMarket.app.controller;
+package com.finance.stockMarket.app.controller;
 
 import java.util.List;
 
@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.finance.SugerMarket.app.model.CreditCard;
-import com.finance.SugerMarket.app.service.CreditCardService;
-import com.finance.SugerMarket.auth.service.MFUserService;
-import com.finance.SugerMarket.constants.MFConstants;
+import com.finance.stockMarket.app.model.CreditCard;
+import com.finance.stockMarket.app.service.CreditCardService;
+import com.finance.stockMarket.auth.service.MFUserService;
+import com.finance.stockMarket.constants.MFConstants;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController

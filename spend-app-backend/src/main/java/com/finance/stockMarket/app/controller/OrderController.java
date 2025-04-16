@@ -1,4 +1,4 @@
-package com.finance.SugerMarket.app.controller;
+package com.finance.stockMarket.app.controller;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -22,13 +22,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.finance.SugerMarket.app.dto.MutualFundPortfolio;
-import com.finance.SugerMarket.app.model.OrderDetail;
-import com.finance.SugerMarket.app.service.CamsKFinTechPDFPerserService;
-import com.finance.SugerMarket.app.service.OrderService;
-import com.finance.SugerMarket.app.service.SaveOrderService;
-import com.finance.SugerMarket.auth.service.MFUserService;
-import com.finance.SugerMarket.constants.MFConstants;
+import com.finance.stockMarket.app.dto.MutualFundPortfolio;
+import com.finance.stockMarket.app.model.OrderDetail;
+import com.finance.stockMarket.app.service.CamsKFinTechPDFPerserService;
+import com.finance.stockMarket.app.service.OrderService;
+import com.finance.stockMarket.app.service.SaveOrderService;
+import com.finance.stockMarket.auth.service.MFUserService;
+import com.finance.stockMarket.constants.MFConstants;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController

@@ -1,12 +1,12 @@
-package com.finance.SugerMarket.app.service;
+package com.finance.stockMarket.app.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.finance.SugerMarket.app.model.Expense;
-import com.finance.SugerMarket.app.repo.ExpenseRepo;
+import com.finance.stockMarket.app.model.Expense;
+import com.finance.stockMarket.app.repo.ExpenseRepo;
 
 @Service
 public class ExpenseService {

@@ -1,4 +1,4 @@
-package com.finance.SugerMarket.test;
+package com.finance.stockMarket.test;
 
 
 public class Test {

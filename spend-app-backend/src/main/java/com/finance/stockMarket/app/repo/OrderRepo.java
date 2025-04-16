@@ -1,11 +1,11 @@
-package com.finance.SugerMarket.app.repo;
+package com.finance.stockMarket.app.repo;
 
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import com.finance.SugerMarket.app.model.OrderDetail;
+import com.finance.stockMarket.app.model.OrderDetail;
 
 public interface OrderRepo extends JpaRepository<OrderDetail, Integer> {
 

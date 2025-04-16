@@ -1,4 +1,4 @@
-package com.finance.SugerMarket.auth.service;
+package com.finance.stockMarket.auth.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -6,11 +6,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.finance.SugerMarket.auth.config.UserPrincipal;
-import com.finance.SugerMarket.auth.model.MFUser;
-import com.finance.SugerMarket.auth.model.MapRoleUser;
-import com.finance.SugerMarket.auth.repo.MFUserRepo;
-import com.finance.SugerMarket.auth.repo.MapRoleUserRepo;
+import com.finance.stockMarket.auth.config.UserPrincipal;
+import com.finance.stockMarket.auth.model.MFUser;
+import com.finance.stockMarket.auth.model.MapRoleUser;
+import com.finance.stockMarket.auth.repo.MFUserRepo;
+import com.finance.stockMarket.auth.repo.MapRoleUserRepo;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {

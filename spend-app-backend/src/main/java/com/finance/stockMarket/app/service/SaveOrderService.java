@@ -1,25 +1,24 @@
-package com.finance.SugerMarket.app.service;
+package com.finance.stockMarket.app.service;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.finance.SugerMarket.app.dto.MarketData;
-import com.finance.SugerMarket.app.model.OrderDetail;
-import com.finance.SugerMarket.app.repo.MutualFundRepo;
-import com.finance.SugerMarket.app.repo.OrderRepo;
-import com.finance.SugerMarket.app.utils.MarketDataUtil;
-import com.finance.SugerMarket.auth.model.MFUser;
-import com.finance.SugerMarket.constants.MFConstants;
+import com.finance.stockMarket.app.dto.MarketData;
+import com.finance.stockMarket.app.model.OrderDetail;
+import com.finance.stockMarket.app.repo.MutualFundRepo;
+import com.finance.stockMarket.app.repo.OrderRepo;
+import com.finance.stockMarket.app.utils.MarketDataUtil;
+import com.finance.stockMarket.auth.model.MFUser;
+import com.finance.stockMarket.constants.MFConstants;
 
 import io.micrometer.common.util.StringUtils;
 import jakarta.transaction.Transactional;
-
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 @Service
 public class SaveOrderService {

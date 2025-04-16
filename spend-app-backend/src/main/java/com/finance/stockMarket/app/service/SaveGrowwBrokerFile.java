@@ -1,4 +1,4 @@
-package com.finance.SugerMarket.app.service;
+package com.finance.stockMarket.app.service;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,9 +20,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.finance.SugerMarket.app.model.MutualFund;
-import com.finance.SugerMarket.app.model.OrderDetail;
-import com.finance.SugerMarket.auth.model.MFUser;
+import com.finance.stockMarket.app.model.MutualFund;
+import com.finance.stockMarket.app.model.OrderDetail;
+import com.finance.stockMarket.auth.model.MFUser;
 
 @Service
 public class SaveGrowwBrokerFile extends SaveOrderService {

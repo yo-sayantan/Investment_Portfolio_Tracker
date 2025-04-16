@@ -1,4 +1,4 @@
-package com.finance.SugerMarket.auth.controller;
+package com.finance.stockMarket.auth.controller;
 
 import java.util.Map;
 
@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.finance.SugerMarket.auth.dto.AuthenticationRequest;
-import com.finance.SugerMarket.auth.dto.AuthenticationResponse;
-import com.finance.SugerMarket.auth.service.AuthenticationService;
+import com.finance.stockMarket.auth.dto.AuthenticationRequest;
+import com.finance.stockMarket.auth.dto.AuthenticationResponse;
+import com.finance.stockMarket.auth.service.AuthenticationService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController

@@ -1,4 +1,4 @@
-package com.finance.SugerMarket.app.utils;
+package com.finance.stockMarket.app.utils;
 
 import java.util.Date;
 import java.util.List;

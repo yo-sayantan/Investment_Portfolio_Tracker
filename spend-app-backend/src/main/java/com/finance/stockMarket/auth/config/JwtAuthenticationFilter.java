@@ -1,4 +1,4 @@
-package com.finance.SugerMarket.auth.config;
+package com.finance.stockMarket.auth.config;
 
 import java.io.IOException;
 
@@ -11,8 +11,8 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.finance.SugerMarket.auth.memory.Tokens;
-import com.finance.SugerMarket.auth.service.JwtService;
+import com.finance.stockMarket.auth.memory.Tokens;
+import com.finance.stockMarket.auth.service.JwtService;
 
 import io.micrometer.common.util.StringUtils;
 import jakarta.servlet.FilterChain;

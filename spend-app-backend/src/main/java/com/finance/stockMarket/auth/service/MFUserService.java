@@ -1,12 +1,12 @@
-package com.finance.SugerMarket.auth.service;
+package com.finance.stockMarket.auth.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.finance.SugerMarket.auth.model.MFUser;
-import com.finance.SugerMarket.auth.repo.MFUserRepo;
+import com.finance.stockMarket.auth.model.MFUser;
+import com.finance.stockMarket.auth.repo.MFUserRepo;
 
 @Service
 public class MFUserService {

@@ -1,4 +1,4 @@
-package com.finance.SugerMarket.auth.config;
+package com.finance.stockMarket.auth.config;
 
 import java.util.ArrayList;
 import java.util.Collection;

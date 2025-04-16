@@ -1,4 +1,4 @@
-package com.finance.SugerMarket.agent.jobs;
+package com.finance.stockMarket.agent.jobs;
 
 import java.util.Date;
 import java.util.List;
@@ -11,9 +11,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.finance.SugerMarket.app.service.BudgetViewerService;
-import com.finance.SugerMarket.auth.model.MFUser;
-import com.finance.SugerMarket.auth.service.MFUserService;
+import com.finance.stockMarket.app.service.BudgetViewerService;
+import com.finance.stockMarket.auth.model.MFUser;
+import com.finance.stockMarket.auth.service.MFUserService;
 
 @Component
 public class UpdateBudgetAgent implements Job {

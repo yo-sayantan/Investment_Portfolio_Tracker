@@ -1,10 +1,10 @@
-package com.finance.SugerMarket.app.dto;
+package com.finance.stockMarket.app.dto;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import com.finance.SugerMarket.app.model.OrderDetail;
+import com.finance.stockMarket.app.model.OrderDetail;
 
 public class FundData {
 	private Integer id;

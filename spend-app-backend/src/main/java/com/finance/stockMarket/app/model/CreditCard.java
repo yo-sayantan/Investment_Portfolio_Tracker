@@ -1,6 +1,6 @@
-package com.finance.SugerMarket.app.model;
+package com.finance.stockMarket.app.model;
 
-import com.finance.SugerMarket.auth.model.MFUser;
+import com.finance.stockMarket.auth.model.MFUser;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

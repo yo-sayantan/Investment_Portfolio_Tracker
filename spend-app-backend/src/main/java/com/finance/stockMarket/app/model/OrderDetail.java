@@ -1,8 +1,8 @@
-package com.finance.SugerMarket.app.model;
+package com.finance.stockMarket.app.model;
 
 import java.util.Date;
 
-import com.finance.SugerMarket.auth.model.MFUser;
+import com.finance.stockMarket.auth.model.MFUser;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -1,4 +1,4 @@
-package com.finance.SugerMarket.app.service;
+package com.finance.stockMarket.app.service;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,12 +12,12 @@ import java.util.TreeMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.finance.SugerMarket.app.dto.LineChartDto;
-import com.finance.SugerMarket.app.dto.MarketData;
-import com.finance.SugerMarket.app.model.OrderDetail;
-import com.finance.SugerMarket.app.repo.OrderRepo;
-import com.finance.SugerMarket.app.utils.MarketDataUtil;
-import com.finance.SugerMarket.constants.MFConstants;
+import com.finance.stockMarket.app.dto.LineChartDto;
+import com.finance.stockMarket.app.dto.MarketData;
+import com.finance.stockMarket.app.model.OrderDetail;
+import com.finance.stockMarket.app.repo.OrderRepo;
+import com.finance.stockMarket.app.utils.MarketDataUtil;
+import com.finance.stockMarket.constants.MFConstants;
 
 @Service
 public class AnalysisService {
