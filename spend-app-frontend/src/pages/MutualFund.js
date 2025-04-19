@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Grid } from "@mui/material";
+import { Grid, Box, Paper } from "@mui/material";
 import CurrentValuePaper from "../components/mutualFunds/CurrentValuePaper";
 import DetailedPaper from "../components/mutualFunds/DetailedPaper";
 import Nifty50Paper from "../components/mutualFunds/Nifty50Paper";
@@ -59,20 +59,18 @@ const columns = [
     subHeaders: [
       {
         field: "day1ChangeAmount",
-        headerName: "1 Day Return",
+        headerName: "1 Day",
         type: "number",
         cellStyle: true,
         cellValue: (param) => {
           return param.day1ChangeAmount.toFixed(2) + "(" + param.day1Change.toFixed(2) + "%)";
         }
       },
-      //{ field: "week1Change", headerName: "1 Week", type: "number", cellStyle: true, convertToTwoDeciaml: true, suffix: "%", },
       { field: "month1Change", headerName: "1 Month", type: "number", cellStyle: true, convertToTwoDeciaml: true, suffix: "%", },
       { field: "month6Change", headerName: "6 Months", type: "number", cellStyle: true, convertToTwoDeciaml: true, suffix: "%", },
       { field: "year1Change", headerName: "1 Year", type: "number", cellStyle: true, convertToTwoDeciaml: true, suffix: "%", },
       { field: "year3Change", headerName: "3 Years", type: "number", cellStyle: true, convertToTwoDeciaml: true, suffix: "%", },
-      //{ field: "year5Change", headerName: "5 Years", type: "number", cellStyle: true, convertToTwoDeciaml: true, suffix: "%", },
-      { field: "allTimeChange", headerName: "All", type: "number", cellStyle: true, convertToTwoDeciaml: true, suffix: "%" },
+      { field: "allTimeChange", headerName: "Since Inception", type: "number", cellStyle: true, convertToTwoDeciaml: true, suffix: "%" },
     ],
   },
 ];
@@ -169,7 +167,6 @@ const internalColumns = [
   },
 ];
 
-
 const MutualFund = () => {
   const [cookies] = useCookies(['access_token']);
   const [isLoading, setIsLoading] = useState(true);
@@ -194,6 +191,7 @@ const MutualFund = () => {
   }, [rows, searchTerm]);
 
   const updateData = () => {
+    setAddLoader(true);
     axios.defaults.headers.common['Authorization'] = cookies['access_token'];
     axios.get(COMMON_URL + "app/get-order-details")
       .then((res) => {
@@ -275,27 +273,35 @@ const MutualFund = () => {
     fetchData();
   }, []);
 
-
+  // Modern background for the whole page
   return (
-    <div>
+    <Box sx={{
+      minHeight: "100vh",
+      background: "linear-gradient(120deg, #e3f0ff 0%, #f8fafc 100%)",
+      padding: { xs: 1, md: 4 }
+    }}>
       {isLoading ?
-        <>
-          <Loading />
-        </>
+        <Loading />
         :
         <>
-          <Grid container spacing={2} paddingTop={6}>
-            <Grid item xs={3}>
+          <Grid container spacing={3} paddingTop={6} justifyContent="center">
+            <Grid item xs={12} md={3}>
               <CurrentValuePaper amount={currentValue} isPositive={isProfited} />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
               <DetailedPaper investedAmount={investedValue} totalReturn={returnValue} day1Change={day1Change} isPositive={isProfited} isDayPositive={isDayProfited} />
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={12} md={3}>
               <Nifty50Paper xirr={XIRR} isPositive={isProfited} />
             </Grid>
           </Grid>
-          <div style={{ marginTop: '16px', backgroundColor: 'white' }}>
+          <Paper elevation={0} sx={{
+            marginTop: 4,
+            background: "#fff",
+            borderRadius: 4,
+            boxShadow: "0 2px 16px rgba(0,123,255,0.08)",
+            padding: { xs: 1, md: 2 }
+          }}>
             <FundSearchBar
               mutualFundData={mutualFundData}
               updateData={updateData}
@@ -303,21 +309,23 @@ const MutualFund = () => {
               searchTerm={searchTerm}
               setSearchTerm={setSearchTerm}
             />
-          </div>
-          {addLoader ? <Loading /> :
-            <CustomTableV2
-              columns={columns}
-              internalColumns={internalColumns}
-              rows={filteredRows}
-              mutualFundData={mutualFundData}
-              updateData={updateData}
-              setAddLoader={setAddLoader}
-              sortBy="currentAmount"
-              rowKey="fundName"
-            />}
+          </Paper>
+          <Box sx={{ marginTop: 3 }}>
+            {addLoader ? <Loading /> :
+              <CustomTableV2
+                columns={columns}
+                internalColumns={internalColumns}
+                rows={filteredRows}
+                mutualFundData={mutualFundData}
+                updateData={updateData}
+                setAddLoader={setAddLoader}
+                sortBy="currentAmount"
+                rowKey="fundName"
+              />}
+          </Box>
         </>
       }
-    </div>
+    </Box>
   );
 };
 

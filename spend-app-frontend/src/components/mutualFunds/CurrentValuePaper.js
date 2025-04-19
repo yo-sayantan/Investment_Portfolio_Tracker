@@ -34,7 +34,7 @@ const CurrentValuePaper = (props) => {
             <Typography variant="h6" color={props.isPositive ? "green" : "red"} fontWeight="bold" fontSize="45px">
                 {RUPEE_SYMBOL + " " + props.amount}
             </Typography>
-            <Typography fontWeight="bold" fontSize="20px">
+            <Typography fontSize="20px">
                 Current Value
             </Typography>
         </Paper>

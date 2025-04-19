@@ -4,6 +4,7 @@ import { makeStyles } from '@mui/styles';
 import AddIcon from '@mui/icons-material/Add';
 import UploadIcon from '@mui/icons-material/Upload';
 import SearchIcon from '@mui/icons-material/Search';
+import RefreshIcon from '@mui/icons-material/Refresh';
 import AddItemDialog from './AddItemDialog';
 import UploadFormDialog from './UploadFormDialog';
 import PieChartIcon from "@mui/icons-material/PieChart";
@@ -23,46 +24,55 @@ const useStyles = makeStyles({
     searchPaper: {
         display: 'flex',
         alignItems: 'center',
-        padding: '2px 12px',
-        borderRadius: 30,
-        background: '#fff',
-        boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
-        border: '1px solid #e0e0e0',
-        transition: 'box-shadow 0.2s',
+        padding: '8px 24px',
+        borderRadius: 40,
+        background: 'linear-gradient(90deg, #e3f0ff 0%, #f8fafc 100%)',
+        boxShadow: '0 4px 16px rgba(0,123,255,0.08)',
+        border: '2px solid #007bff',
+        transition: 'box-shadow 0.2s, border-color 0.2s',
         '&:focus-within': {
-            boxShadow: '0 4px 16px rgba(0,123,255,0.10)',
-            borderColor: '#007bff',
+            boxShadow: '0 8px 32px rgba(0,123,255,0.15)',
+            borderColor: '#0056b3',
         },
+        minHeight: 60,
     },
     searchInput: {
         flex: 1,
         border: 'none',
         background: 'transparent',
-        fontSize: 18,
-        padding: '8px 0',
+        fontSize: 22,
+        padding: '12px 0',
         outline: 'none',
+        color: '#222',
+        fontWeight: 600,
     },
     buttonGroup: {
         display: 'flex',
         justifyContent: 'flex-end',
-        gap: '12px',
+        gap: '18px',
     },
     button: {
-        backgroundColor: '#fff !important',
-        color: '#007bff !important',
-        border: '1px solid #007bff !important',
-        borderRadius: 24,
-        minWidth: 40,
-        minHeight: 40,
-        boxShadow: '0 1px 4px rgba(0,123,255,0.08)',
-        transition: 'background 0.2s, color 0.2s',
+        background: 'linear-gradient(90deg, #007bff 0%, #00c6ff 100%) !important',
+        color: '#fff !important',
+        border: 'none !important',
+        borderRadius: 32,
+        minWidth: 56,
+        minHeight: 56,
+        fontSize: 24,
+        fontWeight: 700,
+        boxShadow: '0 2px 8px rgba(0,123,255,0.12)',
+        transition: 'background 0.2s, color 0.2s, box-shadow 0.2s',
         '&:hover': {
-            backgroundColor: '#007bff !important',
+            background: 'linear-gradient(90deg, #0056b3 0%, #00aaff 100%) !important',
             color: '#fff !important',
+            boxShadow: '0 4px 16px rgba(0,123,255,0.18)',
         },
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     icon: {
-        fontSize: 22,
+        fontSize: 52,
     }
 });
 
@@ -96,6 +106,13 @@ const FundSearchBar = (props) => {
         setOpenAnalysis(false);
     };
 
+    const handleRefresh = () => {
+        if (props.updateData) {
+            props.setAddLoader && props.setAddLoader(true);
+            props.updateData();
+        }
+    };
+
     return (
         <div className={classes.root}>
             <AppBar position="static" className={classes.appBar} elevation={0}>
@@ -103,7 +120,7 @@ const FundSearchBar = (props) => {
                     <Grid container alignItems="center" spacing={2}>
                         <Grid item xs={12} md={7}>
                             <Paper elevation={0} className={classes.searchPaper}>
-                                <SearchIcon color="primary" style={{ marginRight: 8, opacity: 0.7 }} />
+                                <SearchIcon color="primary" style={{ marginRight: 16, fontSize: 32, opacity: 0.8 }} />
                                 <input
                                     className={classes.searchInput}
                                     type="text"
@@ -116,6 +133,15 @@ const FundSearchBar = (props) => {
                         </Grid>
                         <Grid item xs={12} md={5}>
                             <div className={classes.buttonGroup}>
+                                <Tooltip title="Refresh Table">
+                                    <Button
+                                        variant="outlined"
+                                        className={classes.button}
+                                        onClick={handleRefresh}
+                                    >
+                                        <RefreshIcon className={classes.icon} />
+                                    </Button>
+                                </Tooltip>
                                 <Tooltip title="Profile Analysis">
                                     <Button variant="outlined" className={classes.button} onClick={handleAnalysisClick}>
                                         <PieChartIcon className={classes.icon} />

@@ -23,18 +23,40 @@ const useStyles = makeStyles(() => ({
         boxShadow: '0 12px 48px rgba(0,123,255,0.15), 0 2px 16px rgba(0,0,0,0.08)',
         borderColor: 'rgba(186, 199, 212, 0.47)',
     }
-},
+  },
   horizontalContainer: {
     display: 'flex',
     justifyContent: 'space-between',
-    width: '70%',
+    width: '100%',
+    gap: 6,
   },
-  divContent: {
+  dataPoint: {
     flex: 1,
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
+    minWidth: 0,
+    padding: '0 2px',
+  },
+  label: {
+    fontSize: '1.3rem',
+    fontWeight: 900,
+    color: ' #222',
+    letterSpacing: 0.2,
+    marginTop: 8,
+    opacity: 0.85,
+    textAlign: 'center',
+  },
+  value: {
+    fontSize: '2.2rem',
+    fontWeight: 900,
+    letterSpacing: 0.3,
+    marginBottom: 0,
+    textShadow: '0 1px 4px rgba(0,123,255,0.06)',
+    wordBreak: 'break-word',
+    color: ' #222',
+    textAlign: 'center',
   },
 }));
 
@@ -46,20 +68,19 @@ const Nifty50Paper = (props) => {
   if (typeof xirrValue === "string" && xirrValue !== "N/A") {
     const num = parseFloat(xirrValue.replace("%", "").trim());
     if (!isNaN(num)) {
-      color = num >= 0 ? "green" : "red";
+      color = num >= 0 ? "rgb(4, 153, 56)" : "rgb(226, 42, 39)";
     }
   }
 
   return (
     <Paper elevation={3} className={classes.paper}>
       <Box className={classes.horizontalContainer}>
-        <div className={classes.divContent}>
-          <Typography variant="h4">XIRR: </Typography>
-        </div>
-        <div className={classes.divContent}>
-          <Typography variant="h4" style={{ color }}>
-            {xirrValue}
-          </Typography>
+        
+        <div className={classes.dataPoint}>
+            <Typography fontWeight="bold" fontSize="50px" className={classes.value} style={{ color }}>
+                {xirrValue}
+            </Typography>
+            <Typography fontSize="25px" className={classes.label}>XIRR</Typography>
         </div>
       </Box>
     </Paper>

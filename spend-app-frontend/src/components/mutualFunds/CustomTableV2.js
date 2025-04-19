@@ -14,32 +14,83 @@ import { TablePagination } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 
-
 const useStyles = makeStyles(() => ({
     positivePercentage: {
         fontWeight: "bold",
-        fontSize: "12",
-        backgroundColor: "#306844",
-        color: "white",
+        fontSize: "13px",
+        backgroundColor: "#1db954",
+        color: "#fff",
+        borderRadius: "8px",
+        padding: "2px 8px",
+        transition: "background 0.2s",
     },
     negativePercentage: {
         fontWeight: "bold",
-        fontSize: "12",
-        backgroundColor: "#bf0000",
-        color: "white",
+        fontSize: "13px",
+        backgroundColor: "#e53935",
+        color: "#fff",
+        borderRadius: "8px",
+        padding: "2px 8px",
+        transition: "background 0.2s",
     },
     table: {
         minWidth: 650,
+        borderRadius: 18,
+        overflow: "hidden",
+        background: "linear-gradient(120deg, #f8fafc 80%, #e3f0ff 100%)",
         "& .MuiTableCell-root": {
-            border: "1px solid black",
+            border: "none",
+            fontSize: "1.08rem",
+            fontWeight: 500,
+            color: "#222",
+            background: "transparent",
             transition: "background-color 0.3s ease",
         },
         "& .MuiTableRow-root.selected": {
-            backgroundColor: "#716d6d",
+            backgroundColor: "#e3f0ff !important",
+        },
+    },
+    tableHead: {
+        background: "linear-gradient(90deg, #007bff 0%, #00c6ff 100%)",
+        "& .MuiTableCell-root": {
+            color: "#fff",
+            fontWeight: 900,
+            fontSize: "1.1rem",
+            letterSpacing: 0.5,
+            borderBottom: "2px solid #e3eafc",
+            background: "transparent",
+        },
+    },
+    tableSubHead: {
+        background: "#f1f7ff",
+        "& .MuiTableCell-root": {
+            color: "#007bff",
+            fontWeight: 700,
+            fontSize: "1rem",
+            borderBottom: "1.5px solid #e3eafc",
         },
     },
     hoveredCell: {
-        backgroundColor: "#716d6d",
+        backgroundColor: "#e3f0ff !important",
+        transition: "background 0.2s",
+    },
+    clickableHeader: {
+        cursor: "pointer",
+        userSelect: "none",
+        "&:hover": {
+            color: "#007bff",
+            textDecoration: "underline",
+        },
+    },
+    pagination: {
+        "& .MuiTablePagination-toolbar": {
+            background: "#f8fafc",
+            color: "#007bff",
+            fontWeight: 600,
+        },
+        "& .MuiTablePagination-selectIcon": {
+            color: "#007bff",
+        },
     },
 }));
 
@@ -181,6 +232,10 @@ const CustomTableV2 = (props) => {
         }
     });
 
+    const displayedSecondColumns = isHistoricalDataExpanded
+        ? secondColumns
+        : secondColumns.filter(col => col.parentHeader !== "Historical Data");
+
     const startIndex = page * rowsPerPage;
     const endIndex = startIndex + rowsPerPage;
 
@@ -191,13 +246,13 @@ const CustomTableV2 = (props) => {
     }, []);
     return (
         <Box sx={{ width: "100%" }}>
-            <TableContainer component={Paper}>
+            <TableContainer component={Paper} style={{ borderRadius: 18, boxShadow: "0 4px 24px rgba(0,123,255,0.10)" }}>
                 <Table className={classes.table} aria-label="collapsible table">
                     <TableHead>
-                        <TableRow>
+                        <TableRow className={classes.tableHead}>
                             {props.columns.map((col) => (
                                 <TableCell key={col.headerName} align="center" colSpan={col.subHeaders.length}>
-                                    {col.headerName === "Historical Data" && (
+                                    {/* {col.headerName === "Historical Data" && (
                                         <span
                                             onClick={toggleHistoricalData}
                                             style={{ marginLeft: "5px", cursor: "pointer" }}
@@ -208,19 +263,21 @@ const CustomTableV2 = (props) => {
                                                 <AddCircleOutlineIcon />
                                             )}
                                         </span>
-                                    )}
+                                    )} */}
                                     {col.headerName}
                                 </TableCell>
                             ))}
                         </TableRow>
-                        <TableRow>
-                            {secondColumns.map((col) => (
-                                <TableCell key={col.field}
+                        <TableRow className={classes.tableSubHead}>
+                            {displayedSecondColumns.map((col) => (
+                                <TableCell
+                                    key={col.field}
                                     align="right"
                                     onClick={() => handleColumnHeaderClick(col)}
+                                    className={classes.clickableHeader}
                                 >
                                     {col.headerName} {sortBy === col.field && (
-                                        <span>{sortOrder === "asc" ? "▲" : "▼"}</span>
+                                        <span style={{ color: "#007bff", fontWeight: 900 }}>{sortOrder === "asc" ? "▲" : "▼"}</span>
                                     )}
                                 </TableCell>
                             ))}
@@ -230,7 +287,7 @@ const CustomTableV2 = (props) => {
                         {visibleRows.map((row) => (
                             <Row
                                 key={row[props.rowKey]}
-                                columns={secondColumns}
+                                columns={displayedSecondColumns}
                                 row={row}
                                 internalColumns={props.internalColumns}
                                 colorCell={props.colorCell}
@@ -249,6 +306,7 @@ const CustomTableV2 = (props) => {
                 page={page}
                 onPageChange={handleChangePage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
+                className={classes.pagination}
             />
 
             {popupOpen &&
