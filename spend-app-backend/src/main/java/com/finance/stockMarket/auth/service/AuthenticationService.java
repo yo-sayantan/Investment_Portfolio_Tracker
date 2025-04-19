@@ -1,7 +1,6 @@
 package com.finance.stockMarket.auth.service;
 
 import java.security.SecureRandom;
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,7 +49,7 @@ public class AuthenticationService {
 	@Autowired
 	private EmailService emailService;
 	@Autowired
-    private PasswordEncoder passwordEncoder;
+	private PasswordEncoder passwordEncoder;
 
 	private static final SecureRandom secureRandom = new SecureRandom();
 	private static final int OTP_LENGTH = 6;
@@ -96,7 +95,7 @@ public class AuthenticationService {
 		if (userRepo.existsByUsernameAndIsActive(request.getUsername(), true)) {
 			return new SignUpResponseDTO(request.getUsername() + " already exists", false);
 		}
-		if(userRepo.existsByEmailAndIsActive(request.getEmailId(), true)) {
+		if (userRepo.existsByEmailAndIsActive(request.getEmailId(), true)) {
 			return new SignUpResponseDTO(request.getEmailId() + " already exists", false);
 		}
 
@@ -129,7 +128,7 @@ public class AuthenticationService {
 		try {
 			log.info("sending otp for " + username);
 			OTPDetails otp = new OTPDetails(generateOTP(), OTP_EXPIRATION_TIME_MS);
-			UserOTPs.getInstance().addOtp(username, otp); //add otp
+			UserOTPs.getInstance().addOtp(username, otp); // add otp
 			String subject = fullName + "! Here is your OTP";
 			String body = otp.getOtp() + " is your OTP for Sugar Spend. Please do not share to anyone.\nArigato";
 			emailService.sendSMS(emailId, subject, body);
@@ -155,8 +154,8 @@ public class AuthenticationService {
 
 	public SignUpResponseDTO verifyotp(SignUpRequestDTO request) {
 		OTPDetails otp = UserOTPs.getInstance().getOtp(request.getUsername());
-		if(otp != null && 
-				(otp.getExpirationTime() > System.currentTimeMillis() 
+		if (otp != null &&
+				(otp.getExpirationTime() > System.currentTimeMillis()
 						|| otp.getOtp().equals(request.getOtp()))) {
 			MFUser user = userRepo.findByUsername(request.getUsername());
 			user.setIsActive(true);
@@ -164,8 +163,7 @@ public class AuthenticationService {
 			UserOTPs.getInstance().removeOtp(request.getUsername());
 			return new SignUpResponseDTO(request.getUsername(), request.getEmailId(),
 					"Signup successful please login", true);
-		}
-		else if(otp != null && otp.getExpirationTime() < System.currentTimeMillis()) {
+		} else if (otp != null && otp.getExpirationTime() < System.currentTimeMillis()) {
 			UserOTPs.getInstance().removeOtp(request.getUsername());
 			return new SignUpResponseDTO(request.getUsername(), request.getEmailId(),
 					"OTP Expired", false);

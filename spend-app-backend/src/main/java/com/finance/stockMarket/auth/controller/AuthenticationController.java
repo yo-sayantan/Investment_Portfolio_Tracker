@@ -26,52 +26,52 @@ import com.finance.stockMarket.auth.service.AuthenticationService;
 @RestController
 @RequestMapping("/auth")
 public class AuthenticationController {
+
 	@Autowired
 	private AuthenticationService authenticationService;
-	
+
 	private static final Logger log = LoggerFactory.getLogger(AuthenticationService.class);
 
 	@PostMapping("/authenticate")
 	public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
 		try {
 			return ResponseEntity.ok(authenticationService.authenticate(request));
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			log.error("getUserDetailsByJWT failed", e.getMessage());
 		}
-		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new AuthenticationResponse("Incorrect Username or password."));
+		return ResponseEntity.status(HttpStatus.FORBIDDEN)
+				.body(new AuthenticationResponse("Incorrect Username or password."));
 	}
 
 	@GetMapping("/userinfo")
 	public ResponseEntity<UserDetails> getUserDetailsByJWT(@RequestHeader Map<String, String> request) {
 		try {
 			return ResponseEntity.ok(authenticationService.getUserDetailsByToken(request.get("authorization")));
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			log.error("getUserDetailsByJWT failed", e.getMessage());
 		}
 		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
 	}
-	
+
 	@PostMapping("/signup")
-	public ResponseEntity<SignUpResponseDTO> signup(@RequestBody SignUpRequestDTO request){
+	public ResponseEntity<SignUpResponseDTO> signup(@RequestBody SignUpRequestDTO request) {
 		try {
 			return ResponseEntity.ok(authenticationService.signup(request));
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			log.error("getUserDetailsByJWT failed", e.getMessage());
 		}
-		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new SignUpResponseDTO("There are some internal error", false));
+		return ResponseEntity.status(HttpStatus.FORBIDDEN)
+				.body(new SignUpResponseDTO("There are some internal error", false));
 	}
-	
+
 	@PostMapping("/verifyotp")
-	public ResponseEntity<SignUpResponseDTO> verifyotp(@RequestBody SignUpRequestDTO request){
+	public ResponseEntity<SignUpResponseDTO> verifyotp(@RequestBody SignUpRequestDTO request) {
 		try {
 			return ResponseEntity.ok(authenticationService.verifyotp(request));
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			log.error("getUserDetailsByJWT failed", e.getMessage());
 		}
-		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new SignUpResponseDTO("There are some internal error", false));
+		return ResponseEntity.status(HttpStatus.FORBIDDEN)
+				.body(new SignUpResponseDTO("There are some internal error", false));
 	}
 }

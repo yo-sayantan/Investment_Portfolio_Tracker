@@ -1,6 +1,5 @@
 package com.finance.stockMarket.auth.service;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,7 +14,7 @@ import com.finance.stockMarket.auth.repo.MapRoleUserRepo;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-	
+
 	@Autowired
 	private MFUserRepo userRepo;
 	@Autowired
@@ -32,6 +31,5 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		return new UserPrincipal(user.getId(), user.getUsername(), user.getPassword(),
 				mapRoleUser.getRole().getRoleName(), user.getFullname());
 	}
-	
 
 }

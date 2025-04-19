@@ -13,10 +13,10 @@ public class SignUpResponseDTO {
         this.message = message;
         this.isValid = isValid;
     }
-    
+
     public SignUpResponseDTO(String message, Boolean isValid) {
-    	this.message = message;
-    	this.isValid = false;
+        this.message = message;
+        this.isValid = false;
     }
 
     // Getters and Setters
@@ -44,11 +44,11 @@ public class SignUpResponseDTO {
         this.message = message;
     }
 
-	public Boolean getIsValid() {
-		return isValid;
-	}
+    public Boolean getIsValid() {
+        return isValid;
+    }
 
-	public void setIsValid(Boolean isValid) {
-		this.isValid = isValid;
-	}
+    public void setIsValid(Boolean isValid) {
+        this.isValid = isValid;
+    }
 }

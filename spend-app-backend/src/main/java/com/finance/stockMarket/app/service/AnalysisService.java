@@ -76,7 +76,7 @@ public class AnalysisService {
 			Double totalCurrentAmount = 0.0;
 			for (String code : orderDetailMap.keySet()) {
 				if (marketDataMap.get(code).getNavData().get(date) == null) {
-					if(trackerMap.get(code) != null) {
+					if (trackerMap.get(code) != null) {
 						totalInvestedAmount += trackerMap.get(code).investedAmount;
 						totalCurrentAmount += trackerMap.get(code).units * trackerMap.get(code).nav;
 					}

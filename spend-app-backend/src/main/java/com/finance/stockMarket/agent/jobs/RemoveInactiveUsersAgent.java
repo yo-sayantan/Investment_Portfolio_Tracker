@@ -19,20 +19,20 @@ import com.finance.stockMarket.auth.repo.MapRoleUserRepo;
 @Component
 public class RemoveInactiveUsersAgent implements Job {
 	private static final Logger log = LoggerFactory.getLogger(RemoveInactiveUsersAgent.class);
-	
+
 	@Autowired
 	private MFUserRepo userRepo;
 	@Autowired
 	private MapRoleUserRepo mapRoleUserRepo;
-	
+
 	@Override
 	public void execute(JobExecutionContext context) throws JobExecutionException {
 		log.info("Strated removeing Inactive users");
 		List<String> expiredList = UserOTPs.getInstance().getExpiredUserIds();
-		
+
 		expiredList.forEach(userId -> {
 			MFUser user = userRepo.findByUsername(userId);
-			if(user.getIsActive()) {
+			if (user.getIsActive()) {
 				return;
 			}
 			log.info("trying to remove: " + userId);

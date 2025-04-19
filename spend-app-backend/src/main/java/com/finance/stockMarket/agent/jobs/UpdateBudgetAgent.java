@@ -17,12 +17,12 @@ import com.finance.stockMarket.auth.service.MFUserService;
 
 @Component
 public class UpdateBudgetAgent implements Job {
-	
+
 	@Autowired
 	private BudgetViewerService budgetViewerService;
 	@Autowired
 	private MFUserService mfUserService;
-	
+
 	private static final Logger log = LoggerFactory.getLogger(UpdateBudgetAgent.class);
 
 	@Override
@@ -30,10 +30,10 @@ public class UpdateBudgetAgent implements Job {
 		log.info("started UpdateBudgetAgent class..");
 		List<MFUser> listOfUsers = mfUserService.findAllUsers();
 		Date date = (Date) context.getJobDetail().getJobDataMap().get("date");
-		for(MFUser user : listOfUsers) {
+		for (MFUser user : listOfUsers) {
 			budgetViewerService.updateBudgetView(date, user.getId());
 		}
-		
+
 	}
 
 }

@@ -28,33 +28,33 @@ public class BudgetViewerController extends BaseController {
 
 	@Autowired
 	private BudgetViewerService budgetViewerService;
-	
+
 	private static final Logger log = LoggerFactory.getLogger(BudgetViewerController.class);
-	
+
 	@PostMapping("/get-budgets")
 	public List<BudgetView> findAllBudget(@RequestBody Map<String, String> map) {
 		return budgetViewerService.findAllBudget(Integer.parseInt(map.get("budgetYear")), map.get("budgetMonth"),
 				getUserName());
 	}
-	
+
 	@PostMapping("/get-budget-chart")
 	public List<BudgetDto> getBudgetChart(@RequestBody Map<String, String> map) {
 		return budgetViewerService.getBudgetChart(Integer.parseInt(map.get("budgetYear")), map.get("budgetMonth"),
 				getUserName());
 	}
-	
+
 	@PostMapping("/get-pie-chart")
-	public List<BudgetDto> getPieChart(@RequestBody Map<String, String> map){
+	public List<BudgetDto> getPieChart(@RequestBody Map<String, String> map) {
 		return budgetViewerService.getPieChart(Integer.parseInt(map.get("budgetYear")), map.get("budgetMonth"),
 				getUserName());
 	}
-	
+
 	@PostMapping("/get-total-amount")
-	public Map<String, BigDecimal> getTotalAmount(@RequestBody Map<String, String> map){
+	public Map<String, BigDecimal> getTotalAmount(@RequestBody Map<String, String> map) {
 		return budgetViewerService.getTotalAmount(Integer.parseInt(map.get("budgetYear")), map.get("budgetMonth"),
 				getUserName());
 	}
-	
+
 	@PostMapping("/update-budget-data")
 	public ResponseEntity<String> updateBudgetData() {
 		try {
@@ -62,23 +62,22 @@ public class BudgetViewerController extends BaseController {
 		} catch (Exception e) {
 			log.error("error while updating budget: ", e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(MFConstants.FAILED);
+					.body(MFConstants.FAILED);
 		}
 		return ResponseEntity.ok(MFConstants.SUCCESS);
-		
+
 	}
-	
+
 	@PostMapping("/modify-remaing-amount")
 	public ResponseEntity<String> modifyRemainingAmount(@RequestBody BudgetView budget) {
 		try {
 			BudgetView orgOBudget = budgetViewerService.findBudgetById(budget.getId());
 			orgOBudget.setRemainingAmount(budget.getRemainingAmount());
 			budgetViewerService.saveBudget(orgOBudget);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			log.error("error while modifying remiang amount: ", e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(MFConstants.FAILED);
+					.body(MFConstants.FAILED);
 		}
 		return ResponseEntity.ok(MFConstants.SUCCESS);
 	}

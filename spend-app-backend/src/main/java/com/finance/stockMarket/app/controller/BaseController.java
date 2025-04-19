@@ -12,7 +12,7 @@ public class BaseController {
 
 	@Autowired
 	private JwtService jwtService;
-	
+
 	private String getToken() {
 		String token = null;
 		ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder
@@ -26,7 +26,7 @@ public class BaseController {
 	public String getUserName() {
 		return jwtService.extractUsername(getToken());
 	}
-	
+
 	public Integer getUserId() {
 		return Integer.parseInt(jwtService.extractUserId(getToken()));
 	}

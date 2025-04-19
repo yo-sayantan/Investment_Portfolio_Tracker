@@ -1,11 +1,12 @@
 package com.finance.stockMarket.auth.repo;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.finance.stockMarket.auth.model.MapRoleUser;
 
-public interface MapRoleUserRepo extends JpaRepository<MapRoleUser, Integer>{
+public interface MapRoleUserRepo extends JpaRepository<MapRoleUser, Integer> {
 	@Query("SELECT maproleuser FROM MapRoleUser maproleuser WHERE maproleuser.user.id=:userId")
-	public MapRoleUser findByUser(@Param("userId")Integer userId);
+	public MapRoleUser findByUser(@Param("userId") Integer userId);
 }

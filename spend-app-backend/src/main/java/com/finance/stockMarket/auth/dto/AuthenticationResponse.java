@@ -1,4 +1,5 @@
 package com.finance.stockMarket.auth.dto;
+
 import org.springframework.security.core.userdetails.UserDetails;
 
 public class AuthenticationResponse {
@@ -12,11 +13,11 @@ public class AuthenticationResponse {
 		this.token = token;
 		this.userDetails = userDetails;
 	}
-	
+
 	public AuthenticationResponse(String msg) {
 		this.msg = msg;
 	}
-	
+
 	public AuthenticationResponse() {
 		super();
 	}

@@ -17,7 +17,7 @@ public class MutualFundService {
 	public List<MutualFund> findAllMutualFunds() {
 		return mutualfundRepo.findAll();
 	}
-	
+
 	public void saveMutualFund(MutualFund fund) {
 		mutualfundRepo.save(fund);
 	}

@@ -168,7 +168,7 @@ public class CamsKFinTechPDFPerserService extends SaveOrderService {
 			}
 		}
 	}
-	
+
 	public static String extractFundName(String description) {
 		String[] excludedKeywords = { "Direct", "formerly", "Growth", "OPTION" };
 		description = description.replaceAll("\\([^\\)]*\\)", "");

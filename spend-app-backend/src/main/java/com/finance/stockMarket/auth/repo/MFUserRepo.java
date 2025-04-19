@@ -10,14 +10,14 @@ import com.finance.stockMarket.auth.model.MFUser;
 
 public interface MFUserRepo extends JpaRepository<MFUser, Integer> {
 	public MFUser findByUsername(String username);
-	
+
 	@Query("SELECT user FROM MFUser user WHERE user.username=:username AND user.isActive=true")
 	public MFUser findBYUsernameAndISActive(@Param("username") String username);
-	
+
 	@Query("SELECT user FROM MFUser user WHERE user.isActive=true")
 	public List<MFUser> getActiveUserList();
-	
+
 	boolean existsByUsernameAndIsActive(String username, boolean isActive);
-    
-    boolean existsByEmailAndIsActive(String email, boolean isActive);
+
+	boolean existsByEmailAndIsActive(String email, boolean isActive);
 }

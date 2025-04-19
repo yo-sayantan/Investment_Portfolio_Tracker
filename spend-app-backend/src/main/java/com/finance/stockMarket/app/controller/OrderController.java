@@ -75,7 +75,7 @@ public class OrderController extends BaseController {
 	public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file,
 			@RequestParam("password") String password) {
 		try {
-			
+
 			saveOrderService = context.getBean(CamsKFinTechPDFPerserService.class);
 
 			String uploadDirectory = MFConstants.FILE_UPLOAD_DIR;

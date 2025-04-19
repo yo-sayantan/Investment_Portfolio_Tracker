@@ -23,19 +23,19 @@ import com.finance.stockMarket.constants.MFConstants;
 @RestController
 @RequestMapping("/app")
 public class CreditCardController extends BaseController {
-	
+
 	@Autowired
 	private CreditCardService creditCardService;
 	@Autowired
 	private MFUserService userService;
-	
+
 	private static final Logger log = LoggerFactory.getLogger(CreditCardController.class);
-	
+
 	@GetMapping("/get-credit-cards")
 	public List<CreditCard> findAllCreditCard() {
 		return creditCardService.findAllCreditCard(getUserName());
 	}
-	
+
 	@PostMapping("/save-credit-card")
 	public ResponseEntity<String> saveCreditCard(@RequestBody CreditCard cardDetail) {
 		try {
@@ -44,11 +44,11 @@ public class CreditCardController extends BaseController {
 		} catch (Exception e) {
 			log.error("error while saving credit card: ", e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(MFConstants.FAILED);
+					.body(MFConstants.FAILED);
 		}
 		return ResponseEntity.ok(MFConstants.SUCCESS);
 	}
-	
+
 	@PostMapping("delete-credit-card")
 	public ResponseEntity<String> deleteCreditCard(@RequestBody CreditCard cardDetail) {
 		try {
@@ -56,7 +56,7 @@ public class CreditCardController extends BaseController {
 		} catch (Exception e) {
 			log.error("error while saving credit card: ", e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(MFConstants.FAILED);
+					.body(MFConstants.FAILED);
 		}
 	}
 

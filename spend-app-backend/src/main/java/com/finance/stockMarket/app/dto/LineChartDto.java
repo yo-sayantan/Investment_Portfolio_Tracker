@@ -47,6 +47,5 @@ public class LineChartDto {
 		return "LineChartDto [investedAmount=" + investedAmount + ", currentAmount=" + currentAmount + ", date=" + date
 				+ "]";
 	}
-	
 
 }

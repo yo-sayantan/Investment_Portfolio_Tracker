@@ -12,6 +12,7 @@ public class UserOTPs {
     private static UserOTPs instance;
 
     private Map<String, OTPDetails> otpMap;
+
     private UserOTPs() {
         otpMap = new HashMap<>();
     }
@@ -24,9 +25,9 @@ public class UserOTPs {
     }
 
     public void addOtp(String userId, OTPDetails token) throws Exception {
-    	if(otpMap.containsKey(userId) && otpMap.get(userId).getExpirationTime() > System.currentTimeMillis()) {
-    		throw new Exception("user already exists");
-    	}
+        if (otpMap.containsKey(userId) && otpMap.get(userId).getExpirationTime() > System.currentTimeMillis()) {
+            throw new Exception("user already exists");
+        }
         otpMap.put(userId, token);
     }
 
@@ -37,11 +38,11 @@ public class UserOTPs {
     public void removeOtp(String userId) {
         otpMap.remove(userId);
     }
-    
+
     public List<String> getExpiredUserIds() {
-    	List<String> expiredUserIds = new ArrayList<>();
+        List<String> expiredUserIds = new ArrayList<>();
         Iterator<Map.Entry<String, OTPDetails>> iterator = otpMap.entrySet().iterator();
-        
+
         while (iterator.hasNext()) {
             Map.Entry<String, OTPDetails> entry = iterator.next();
             if (entry.getValue().getExpirationTime() < System.currentTimeMillis()) {
@@ -49,8 +50,8 @@ public class UserOTPs {
                 iterator.remove();
             }
         }
-        
+
         return expiredUserIds;
-    	
+
     }
 }

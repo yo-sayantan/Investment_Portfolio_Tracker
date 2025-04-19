@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class StockMarketApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(StockMarketApplication .class, args);
+		SpringApplication.run(StockMarketApplication.class, args);
 	}
 
 }

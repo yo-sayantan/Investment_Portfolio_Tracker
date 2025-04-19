@@ -26,19 +26,19 @@ public class MutualFundController {
 
 	@Autowired
 	private MutualFundService mutualFundService;
-	
+
 	private static final Logger log = LoggerFactory.getLogger(MutualFundController.class);
 
 	@GetMapping("/get-mutualfunds")
 	public List<MutualFund> findAllMutualFunds() {
 		return mutualFundService.findAllMutualFunds();
 	}
-	
+
 	@GetMapping("/get-mf-api-data")
 	public List<MutualFund> findMfApiMutualFunds() {
 		return MarketDataUtil.getMFList();
 	}
-	
+
 	@PostMapping("/save-mutualfund")
 	public ResponseEntity<String> saveMutualFund(@RequestBody MutualFund fund) {
 		try {
@@ -46,7 +46,7 @@ public class MutualFundController {
 		} catch (Exception e) {
 			log.error("error while saving mutual fund: ", e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(MFConstants.FAILED);
+					.body(MFConstants.FAILED);
 		}
 		return ResponseEntity.ok(MFConstants.SUCCESS);
 	}

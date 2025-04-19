@@ -1,4 +1,5 @@
 package com.finance.stockMarket.auth.dto;
+
 public class AuthenticationRequest {
 
 	private String username;

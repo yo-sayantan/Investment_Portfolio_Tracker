@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @Service
 public class LogoutService implements LogoutHandler {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(LogoutService.class);
 
 	@Override
@@ -28,8 +28,7 @@ public class LogoutService implements LogoutHandler {
 			token.setExpired(true);
 			Tokens.tokenMap.remove(jwt);
 			SecurityContextHolder.clearContext();
-		}
-		else {
+		} else {
 			log.error("no such token with this jwt");
 		}
 

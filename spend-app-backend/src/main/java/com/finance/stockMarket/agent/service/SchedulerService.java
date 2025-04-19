@@ -31,15 +31,14 @@ public class SchedulerService {
 	public void init() {
 		try {
 			scheduler.start();
-			Schedulers.getInstance().getAllJobs().forEach((jobName, cron)->{
+			Schedulers.getInstance().getAllJobs().forEach((jobName, cron) -> {
 				try {
 					String className = "com.finance.stockMarket.agent.jobs." + jobName;
 					Class<?> clazz = Class.forName(className);
 					JobDetail jobDetails = buildJobDetail(clazz);
 					Trigger trigger = buildTrigger(clazz, "00 00 00 ? * * *");
 					scheduler.scheduleJob(jobDetails, trigger);
-				}
-				catch (Exception e) {
+				} catch (Exception e) {
 					log.error("error while scheduling job " + jobName, e);
 				}
 			});
@@ -62,7 +61,7 @@ public class SchedulerService {
 	private JobDetail buildJobDetail(Class jobClass) {
 		JobDataMap jobDataMap = new JobDataMap();
 		jobDataMap.put("date", new Date());
-//        jobDataMap.put(jobClass.getSimpleName(), info);
+		// jobDataMap.put(jobClass.getSimpleName(), info);
 
 		return JobBuilder.newJob(jobClass).withIdentity(jobClass.getSimpleName()).setJobData(jobDataMap).build();
 	}
@@ -73,20 +72,21 @@ public class SchedulerService {
 				.withSchedule(CronScheduleBuilder.cronSchedule(cronExpression))
 				.startAt(new Date(System.currentTimeMillis())).build();
 	}
-	
+
 	@SuppressWarnings("rawtypes")
 	private Trigger buildTrigger(Class jobClass) {
 		return TriggerBuilder.newTrigger()
-                .withIdentity(jobClass.getSimpleName())
-                .startNow()
-                .withSchedule(SimpleScheduleBuilder.simpleSchedule()
-                        .withMisfireHandlingInstructionFireNow())
-                .build();
+				.withIdentity(jobClass.getSimpleName())
+				.startNow()
+				.withSchedule(SimpleScheduleBuilder.simpleSchedule()
+						.withMisfireHandlingInstructionFireNow())
+				.build();
 	}
 
-//	private Trigger buildTrigger(Class jobClass) {
-//		return TriggerBuilder.newTrigger().withIdentity(jobClass.getSimpleName()).startNow().build();
-//	}
+	// private Trigger buildTrigger(Class jobClass) {
+	// return
+	// TriggerBuilder.newTrigger().withIdentity(jobClass.getSimpleName()).startNow().build();
+	// }
 
 	@PreDestroy
 	public void preDestroy() {

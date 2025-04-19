@@ -28,13 +28,12 @@ public class SecurityConfiguration {
 	@Autowired
 	private LogoutHandler logoutHandler;
 	@Value("${cors.allowedOrigins}")
-    private String allowedOrigins;
-
+	private String allowedOrigins;
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		
-		http.cors(cors->cors.configurationSource(corsConfigurationSource()));
+
+		http.cors(cors -> cors.configurationSource(corsConfigurationSource()));
 		http.csrf(AbstractHttpConfigurer::disable)
 				.authorizeHttpRequests(auth -> auth.requestMatchers("/auth/*").permitAll().anyRequest().authenticated())
 				.authenticationProvider(authenticationProvider)
@@ -50,7 +49,8 @@ public class SecurityConfiguration {
 		configuration.setAllowedOrigins(Arrays.asList(allowedOrigins.split(",")));
 		configuration.addAllowedMethod("*");
 		configuration.addAllowedHeader("*");
-		//configuration.setAllowCredentials(true); // Add this line if you need to allow credentials (e.g., cookies)
+		// configuration.setAllowCredentials(true); // Add this line if you need to
+		// allow credentials (e.g., cookies)
 
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);

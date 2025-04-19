@@ -26,13 +26,13 @@ import com.finance.stockMarket.auth.model.MFUser;
 
 @Service
 public class SaveGrowwBrokerFile extends SaveOrderService {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(SaveGrowwBrokerFile.class);
 
 	@Override
 	public void processFile(File file, MFUser user, String password) throws Exception {
-		try(InputStream inputStream = new FileInputStream(file);
-			Workbook workbook = new HSSFWorkbook(inputStream)){
+		try (InputStream inputStream = new FileInputStream(file);
+				Workbook workbook = new HSSFWorkbook(inputStream)) {
 			// Assuming you want to read data from the second sheet (index 1)
 			Sheet sheet = workbook.getSheetAt(1);
 
@@ -68,13 +68,12 @@ public class SaveGrowwBrokerFile extends SaveOrderService {
 				}
 
 				OrderDetail orderDetail = new OrderDetail();
-				int index =0;
+				int index = 0;
 				for (Cell cell : row) {
 					String cellValue = null;
-					if(cell.getCellType() == CellType.NUMERIC) {
+					if (cell.getCellType() == CellType.NUMERIC) {
 						cellValue = Double.toString(cell.getNumericCellValue());
-					}
-					else {
+					} else {
 						cellValue = cell.getStringCellValue();
 					}
 					functionList.get(index).apply(cellValue, orderDetail);
@@ -83,38 +82,31 @@ public class SaveGrowwBrokerFile extends SaveOrderService {
 				orderDetail.setUser(user);
 				saveInvestment(orderDetail);
 			}
-			
-			
+
 			log.info("File upload success:" + file.getName());
-			
-			
+
 		} catch (Exception e) {
-			log.error("Error While Uploading data: ",e);
+			log.error("Error While Uploading data: ", e);
 		}
 	}
 
 	BiFunction<String, OrderDetail, OrderDetail> createOrderDetailFunction(String column) {
 		return (value, orderDetail) -> {
-			if(column.equals("mutualFund.schemeName")) {
+			if (column.equals("mutualFund.schemeName")) {
 				MutualFund fund = new MutualFund();
 				value = value.replaceAll("\\s+", " ");
 				fund.setSchemeName(value);
 				orderDetail.setMutualFund(fund);
-			}
-			else if(column.equals("side")) {
+			} else if (column.equals("side")) {
 				orderDetail.setSide(value.equals("PURCHASE") ? "Buy" : "Sell");
-			}
-			else if(column.equals("units")) {
+			} else if (column.equals("units")) {
 				orderDetail.setUnits(Double.valueOf(value));
-			}
-			else if(column.equals("nav")) {
+			} else if (column.equals("nav")) {
 				orderDetail.setNav(Double.valueOf(value));
-			}
-			else if(column.equals("amount")) {
+			} else if (column.equals("amount")) {
 				value = value.replaceAll(",", "");
 				orderDetail.setAmount(Double.valueOf(value));
-			}
-			else if(column.equals("dateOfEvent")) {
+			} else if (column.equals("dateOfEvent")) {
 				SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy");
 				try {
 					orderDetail.setDateOfEvent(sdf.parse(value));

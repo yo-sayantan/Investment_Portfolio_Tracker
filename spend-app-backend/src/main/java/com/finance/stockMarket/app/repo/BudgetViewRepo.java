@@ -25,5 +25,5 @@ public interface BudgetViewRepo extends JpaRepository<BudgetView, Integer> {
 			+ "WHERE b.creditCard.user.username = :userName AND "
 			+ "b.budgetYear = :year " + "GROUP BY b.creditCard.id")
 	List<Object[]> findAllByYear(Integer year, String userName);
-	
+
 }

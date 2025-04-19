@@ -3,11 +3,10 @@ package com.finance.stockMarket.app.utils;
 import java.util.Date;
 import java.util.List;
 
-
 public class MathUtil {
-	
+
 	public static final double tolerance = 0.001;
-	
+
 	public static Double getReturnPercentage(List<Double> investedValues, Double currentValue) {
 		Double totalInvestedValue = investedValues.stream().mapToDouble(Double::doubleValue).sum();
 		return (currentValue / totalInvestedValue - 1) * 100;
@@ -24,9 +23,9 @@ public class MathUtil {
 			x0 = x1;
 		}
 
-		return Math.ceil(x0 * 100 * 10) / 10; //make it to percentage and round up to one decimal 
+		return Math.ceil(x0 * 100 * 10) / 10; // make it to percentage and round up to one decimal
 	}
-	
+
 	private static double dateDiff(Date d1, Date d2) {
 		long day = 24 * 60 * 60 * 1000;
 
@@ -60,6 +59,5 @@ public class MathUtil {
 
 		return resf;
 	}
-	
-	
+
 }

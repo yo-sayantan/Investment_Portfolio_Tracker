@@ -41,7 +41,6 @@ public class OrderDetail {
 	private String totalReturn;
 	@Transient
 	private Double currenValue;
-	
 
 	public Integer getId() {
 		return id;

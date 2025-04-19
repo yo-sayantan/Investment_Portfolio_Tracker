@@ -15,13 +15,13 @@ public class MutualFund {
 	@Column(name = "pk_mutual_fund_id")
 	private Integer id;
 	@Column(name = "amc_name")
-    private String amcName;
+	private String amcName;
 	@Column(name = "scheme_name")
 	private String schemeName;
 	@Column(name = "option")
-    private String option;
+	private String option;
 	@Column(name = "plan_type")
-    private String planType;
+	private String planType;
 	@Column(name = "scheme_code")
 	private String schemeCode;
 
@@ -32,7 +32,7 @@ public class MutualFund {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
+
 	public String getAmcName() {
 		return amcName;
 	}
@@ -48,7 +48,7 @@ public class MutualFund {
 	public void setSchemeName(String schemeName) {
 		this.schemeName = schemeName;
 	}
-	
+
 	public String getOption() {
 		return option;
 	}
@@ -79,11 +79,11 @@ public class MutualFund {
 
 	public MutualFund(String amcName, String schemeName, String schemeCode, String option, String planType) {
 		super();
-        this.amcName = amcName;
-        this.schemeName = schemeName;
-        this.schemeCode = schemeCode;
-        this.option = option;
-        this.planType = planType;
-    }
+		this.amcName = amcName;
+		this.schemeName = schemeName;
+		this.schemeCode = schemeCode;
+		this.option = option;
+		this.planType = planType;
+	}
 
 }

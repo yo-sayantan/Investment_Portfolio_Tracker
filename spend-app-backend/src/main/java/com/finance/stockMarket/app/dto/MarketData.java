@@ -56,17 +56,15 @@ public class MarketData {
 
 	public void convertToNavData(String apiData, String schemeCode) throws Exception {
 		try {
-		this.navData = new TreeMap<>();
-		for (DateNav nav : this.data) {
-			try {
-				this.navData.put(sdf.parse(nav.getDate()), Double.valueOf(nav.getNav()));
+			this.navData = new TreeMap<>();
+			for (DateNav nav : this.data) {
+				try {
+					this.navData.put(sdf.parse(nav.getDate()), Double.valueOf(nav.getNav()));
+				} catch (Exception e) {
+					throw new Exception("error in" + nav.getDate() + " -- " + nav.getNav(), e);
+				}
 			}
-			catch (Exception e) {
-				throw new Exception("error in" + nav.getDate() + " -- " + nav.getNav(), e);
-			}
-		}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			FileWriter fileWriter;
 			try {
 				fileWriter = new FileWriter("C:\\ZZZ\\Tmp\\" + schemeCode + ".txt");

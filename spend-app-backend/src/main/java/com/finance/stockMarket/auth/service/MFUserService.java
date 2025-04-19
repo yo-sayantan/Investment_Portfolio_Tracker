@@ -10,14 +10,14 @@ import com.finance.stockMarket.auth.repo.MFUserRepo;
 
 @Service
 public class MFUserService {
-	
+
 	@Autowired
 	private MFUserRepo userRepo;
-	
+
 	public MFUser getUserByUsername(String username) {
 		return userRepo.findByUsername(username);
 	}
-	
+
 	public List<MFUser> findAllUsers() {
 		return userRepo.findAll();
 	}

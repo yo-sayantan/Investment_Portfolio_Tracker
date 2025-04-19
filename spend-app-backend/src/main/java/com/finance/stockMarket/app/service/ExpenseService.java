@@ -10,20 +10,20 @@ import com.finance.stockMarket.app.repo.ExpenseRepo;
 
 @Service
 public class ExpenseService {
-	
+
 	@Autowired
 	private ExpenseRepo expenseRepo;
-	
-	public List<Expense> findAllExpense(String userName){
+
+	public List<Expense> findAllExpense(String userName) {
 		List<Expense> list = expenseRepo.findByUsername(userName);
-		list.forEach(x->x.getCreditCard().setUser(null));
+		list.forEach(x -> x.getCreditCard().setUser(null));
 		return list;
 	}
-	
+
 	public void saveExpense(Expense expense) {
 		expenseRepo.save(expense);
 	}
-	
+
 	public void deleteExpense(Integer id) {
 		expenseRepo.deleteById(id);
 	}
