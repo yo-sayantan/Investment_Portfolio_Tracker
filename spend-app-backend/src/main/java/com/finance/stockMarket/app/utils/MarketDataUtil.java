@@ -57,6 +57,29 @@ public class MarketDataUtil {
 		return data;
 	}
 
+	public static Double getLatestNav(String schemeCode) {
+		try {
+			String apiData = getDataFromURL(BASE_URL + "/" + schemeCode);
+			Gson g = new Gson();
+			java.util.Map<String, Object> map = g.fromJson(apiData, java.util.Map.class);
+
+			if (map.containsKey("data")) {
+				List<?> dataList = (List<?>) map.get("data");
+				if (dataList != null && !dataList.isEmpty()) {
+					java.util.Map<?, ?> latest = (java.util.Map<?, ?>) dataList.get(0);
+
+					if (latest.containsKey("nav")) {
+						String navStr = String.valueOf(latest.get("nav"));
+						return Double.parseDouble(navStr);
+					}
+				}
+			}
+		} catch (Exception e) {
+			log.error("Error fetching latest NAV for schemeCode: " + schemeCode, e);
+		}
+		return null;
+	}
+
 	private static MarketData generateMapData(String apiData, String schemeCode) throws Exception {
 		Gson g = new Gson();
 		MarketData fundetails = g.fromJson(apiData, MarketData.class);

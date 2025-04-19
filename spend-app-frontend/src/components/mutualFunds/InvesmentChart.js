@@ -111,7 +111,7 @@ const InvestmentChart = () => {
     return (
         <div className={classes.chartContainer}>
             <div style={{ width: '100%', height: '180%' }}>
-                <ResponsiveContainer width="100%" height={650}>
+                <ResponsiveContainer width="100%" height={700}>
                     <LineChart data={filteredData} margin={{ top: 10, right: 10, left: 0, bottom: 10 }}>
                         <CartesianGrid strokeDasharray="3 3" stroke=" #e0e0e0" />
                         <XAxis
@@ -123,6 +123,7 @@ const InvestmentChart = () => {
                         <YAxis
                             tick={{ fontSize: 13, fill: ' #888' }}
                             width={60}
+                            tickCount={10}
                         />
                         <Tooltip content={<CustomTooltip />} />
                         <Legend
