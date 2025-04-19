@@ -13,7 +13,7 @@ import com.finance.stockMarket.app.service.AnalysisService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/app")
 public class AnalysisController extends BaseController {
 
 	@Autowired

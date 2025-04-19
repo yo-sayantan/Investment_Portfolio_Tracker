@@ -23,7 +23,7 @@ import com.finance.stockMarket.constants.MFConstants;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/app")
 public class BudgetViewerController extends BaseController {
 
 	@Autowired
