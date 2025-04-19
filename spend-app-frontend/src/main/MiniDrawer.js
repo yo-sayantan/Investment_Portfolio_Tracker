@@ -118,13 +118,13 @@ export default function MiniDrawer() {
   const theme = useTheme();
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
-  const [mainMenuControl, setMainMenuControl] = React.useState("Budget Viewer");
+  const [mainMenuControl, setMainMenuControl] = React.useState("Mutual Funds");
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [cookies, setCookie, removeCookie] = useCookies(['access_token']);
   const dispatch = useDispatch();
   const actions = bindActionCreators(actionCreators, dispatch);
-  const upperMenus = ["Profile", "Settings", "Log Out"];
-  const sideMenus = ["Budget Viewer", "Mutual Funds", "Expenses", "Credit Cards"];
+  const upperMenus = ["Log Out"]  // ["Profile", "Settings", "Log Out"];
+  const sideMenus = ["Mutual Funds"]  // "Budget Viewer", "Expenses", "Credit Cards"];
   const adminMenus = ["Manage Mutual Fund"];
 
   const handleDrawerOpen = () => {
@@ -134,12 +134,12 @@ export default function MiniDrawer() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  
+
   let control;
-  if (mainMenuControl === "Budget Viewer") control = <BudgetViewer />
-  else if (mainMenuControl === "Mutual Funds") control = <MutualFund />;
-  else if (mainMenuControl === "Expenses") control = <Expenses />
-  else if (mainMenuControl === "Credit Cards") control = <CreditCards />;
+  if (mainMenuControl === "Mutual Funds") control = <MutualFund />;
+  // else if (mainMenuControl === "Budget Viewer") control = <BudgetViewer />
+  // else if (mainMenuControl === "Expenses") control = <Expenses />
+  // else if (mainMenuControl === "Credit Cards") control = <CreditCards />;
   else if (mainMenuControl === "Manage Mutual Fund") control = <ManageMutualFund />;
 
   const handleMainMenuControl = (value) => {

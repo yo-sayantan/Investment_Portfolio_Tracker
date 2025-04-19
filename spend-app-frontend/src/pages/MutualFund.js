@@ -185,6 +185,14 @@ const MutualFund = () => {
   const [soldRows, setSoldRows] = useState([]);
   const [isProfited, setIsProfited] = useState(false);
   const [isDayProfited, setIsDayProfited] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const filteredRows = React.useMemo(() => {
+    if (!searchTerm) return rows;
+    return rows.filter(row =>
+      row.fundName?.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [rows, searchTerm]);
 
   const updateData = () => {
     axios.defaults.headers.common['Authorization'] = cookies['access_token'];
@@ -282,20 +290,26 @@ const MutualFund = () => {
               <CurrentValuePaper amount={currentValue} isPositive={isProfited} />
             </Grid>
             <Grid item xs={5}>
-              <DetailedPaper investedAmount={investedValue} totalReturn={returnValue} day1Change={day1Change} xirr={XIRR} isPositive={isProfited} isDayPositive={isDayProfited} />
+              <DetailedPaper investedAmount={investedValue} totalReturn={returnValue} day1Change={day1Change} isPositive={isProfited} isDayPositive={isDayProfited} />
             </Grid>
             <Grid item xs={4}>
-              <Nifty50Paper />
+              <Nifty50Paper xirr={XIRR} isPositive={isProfited} />
             </Grid>
           </Grid>
           <div style={{ marginTop: '16px', backgroundColor: 'white' }}>
-            <FundSearchBar mutualFundData={mutualFundData} updateData={updateData} setAddLoader={setAddLoader} />
+            <FundSearchBar
+              mutualFundData={mutualFundData}
+              updateData={updateData}
+              setAddLoader={setAddLoader}
+              searchTerm={searchTerm}
+              setSearchTerm={setSearchTerm}
+            />
           </div>
           {addLoader ? <Loading /> :
             <CustomTableV2
               columns={columns}
               internalColumns={internalColumns}
-              rows={rows}
+              rows={filteredRows}
               mutualFundData={mutualFundData}
               updateData={updateData}
               setAddLoader={setAddLoader}

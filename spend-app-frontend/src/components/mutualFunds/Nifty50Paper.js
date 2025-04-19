@@ -24,19 +24,19 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Nifty50Paper = () => {
+const Nifty50Paper = (props) => {
   const classes = useStyles();
 
   return (
     <Paper elevation={3} className={classes.paper}>
       <Box className={classes.horizontalContainer}>
         <div className={classes.divContent}>
-          <Typography variant="body1">Middle</Typography>
-          <Typography variant="body1">Aligned</Typography>
+          <Typography variant="h4">XIRR</Typography>
         </div>
         <div className={classes.divContent}>
-          <Typography variant="body1">Middle</Typography>
-          <Typography variant="body1">Aligned</Typography>
+          <Typography variant="h2" color="primary">
+            {props.XIRR || "N/A"}
+          </Typography>
         </div>
       </Box>
     </Paper>

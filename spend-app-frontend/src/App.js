@@ -22,23 +22,21 @@ function App() {
   const [isLogging, setIsLogging] = React.useState(true);
   const [isLoading, setIsLoading] = React.useState(true);
   
-
   const customTheme = createTheme({
     palette: {
       primary: {
-        main: '#007bff',
+        main: 'rgb(255, 255, 255)',
       },
       secondary: {
-        main: '#6c757d',
+        main: 'rgba(108, 117, 125, 1)',
       },
       background: {
-        default: '#f8f9fa',
+        default: 'rgba(248, 249, 250, 1)',
       },
       text: {
-        primary: '#333',
+        primary: 'rgba(51, 51, 51, 1)',
       },
     },
-    // Add more theme customization options as needed
   });
 
   const darkTheme = createTheme({
@@ -66,7 +64,7 @@ function App() {
   }, []);
 
   return (
-    <ThemeProvider theme={darkTheme}>
+    <ThemeProvider theme={customTheme}>
       <Router>
         <Routes>
           {isLogging && !userData?.username ?

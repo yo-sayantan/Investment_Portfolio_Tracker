@@ -91,8 +91,8 @@ const ManageMutualFund = () => {
                 </> :
                 <>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 30 }}>
-                        <h1>Manage Mutual Fund</h1>
-                        {hasAdmin() &&
+                        <h1>Mutual Funds History</h1>
+                        {/* {hasAdmin() &&
                             <div>
                                 <Button
                                     variant="contained"
@@ -119,7 +119,7 @@ const ManageMutualFund = () => {
                                     Delete
                                 </Button>
                             </div>
-                        }
+                        } */}
                     </div>
 
                     <DataGrid
