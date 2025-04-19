@@ -1,212 +1,470 @@
 import React, { useEffect, useState } from "react";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar, gridClasses } from "@mui/x-data-grid";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import Button from "@mui/material/Button";
+import DialogActions from "@mui/material/DialogActions";
 import axios from "axios";
 import { COMMON_URL } from "../constants/URL";
-import { Box, FormControl, Grid, InputLabel, MenuItem, OutlinedInput, Select } from "@mui/material";
+import { Box, FormControl, Grid, InputLabel, MenuItem, OutlinedInput, Select, Typography, useTheme, IconButton, Tooltip, Paper } from "@mui/material";
 import { useCookies } from "react-cookie";
 import Loading from "../main/Loading";
 import { useSelector } from "react-redux";
+import AddIcon from "@mui/icons-material/Add";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import SearchIcon from "@mui/icons-material/Search";
+import CloseIcon from "@mui/icons-material/Close";
 
 const ManageMutualFund = () => {
     const [data, setData] = useState([]);
-    //const [dataList, setDataList] = useState([]);
-    const [cookies, _setCookie] = useCookies(['access_token']);
+    const [cookies] = useCookies(['access_token']);
     const [isLoading, setIsLoading] = useState(true);
     const [isDialogOpen, setDialogOpen] = useState(false);
-    const [enableEditDeleteBtn, setEnableEditDeleteBtn] = useState(false);
+    const [dialogMode, setDialogMode] = useState("add"); // "add" or "edit"
+    const [selectedRow, setSelectedRow] = useState(null);
     const [schemeName, setSchemeName] = useState('');
     const [schemeCode, setSchemeCode] = useState('');
     const [id, setId] = useState(null);
-    const [isSaved, setIsSaved] = useState(false);
+    const [search, setSearch] = useState('');
+    const [filteredData, setFilteredData] = useState([]);
     const userData = useSelector(state => state.login);
+    const theme = useTheme();
+    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+    const [rowToDelete, setRowToDelete] = useState(null);
+    const [addError, setAddError] = useState("");
+    const [schemeDetails, setSchemeDetails] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
+            setIsLoading(true);
             try {
                 axios.defaults.headers.common['Authorization'] = cookies['access_token'];
-                //const marketDataPromise = axios.get(COMMON_URL + "app/get-mf-api-data");
                 const dbData = await axios.get(COMMON_URL + "app/get-mutualfunds");
-
-                //const [marketData, dbData] = await Promise.all([marketDataPromise, dbDataPromise]);
-
                 if (dbData.status === 200 && dbData.data) {
-                    //setDataList(marketData.data);
                     setData(dbData.data);
-                    setIsLoading(false);
                 }
             }
             catch (error) {
-                // Handle errors if any of the API calls fail
                 console.error('Error calling one or more APIs', error);
             }
+            setIsLoading(false);
         };
         fetchData();
-    }, [isSaved]);
+    }, []);
+
+    useEffect(() => {
+        if (!search) {
+            setFilteredData(data);
+        } else {
+            setFilteredData(
+                data.filter(row =>
+                    row.schemeName?.toLowerCase().includes(search.toLowerCase()) ||
+                    row.schemeCode?.toString().includes(search) ||
+                    row.amcName?.toLowerCase().includes(search.toLowerCase())
+                )
+            );
+        }
+    }, [search, data]);
 
     const columns = [
-        { field: "amcName", headerName: "AMC Name", flex: 1 },
-        { field: "schemeName", headerName: "Scheme Name", flex: 1 },
-        { field: "option", headerName: "Option", flex: 1 },
-        { field: "planType", headerName: "Plan Type", flex: 1 },
-        { field: "schemeCode", headerName: "Scheme Code", flex: 1 },
+        { field: "amcName", headerName: "AMC Name", flex: 1, minWidth: 120 },
+        { field: "schemeName", headerName: "Scheme Name", flex: 1.5, minWidth: 180 },
+        { field: "option", headerName: "Option", flex: 1, minWidth: 100 },
+        { field: "planType", headerName: "Plan Type", flex: 1, minWidth: 100 },
+        { field: "schemeCode", headerName: "Scheme Code", flex: 1, minWidth: 120 },
+        // {
+        //     field: "actions",
+        //     headerName: "Actions",
+        //     flex: 1,
+        //     minWidth: 120,
+        //     sortable: false,
+        //     filterable: false,
+        //     renderCell: (params) => (
+        //         <Box>
+        //             <Tooltip title="Edit">
+        //                 <IconButton
+        //                     color="primary"
+        //                     onClick={() => handleEdit(params.row)}
+        //                     sx={{ mr: 1 }}
+        //                 >
+        //                     <EditIcon />
+        //                 </IconButton>
+        //             </Tooltip>
+        //             <Tooltip title="Delete">
+        //                 <IconButton
+        //                     color="error"
+        //                     onClick={() => handleDelete(params.row)}
+        //                 >
+        //                     <DeleteIcon />
+        //                 </IconButton>
+        //             </Tooltip>
+        //         </Box>
+        //     ),
+        // },
     ];
 
-    const handleDialog = () => {
+    const handleDialog = (mode = "add") => {
+        setDialogMode(mode);
         setDialogOpen(!isDialogOpen);
+        setSchemeCode('');
+        setId(null);
+        setAddError("");
+        setSchemeDetails(null);
     };
 
     const isAnyFieldEmpty = () => {
-        return !schemeName || !schemeCode;
+        return !schemeCode;
     };
 
-    const handleAdd = () => {
+    const handleAddOrEdit = async () => {
+        setAddError("");
+        setSchemeDetails(null);
+        if (!schemeCode) {
+            setAddError("Scheme code is required.");
+            return;
+        }
+        // First check in frontend state
+        const alreadyExists = data.some(item => String(item.schemeCode) === String(schemeCode));
+        if (alreadyExists) {
+            setAddError("This scheme code already exists in your database.");
+            return;
+        }
         setIsLoading(true);
-        handleDialog();
-        axios.defaults.headers.common['Authorization'] = cookies['access_token'];
-        const data = { id: id, schemeName: schemeName, schemeCode: schemeCode };
-        axios.post(COMMON_URL + "app/save-mutualfund", data).then((res) => {
-            setIsSaved(true);
-        }).catch((error) => {
-            console.error('userinfo failed:', error);
+        try {
+            axios.defaults.headers.common['Authorization'] = cookies['access_token'];
+            // Check with backend as well
+            const existsRes = await axios.get(COMMON_URL + `app/exists-mutualfund/${schemeCode}`);
+            if (existsRes.data === true) {
+                setAddError("This scheme code already exists in your database.");
+                setIsLoading(false);
+                return;
+            }
+            // Call backend to get scheme details by code
+            const res = await axios.get(COMMON_URL + `app/get-mutualfund-details/${schemeCode}`);
+            if (res.status === 200 && res.data) {
+                setSchemeDetails(res.data);
+                // Now add to DB
+                await axios.post(COMMON_URL + "app/save-mutualfund", res.data);
+                // Refresh data
+                const dbData = await axios.get(COMMON_URL + "app/get-mutualfunds");
+                if (dbData.status === 200 && dbData.data) {
+                    setData(dbData.data);
+                }
+                setDialogOpen(false);
+            } else {
+                setAddError("Scheme details not found for this code.");
+            }
+        } catch (error) {
+            setAddError("Failed to fetch or save scheme details.");
+        } finally {
             setIsLoading(false);
-        }).finally(() => {
             setSchemeCode('');
-            setSchemeName('');
-        })
+        }
+    };
+
+    const handleEdit = (row) => {
+        setSchemeName(row.schemeName);
+        setSchemeCode(row.schemeCode);
+        setId(row.id);
+        setDialogMode("edit");
+        setDialogOpen(true);
+    };
+
+    const handleDelete = (row) => {
+        setRowToDelete(row);
+        setDeleteDialogOpen(true);
+    };
+
+    const confirmDelete = async () => {
+        setIsLoading(true);
+        setDeleteDialogOpen(false);
+        axios.defaults.headers.common['Authorization'] = cookies['access_token'];
+        try {
+            // await axios.delete(`${COMMON_URL}app/delete-mutualfund/${rowToDelete.id}`);
+            // setData(prev => prev.filter(item => item.id !== rowToDelete.id));
+            throw new Error("Delete API not implemented yet");
+        } catch (error) {
+            console.error('Delete failed:', error);
+        }
+        setIsLoading(false);
+        setRowToDelete(null);
+    };
+
+    const handleRowSelection = (ids) => {
+        const selected = data.find(row => row.id === ids[0]);
+        setSelectedRow(selected || null);
     };
 
     const hasAdmin = () => {
-        return userData && userData.authorities[0].authority === "admin";
-    }
+        return userData && userData.authorities && userData.authorities[0].authority === "admin";
+    };
 
     return (
-        <Box sx={{ width: "100%", paddingTop: 6 }}>
-            {isLoading ?
-                <>
+        <Box sx={{
+            width: "100%",
+            paddingTop: 6,
+            background: "linear-gradient(120deg, #f8fafc 80%, #e3f0ff 100%)",
+            minHeight: "100vh"
+        }}>
+            <Paper elevation={3} sx={{
+                p: { xs: 2, sm: 4 },
+                m: { xs: 1, sm: 4 },
+                borderRadius: 4,
+                boxShadow: "0 8px 32px rgba(0,123,255,0.10)",
+                background: "#fff"
+            }}>
+                <Box sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    mb: 3
+                }}>
+                    <Typography variant="h4" fontWeight={900} color="#007bff">
+                        Mutual Funds History
+                    </Typography>
+                    {/* <Button
+                        variant="contained"
+                        startIcon={<AddIcon />}
+                        onClick={() => handleDialog("add")}
+                        sx={{
+                            background: "linear-gradient(90deg, #007bff 0%, #00c6ff 100%)",
+                            color: "#fff",
+                            fontWeight: 700,
+                            borderRadius: 2,
+                            px: 3,
+                            py: 1,
+                            boxShadow: "0 2px 8px rgba(0,123,255,0.12)",
+                            textTransform: "none",
+                            '&:hover': {
+                                background: "linear-gradient(90deg, #0056b3 0%, #00aaff 100%)"
+                            }
+                        }}
+                    >
+                        Add Fund
+                    </Button> */}
+                </Box>
+                <Box sx={{
+                    mb: 2,
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 2
+                }}>
+                    <SearchIcon sx={{ color: "#007bff", fontSize: 28 }} />
+                    <OutlinedInput
+                        placeholder="Search by AMC, Scheme Name or Code"
+                        value={search}
+                        onChange={e => setSearch(e.target.value)}
+                        sx={{
+                            width: 350,
+                            background: "#f8fafc",
+                            borderRadius: 2,
+                            fontSize: 18,
+                            fontWeight: 500,
+                            '& .MuiOutlinedInput-notchedOutline': {
+                                borderColor: '#bdbdbd',
+                            },
+                            '&:hover .MuiOutlinedInput-notchedOutline': {
+                                borderColor: '#007bff',
+                                borderWidth: 2,
+                            },
+                            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                borderColor: '#007bff',
+                                borderWidth: 2,
+                            },
+                        }}
+                        startAdornment={<></>}
+                    />
+                </Box>
+                {isLoading ? (
                     <Loading />
-                </> :
-                <>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 30 }}>
-                        <h1>Mutual Funds History</h1>
-                        {/* {hasAdmin() &&
-                            <div>
+                ) : (
+                    <Box sx={{
+                        width: "100%",
+                        '& .MuiDataGrid-root': {
+                            background: "#fff",
+                            borderRadius: 2,
+                        },
+                        '& .MuiDataGrid-columnHeaders': {
+                            background: "linear-gradient(90deg, #e3f0ff 0%, #f8fafc 100%)",
+                            color: "#007bff",
+                            fontWeight: 700,
+                            fontSize: 18,
+                        },
+                        '& .MuiDataGrid-row': {
+                            fontSize: 16,
+                        },
+                        '& .MuiDataGrid-footerContainer': {
+                            background: "#f8fafc",
+                        },
+                        '& .MuiDataGrid-toolbarContainer': {
+                            background: "#f8fafc",
+                        }
+                    }}>
+                        <DataGrid
+                            autoHeight
+                            rows={filteredData}
+                            columns={columns}
+                            pageSize={10}
+                            rowsPerPageOptions={[5, 10, 20]}
+                            getRowId={row => row.id}
+                            components={{
+                                Toolbar: GridToolbar,
+                                NoRowsOverlay: () => (
+                                    <Box sx={{ p: 4, textAlign: "center", color: "#888" }}>
+                                        No mutual funds found.
+                                    </Box>
+                                ),
+                            }}
+                            sx={{
+                                border: "none",
+                                fontFamily: theme.typography.fontFamily,
+                                [`& .${gridClasses.cell}`]: {
+                                    borderBottom: "1px solid #e3f0ff"
+                                }
+                            }}
+                            onRowSelectionModelChange={handleRowSelection}
+                            disableColumnMenu={false}
+                            disableColumnFilter={false}
+                            disableColumnSelector={false}
+                            columnBuffer={8}
+                            columnThreshold={8}
+                            resizable
+                            experimentalFeatures={{ columnResize: true }}
+                        />
+                    </Box>
+                )}
+            </Paper>
+            <Dialog open={isDialogOpen} onClose={() => setDialogOpen(false)} maxWidth="xs" fullWidth>
+                <DialogTitle sx={{
+                    fontWeight: 700,
+                    color: "#007bff",
+                    background: "linear-gradient(90deg, #e3f0ff 0%, #f8fafc 100%)"
+                }}>
+                    Add Mutual Fund
+                    <IconButton
+                        aria-label="close"
+                        onClick={() => setDialogOpen(false)}
+                        sx={{
+                            position: 'absolute',
+                            right: 8,
+                            top: 8,
+                            color: "#888"
+                        }}
+                    >
+                        <CloseIcon />
+                    </IconButton>
+                </DialogTitle>
+                <DialogContent>
+                    <form>
+                        <Grid container spacing={3} sx={{ mt: 1 }}>
+                            <Grid item xs={12}>
+                                <FormControl fullWidth variant="outlined">
+                                    <InputLabel
+                                        sx={{
+                                            background: "#fff",
+                                            px: 0.5,
+                                            color: "#007bff",
+                                            fontWeight: 600,
+                                            zIndex: 2,
+                                            '&.Mui-focused': {
+                                                color: "#007bff",
+                                                background: "#fff",
+                                            },
+                                            '&.MuiInputLabel-shrink': {
+                                                background: "#fff",
+                                            }
+                                        }}
+                                    >
+                                        Scheme Code
+                                    </InputLabel>
+                                    <OutlinedInput
+                                        label="Scheme Code"
+                                        type="number"
+                                        value={schemeCode}
+                                        onChange={e => setSchemeCode(e.target.value)}
+                                        sx={{
+                                            background: "#fff",
+                                            borderRadius: 2,
+                                            fontWeight: 600,
+                                            '& .MuiOutlinedInput-notchedOutline': {
+                                                borderColor: '#bdbdbd',
+                                            },
+                                            '&:hover .MuiOutlinedInput-notchedOutline': {
+                                                borderColor: '#007bff',
+                                                borderWidth: 2,
+                                            },
+                                            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                                borderColor: '#007bff',
+                                                borderWidth: 2,
+                                            },
+                                        }}
+                                    />
+                                </FormControl>
+                            </Grid>
+                            {addError && (
+                                <Grid item xs={12}>
+                                    <Typography color="error" fontWeight={600}>{addError}</Typography>
+                                </Grid>
+                            )}
+                            {schemeDetails && (
+                                <Grid item xs={12}>
+                                    <Typography color="primary" fontWeight={600}>
+                                        {schemeDetails.schemeName} ({schemeDetails.schemeCode})<br />
+                                        {schemeDetails.amcName}
+                                    </Typography>
+                                </Grid>
+                            )}
+                            <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>
                                 <Button
                                     variant="contained"
-                                    onClick={handleDialog}
-                                    style={{ marginRight: 10 }}
+                                    onClick={handleAddOrEdit}
+                                    disabled={isAnyFieldEmpty()}
+                                    sx={{
+                                        background: "linear-gradient(90deg, #007bff 0%, #00c6ff 100%)",
+                                        color: "#fff",
+                                        fontWeight: 700,
+                                        fontSize: "1.1rem",
+                                        borderRadius: 2,
+                                        px: 4,
+                                        py: 1.5,
+                                        boxShadow: "0 2px 8px rgba(0,123,255,0.12)",
+                                        textTransform: "none",
+                                        '&:hover': {
+                                            background: "linear-gradient(90deg, #0056b3 0%, #00aaff 100%)"
+                                        }
+                                    }}
                                 >
                                     Add
                                 </Button>
                                 <Button
                                     variant="contained"
-                                    color="primary"
-                                    disabled={!enableEditDeleteBtn}
-                                    //onClick={() => handleRowEdit(selectedRow)}
-                                    style={{ marginRight: 10 }}
-                                >
-                                    Edit
-                                </Button>
-                                <Button
-                                    variant="contained"
                                     color="secondary"
-                                    disabled={!enableEditDeleteBtn}
-                                //onClick={() => handleDelete(selectedRow)}
+                                    onClick={() => setDialogOpen(false)}
+                                    sx={{
+                                        background: "linear-gradient(90deg, #e53935 0%, #ffb199 100%)",
+                                        color: "#fff",
+                                        fontWeight: 700,
+                                        fontSize: "1.1rem",
+                                        borderRadius: 2,
+                                        px: 4,
+                                        py: 1.5,
+                                        boxShadow: "0 2px 8px rgba(229,57,53,0.12)",
+                                        textTransform: "none",
+                                        '&:hover': {
+                                            background: "linear-gradient(90deg, #b71c1c 0%, #ff8a65 100%)"
+                                        }
+                                    }}
                                 >
-                                    Delete
+                                    Cancel
                                 </Button>
-                            </div>
-                        } */}
-                    </div>
-
-                    <DataGrid
-                        autoHeight
-                        rows={data}
-                        columns={columns}
-                        initialState={{
-                            pagination: {
-                                paginationModel: { page: 0, pageSize: 10 },
-                            },
-                        }}
-                    // pageSizeOptions={[5, 10]}
-                    // checkboxSelection
-                    // autoHeight
-                    // onRowSelectionModelChange={(newSelection) => {
-                    //     handleRowSelection(newSelection);
-                    // }}
-                    // rowSelectionModel={selectedRow ? selectedRow : {}}
-                    // style={{ marginBottom: "16px" }}
-                    />
-                </>}
-            <Dialog open={isDialogOpen} onClose={handleDialog}>
-                <DialogTitle>Add Item</DialogTitle>
-                <DialogContent>
-                    <form>
-                        <Grid container spacing={2}>
-                            <Grid item xs={12}>
-                                <FormControl fullWidth variant="outlined">
-                                    <InputLabel>Mutual Fund</InputLabel>
-                                    <Select
-                                        //value={side}
-                                        //onChange={(e) => setSide(e.target.value)}
-                                        input={<OutlinedInput label="Side (Buy/Sell)" />}
-                                        fullWidth
-                                        disabled
-                                    >
-                                        <MenuItem value="Buy">Buy</MenuItem>
-                                        <MenuItem value="Sell">Sell</MenuItem>
-                                    </Select>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <FormControl fullWidth variant="outlined">
-                                    <InputLabel>Scheme Name</InputLabel>
-                                    <OutlinedInput
-                                        label="Scheme Name"
-                                        type="string"
-                                        value={schemeName}
-                                        onChange={(e) => setSchemeName(e.target.value)}
-                                    />
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <FormControl fullWidth variant="outlined">
-                                    <InputLabel>Scheme Code</InputLabel>
-                                    <OutlinedInput
-                                        label="Scheme Code"
-                                        type="number"
-                                        value={schemeCode}
-                                        onChange={(e) => {
-                                            const inputValue = e.target.value;
-                                            if (/^\d*$/.test(inputValue)) {
-                                                setSchemeCode(inputValue);
-                                            }
-                                        }}
-                                    //disabled
-                                    />
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={6}>
-                                <Box display="flex" justifyContent="flex-end">
-                                    <Button variant="contained" color="primary" onClick={handleAdd} disabled={isAnyFieldEmpty()}>
-                                        Add
-                                    </Button>
-                                </Box>
-                            </Grid>
-                            <Grid item xs={6}>
-                                <Box display="flex" justifyContent="flex-start">
-                                    <Button variant="contained" color="secondary" onClick={handleDialog}>
-                                        Cancel
-                                    </Button>
-                                </Box>
                             </Grid>
                         </Grid>
                     </form>
                 </DialogContent>
             </Dialog>
+            {/* ...delete dialog remains unchanged... */}
         </Box>
     );
 };

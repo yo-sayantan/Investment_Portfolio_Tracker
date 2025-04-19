@@ -21,4 +21,8 @@ public class MutualFundService {
 	public void saveMutualFund(MutualFund fund) {
 		mutualfundRepo.save(fund);
 	}
+
+	public MutualFund findBySchemeCode(String schemeCode) {
+		return mutualfundRepo.findMutualFundBySchemeCode(schemeCode);
+	}
 }

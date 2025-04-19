@@ -80,6 +80,20 @@ public class MarketDataUtil {
 		return null;
 	}
 
+	// public static MutualFund getMFDetails(String schemeCode) {
+	// MutualFund fund = new MutualFund();
+	// try {
+	// String apiData = getDataFromURL(BASE_URL);
+	// Gson g = new Gson();
+	// TypeToken<List<MutualFund>> token = new TypeToken<List<MutualFund>>() {
+	// };
+	// fund = g.fromJson(apiData, token);
+	// } catch (Exception e) {
+	// log.error("error in getLatestData() ", e);
+	// }
+	// return fund;
+	// }
+
 	private static MarketData generateMapData(String apiData, String schemeCode) throws Exception {
 		Gson g = new Gson();
 		MarketData fundetails = g.fromJson(apiData, MarketData.class);

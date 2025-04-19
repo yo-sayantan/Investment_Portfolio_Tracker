@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,6 +39,40 @@ public class MutualFundController {
 	public List<MutualFund> findMfApiMutualFunds() {
 		return MarketDataUtil.getMFList();
 	}
+
+	@GetMapping("/exists-mutualfund/{schemeCode}")
+	public ResponseEntity<Boolean> existsMutualFundBySchemeCode(@PathVariable("schemeCode") String schemeCode) {
+		try {
+			MutualFund found = mutualFundService.findBySchemeCode(schemeCode);
+			return ResponseEntity.ok(found != null);
+		} catch (Exception e) {
+			log.error("Error checking existence of mutual fund for schemeCode: " + schemeCode, e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
+		}
+	}
+
+	// @GetMapping("/get-mutualfund-details/{schemeCode}")
+	// public ResponseEntity<MutualFund>
+	// getMutualFundDetailsBySchemeCode(@PathVariable("schemeCode") String
+	// schemeCode) {
+	// try {
+	// // List<MutualFund> allFunds = MarketDataUtil.getMFList();
+	// // MutualFund found = allFunds.stream()
+	// // .filter(f -> String.valueOf(f.getSchemeCode()).equals(schemeCode))
+	// // .findFirst()
+	// // .orElse(null);
+	// MutualFund found = MarketDataUtil.getMFDetailsList(schemeCode);
+	// if (found != null) {
+	// return ResponseEntity.ok(found);
+	// } else {
+	// return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+	// }
+	// } catch (Exception e) {
+	// log.error("Error fetching mutual fund details for schemeCode: " + schemeCode,
+	// e);
+	// return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+	// }
+	// }
 
 	@PostMapping("/save-mutualfund")
 	public ResponseEntity<String> saveMutualFund(@RequestBody MutualFund fund) {
