@@ -51,7 +51,6 @@ const columns = [
   {
     headerName: "NAV",
     subHeaders: [
-      // { field: "avgNav", headerName: "Average NAV", type: "number" },
       { field: "currentNav", headerName: "Current NAV", type: "number", convertToTwoDeciaml: true },
     ],
   },
@@ -289,10 +288,10 @@ const MutualFund = () => {
             <Grid item xs={3}>
               <CurrentValuePaper amount={currentValue} isPositive={isProfited} />
             </Grid>
-            <Grid item xs={5}>
+            <Grid item xs={6}>
               <DetailedPaper investedAmount={investedValue} totalReturn={returnValue} day1Change={day1Change} isPositive={isProfited} isDayPositive={isDayProfited} />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={3}>
               <Nifty50Paper xirr={XIRR} isPositive={isProfited} />
             </Grid>
           </Grid>

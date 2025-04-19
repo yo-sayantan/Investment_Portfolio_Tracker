@@ -29,10 +29,15 @@ const ProfileAnalysis = (props) => {
         >
             <DialogContent>
                 <TabContext value={value}>
-                    <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                        <TabList onChange={handleChange} aria-label="lab API tabs example">
-                            <Tab label="Investment Chart" value="1" />
-                            <Tab label="Pie Chart" value="2" />
+                    <Box sx={{ borderBottom: 1, borderColor: 'divider', bgcolor: '#fff' }}>
+                        <TabList
+                            onChange={handleChange}
+                            aria-label="lab API tabs example"
+                            TabIndicatorProps={{ style: { background: '#007bff' } }}
+                            textColor="primary"
+                        >
+                            <Tab label="Investment Chart" value="1" style={{ color: '#007bff', fontWeight: 600 }} />
+                            {/* <Tab label="Pie Chart" value="2" style={{ color: '#007bff', fontWeight: 600 }} /> */}
                         </TabList>
                     </Box>
                     <TabPanel value="1">

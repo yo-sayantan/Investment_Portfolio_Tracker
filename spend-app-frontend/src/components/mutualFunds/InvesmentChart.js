@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { LineChart, Line, YAxis, Tooltip, Legend, ResponsiveContainer, ReferenceLine } from 'recharts';
+import { LineChart, Line, YAxis, XAxis, Tooltip, Legend, ResponsiveContainer, ReferenceLine, CartesianGrid } from 'recharts';
 import { makeStyles } from '@mui/styles';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
@@ -15,10 +15,19 @@ const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
         const data = payload[0].payload;
         return (
-            <div className="custom-tooltip">
-                <p>Day: {formatDate(data.date)}</p>
-                <p>Invested Amount: {Math.round(data.investedAmount)}</p>
-                <p>Current Amount: {Math.round(data.currentAmount)}</p>
+            <div
+                style={{
+                    background: ' #fff',
+                    border: '1px solid #e0e0e0',
+                    borderRadius: 8,
+                    padding: 12,
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+                    minWidth: 180
+                }}
+            >
+                <div style={{ fontWeight: 600, marginBottom: 4 }}>Day: {formatDate(data.date)}</div>
+                <div style={{ color: ' #8884d8' }}>Invested Amount: <b>{Math.round(data.investedAmount)}</b></div>
+                <div style={{ color: ' #82ca9d' }}>Current Amount: <b>{Math.round(data.currentAmount)}</b></div>
             </div>
         );
     }
@@ -30,29 +39,47 @@ const useStyles = makeStyles({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        width: '100%',
-        height: '70vh', // Adjust the height to fill the viewport
+        width: '98%', // Wider chart
+        height: '60vh', // Slightly less tall for a modern look
+        background: ' #f8f9fa',
+        borderRadius: 16,
+        boxShadow: '0 2px 16px rgba(0,0,0,0.06)',
+        padding: 6, // Narrower padding
+        marginTop: 10, // Less margin at top
     },
     chartOptions: {
         display: 'flex',
         justifyContent: 'center',
-        gap: '10px',
-        margin: '20px', // Add margin for spacing
+        gap: '30px',
+        margin: '80px', // Narrower margin
     },
     button: {
-        borderRadius: '50%',
-        border: '2px solid transparent',
-        padding: '5px 15px',
+        borderRadius: 20,
+        border: '1.5px solid #007bff',
+        padding: '6px 22px',
         cursor: 'pointer',
+        background: ' #ffffff',
+        color: ' #007bff',
+        fontWeight: 600,
+        fontSize: 16,
+        transition: 'all 0.2s',
+        boxShadow: '0 1px 4px rgba(0,123,255,0.08)',
+        outline: 'none',
+        '&:hover': {
+            background: ' #007bff',
+            color: ' #fff',
+        },
     },
     activeButton: {
-        borderColor: 'green',
+        background: ' #007bff',
+        color: ' #fff',
+        borderColor: ' #007bff',
     },
 });
 
 const InvestmentChart = () => {
     const [timeframe, setTimeframe] = useState('1M');
-    const [cookies, _setCookie] = useCookies(['access_token']);
+    const [cookies] = useCookies(['access_token']);
     const [data, setData] = useState([]);
     const classes = useStyles();
 
@@ -64,10 +91,9 @@ const InvestmentChart = () => {
                 setData(res.data);
             }
         } catch (error) {
-            // Handle errors if any of the API calls fail
             console.error('Error calling one or more APIs', error);
         }
-    }
+    };
 
     React.useEffect(() => {
         fetchData();
@@ -84,42 +110,59 @@ const InvestmentChart = () => {
 
     return (
         <div className={classes.chartContainer}>
-            <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={filteredData} margin={{ top: 5, right: 20, left: 10, bottom: 5 }}>
-                    <YAxis />
-                    <Tooltip content={<CustomTooltip />} />
-                    <Legend />
-                    <Line type="monotone" dataKey="investedAmount" stroke="#8884d8" />
-                    <Line type="monotone" dataKey="currentAmount" stroke="#82ca9d" />
-                    <ReferenceLine y={0} stroke="black" strokeWidth={1} />
-                </LineChart>
-            </ResponsiveContainer>
-
+            <div style={{ width: '100%', height: '180%' }}>
+                <ResponsiveContainer width="100%" height={650}>
+                    <LineChart data={filteredData} margin={{ top: 10, right: 10, left: 0, bottom: 10 }}>
+                        <CartesianGrid strokeDasharray="3 3" stroke=" #e0e0e0" />
+                        <XAxis
+                            dataKey="date"
+                            tickFormatter={formatDate}
+                            minTickGap={30}
+                            tick={{ fontSize: 13, fill: ' #888' }}
+                        />
+                        <YAxis
+                            tick={{ fontSize: 13, fill: ' #888' }}
+                            width={60}
+                        />
+                        <Tooltip content={<CustomTooltip />} />
+                        <Legend
+                            verticalAlign="top"
+                            align="right"
+                            iconType="circle"
+                            wrapperStyle={{ paddingBottom: 8 }}
+                        />
+                        <Line
+                            type="monotone"
+                            dataKey="investedAmount"
+                            stroke=" #8884d8"
+                            strokeWidth={3}
+                            dot={false}
+                            activeDot={{ r: 6 }}
+                            name="Invested Amount"
+                        />
+                        <Line
+                            type="monotone"
+                            dataKey="currentAmount"
+                            stroke=" #82ca9d"
+                            strokeWidth={3}
+                            dot={false}
+                            activeDot={{ r: 6 }}
+                            name="Current Amount"
+                        />
+                        <ReferenceLine y={0} stroke=" #aaaaaa" strokeWidth={1} />
+                    </LineChart>
+                </ResponsiveContainer>
+            </div>
             <div className={classes.chartOptions}>
-                <button
-                    className={`${classes.button} ${timeframe === '1M' ? classes.activeButton : ''}`}
-                    onClick={() => setTimeframe('1M')}
-                >
-                    1M
-                </button>
-                <button
-                    className={`${classes.button} ${timeframe === '6M' ? classes.activeButton : ''}`}
-                    onClick={() => setTimeframe('6M')}
-                >
-                    6M
-                </button>
-                <button
-                    className={`${classes.button} ${timeframe === '1Y' ? classes.activeButton : ''}`}
-                    onClick={() => setTimeframe('1Y')}
-                >
-                    1Y
-                </button>
-                <button
-                    className={`${classes.button} ${timeframe === 'All' ? classes.activeButton : ''}`}
-                    onClick={() => setTimeframe('All')}
-                >
-                    All
-                </button>
+                {['1M', '6M', '1Y', 'All'].map((label) => (
+                    <button
+                        key={label}
+                        className={`${classes.button} ${timeframe === label ? classes.activeButton : ''}`}
+                        onClick={() => setTimeframe(label)}
+                    >
+                        {label}
+                    </button>
+                ))}
             </div>
         </div>
     );
