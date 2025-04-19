@@ -18,8 +18,8 @@ const useStyles = makeStyles(() => ({
     positivePercentage: {
         fontWeight: "bold",
         fontSize: "13px",
-        backgroundColor: "#1db954",
-        color: "#fff",
+        backgroundColor: " #1db954",
+        color: " #fff",
         borderRadius: "8px",
         padding: "2px 8px",
         transition: "background 0.2s",
@@ -27,8 +27,8 @@ const useStyles = makeStyles(() => ({
     negativePercentage: {
         fontWeight: "bold",
         fontSize: "13px",
-        backgroundColor: "#e53935",
-        color: "#fff",
+        backgroundColor: " #e53935",
+        color: " #fff",
         borderRadius: "8px",
         padding: "2px 8px",
         transition: "background 0.2s",
@@ -38,58 +38,68 @@ const useStyles = makeStyles(() => ({
         borderRadius: 18,
         overflow: "hidden",
         background: "linear-gradient(120deg, #f8fafc 80%, #e3f0ff 100%)",
+        border: "2px solid #007bff", // Add outer border
         "& .MuiTableCell-root": {
-            border: "none",
+            borderLeft: "1.5px solid #e3eafc", // Column-wise border
+            borderRight: "1.5px solid #e3eafc", // Column-wise border
+            borderTop: "none",
+            borderBottom: "none",
             fontSize: "1.08rem",
             fontWeight: 500,
-            color: "#222",
+            color: " #222",
             background: "transparent",
             transition: "background-color 0.3s ease",
         },
         "& .MuiTableRow-root.selected": {
-            backgroundColor: "#e3f0ff !important",
+            backgroundColor: " #e3f0ff !important",
+        },
+        "& .MuiTableCell-root:first-of-type": {
+            borderLeft: "none", // Remove left border for first column
+        },
+        "& .MuiTableCell-root:last-of-type": {
+            borderRight: "none", // Remove right border for last column
         },
     },
     tableHead: {
-        background: "linear-gradient(90deg, #007bff 0%, #00c6ff 100%)",
+        background: "linear-gradient(90deg,rgb(60, 73, 255) 0%,rgb(0, 132, 255) 100%) !important",
         "& .MuiTableCell-root": {
-            color: "#fff",
+            color: " #ffffff",
             fontWeight: 900,
-            fontSize: "1.1rem",
+            fontSize: "1.3rem",
             letterSpacing: 0.5,
             borderBottom: "2px solid #e3eafc",
             background: "transparent",
         },
     },
     tableSubHead: {
-        background: "#f1f7ff",
+        background: " #f1f7ff",
         "& .MuiTableCell-root": {
-            color: "#007bff",
+            color: " #007bff",
             fontWeight: 700,
             fontSize: "1rem",
             borderBottom: "1.5px solid #e3eafc",
         },
     },
     hoveredCell: {
-        backgroundColor: "#e3f0ff !important",
+        backgroundColor: " #e3f0ff !important",
         transition: "background 0.2s",
     },
     clickableHeader: {
         cursor: "pointer",
         userSelect: "none",
         "&:hover": {
-            color: "#007bff",
+            color: " #007bff",
             textDecoration: "underline",
         },
     },
     pagination: {
         "& .MuiTablePagination-toolbar": {
-            background: "#f8fafc",
-            color: "#007bff",
+            background: " #f8fafc",
+            color: " #007bff",
             fontWeight: 600,
         },
         "& .MuiTablePagination-selectIcon": {
-            color: "#007bff",
+            color: " #007bff",
         },
     },
 }));
@@ -100,7 +110,7 @@ function Row(props) {
     const [isSelected, setIsSelected] = useState(false);
 
     const convertValue = (field, value) => {
-        if (!value) {
+        if (!value && value !== 0) {
             return "-";
         }
         const column = props.columns.find((col) => col.field === field);
@@ -129,14 +139,16 @@ function Row(props) {
                 {props.columns.map((col) => {
                     let cellValue = props.row[col.field];
                     const colorCellValue = col.colorCell === undefined ? cellValue : props.row[col.colorCell];
-                    if(col.cellValue !== undefined){
+                    if (col.cellValue !== undefined) {
                         cellValue = col.cellValue(props.row);
                     }
 
                     const cellClassName = !cellValue && !colorCellValue ? null :
                         (col.cellStyle ? colorCellValue > 0
                             ? classes.positivePercentage
-                            : classes.negativePercentage
+                            : colorCellValue < 0
+                                ? classes.negativePercentage
+                                : null
                             : null);
 
                     cellValue = cellValue !== undefined ? convertValue(col.field, cellValue) : "-";
@@ -147,6 +159,14 @@ function Row(props) {
                             : cellValue !== undefined
                                 ? `${cellValue}`
                                 : "-";
+
+                    let style = {};
+                    if (col.cellStyle && typeof colorCellValue === "number") {
+                        style.color = colorCellValue > 0 ? "rgb(0, 177, 62)" : colorCellValue < 0 ? "rgb(216, 4, 0)" : " #222";
+                        style.fontWeight = 600;
+                        style.fontSize = "20px"
+                    }
+
                     return (
                         <TableCell
                             key={col.field}
@@ -154,6 +174,7 @@ function Row(props) {
                             className={`${cellClassName} ${cellClassName === null && isHovered ? classes.hoveredCell : ""
                                 }`}
                             onDoubleClick={() => props.onCellDoubleClick(props.row)}
+                            style={style}
                         >
                             {finalVlaue}
                         </TableCell>
@@ -244,9 +265,10 @@ const CustomTableV2 = (props) => {
     React.useEffect(() => {
         setSecondColumns(getMainColumns(props.columns));
     }, []);
+    
     return (
         <Box sx={{ width: "100%" }}>
-            <TableContainer component={Paper} style={{ borderRadius: 18, boxShadow: "0 4px 24px rgba(0,123,255,0.10)" }}>
+            <TableContainer component={Paper} style={{ borderRadius: 18, boxShadow: "5 4px 24px rgba(0,123,255,0.10)" }}>
                 <Table className={classes.table} aria-label="collapsible table">
                     <TableHead>
                         <TableRow className={classes.tableHead}>
@@ -277,7 +299,7 @@ const CustomTableV2 = (props) => {
                                     className={classes.clickableHeader}
                                 >
                                     {col.headerName} {sortBy === col.field && (
-                                        <span style={{ color: "#007bff", fontWeight: 900 }}>{sortOrder === "asc" ? "▲" : "▼"}</span>
+                                        <span style={{ color: "rgb(0, 0, 0)", fontWeight: 900 }}>{sortOrder === "asc" ? "▲" : "▼"}</span>
                                     )}
                                 </TableCell>
                             ))}

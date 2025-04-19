@@ -17,12 +17,12 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import PieChartIcon from "@mui/icons-material/PieChart";
 import CreditCardIcon from '@mui/icons-material/CreditCard';
 import AddCardIcon from '@mui/icons-material/AddCard';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import MoneyIcon from '@mui/icons-material/Money';
-import Gradient from 'react-gradient';
+import TableChartIcon from '@mui/icons-material/TableChart';
+import EqualizerIcon from '@mui/icons-material/Equalizer';
 import MutualFund from "../pages/MutualFund";
 import { useDispatch } from "react-redux";
 import { Menu, MenuItem, Tooltip } from "@mui/material";
@@ -113,9 +113,9 @@ function loadIcon(data, filled = false) {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    background: "#fff",
+    background: " #fff",
     boxShadow: "0 2px 8px rgba(0,123,255,0.10)",
-    color: "#007bff",
+    color: " #007bff",
     fontSize: 28,
     ...(filled && {
       background:
@@ -129,8 +129,8 @@ function loadIcon(data, filled = false) {
           ? purple[500]
           : data === "Credit Cards"
           ? cyan[500]
-          : "#007bff",
-      color: "#fff",
+          : " #007bff",
+      color: " #fff",
       boxShadow: "0 4px 16px rgba(0,123,255,0.18)",
     }),
     transition: "background 0.2s, color 0.2s",
@@ -138,8 +138,8 @@ function loadIcon(data, filled = false) {
 
   const icons = {
     "Budget Viewer": <AttachMoneyIcon sx={iconStyles} />,
-    "Mutual Funds": <AttachMoneyIcon sx={iconStyles} />,
-    "Manage Mutual Fund": <MoneyIcon sx={iconStyles} />,
+    "Mutual Funds": <EqualizerIcon sx={iconStyles} />,
+    "Manage Mutual Fund": <TableChartIcon sx={iconStyles} />,
     "Expenses": <AddCardIcon sx={iconStyles} />,
     "Credit Cards": <CreditCardIcon sx={iconStyles} />,
   };
@@ -216,7 +216,7 @@ export default function MiniDrawer() {
         color="transparent"
         elevation={0}
         sx={{
-          background: "linear-gradient(90deg, #007bff 0%, #00c6ff 100%)",
+          background: "linear-gradient(90deg,rgb(60, 73, 255) 0%,rgb(0, 132, 255) 100%) !important",
           boxShadow: "0 4px 24px rgba(0,123,255,0.10)",
           borderBottom: "2px solid #e3eafc",
         }}
@@ -231,12 +231,12 @@ export default function MiniDrawer() {
               sx={{
                 marginRight: 5,
                 ...(open && { display: "none" }),
-                background: "#fff",
+                background: " #fff",
                 borderRadius: 2,
                 boxShadow: "0 2px 8px rgba(0,123,255,0.10)",
               }}
             >
-              <MenuIcon sx={{ color: "#007bff" }} />
+              <MenuIcon sx={{ color: " #007bff" }} />
             </IconButton>
           </Box>
           <Box sx={{ flexGrow: 1 }}>
@@ -247,7 +247,7 @@ export default function MiniDrawer() {
               sx={{
                 fontWeight: 700,
                 letterSpacing: 1.5,
-                color: "#fff",
+                color: " #fff",
                 textShadow: "0 2px 8px rgba(0,123,255,0.10)",
               }}
             >
@@ -260,13 +260,13 @@ export default function MiniDrawer() {
                 onClick={handleOpenUserMenu}
                 sx={{
                   p: 0,
-                  background: "#fff",
+                  background: " #fff",
                   borderRadius: 2,
                   boxShadow: "0 2px 8px rgba(0,123,255,0.10)",
                   ml: 2,
                 }}
               >
-                <AccountCircle sx={{ color: "#007bff", fontSize: 36 }} />
+                <AccountCircle sx={{ color: " #007bff", fontSize: 36 }} />
               </IconButton>
             </Tooltip>
             <Menu
@@ -299,10 +299,10 @@ export default function MiniDrawer() {
                   onClick={(setting) => handleActionOnUpperMenu(setting)}
                   sx={{
                     fontWeight: 700,
-                    color: "#007bff",
+                    color: " #007bff",
                     "&:hover": {
-                      background: "linear-gradient(90deg, #007bff 0%, #00c6ff 100%)",
-                      color: "#fff",
+                      background: "linear-gradient(90deg,rgb(255, 145, 0) 0%,rgb(255, 212, 119) 100%)",
+                      color: " #fff",
                     }
                   }}
                 >
@@ -327,9 +327,9 @@ export default function MiniDrawer() {
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "rtl" ? (
-              <ChevronRightIcon sx={{ color: "#007bff" }} />
+              <ChevronRightIcon sx={{ color: " #007bff" }} />
             ) : (
-              <ChevronLeftIcon sx={{ color: "#007bff" }} />
+              <ChevronLeftIcon sx={{ color: " #007bff" }} />
             )}
           </IconButton>
         </DrawerHeader>
@@ -343,16 +343,16 @@ export default function MiniDrawer() {
                   justifyContent: open ? "initial" : "center",
                   px: 2.5,
                   borderRadius: 3,
-                  margin: "6px 0",
+                  margin: "8px 4px",
                   background: mainMenuControl === text
-                    ? "linear-gradient(90deg, #007bff 0%, #00c6ff 100%)"
+                    ? "linear-gradient(90deg,rgb(60, 73, 255) 0%,rgb(100, 180, 255) 100%)"
                     : "transparent",
-                  color: mainMenuControl === text ? "#fff" : "#007bff",
+                  color: mainMenuControl === text ? " #ffffff" : " #007bff",
                   fontWeight: mainMenuControl === text ? 900 : 700,
                   boxShadow: mainMenuControl === text ? "0 2px 8px rgba(0,123,255,0.10)" : "none",
                   "&:hover": {
-                    background: "linear-gradient(90deg, #007bff 0%, #00c6ff 100%)",
-                    color: "#fff",
+                    background: "linear-gradient(90deg,rgb(255, 145, 0) 0%,rgb(255, 212, 119) 100%)",
+                    color: " #fff",
                   }
                 }}
                 onClick={() => handleMainMenuControl(text)}
@@ -362,7 +362,7 @@ export default function MiniDrawer() {
                     minWidth: 0,
                     mr: open ? 3 : "auto",
                     justifyContent: "center",
-                    color: mainMenuControl === text ? "#fff" : "#007bff",
+                    color: mainMenuControl === text ? " #fff" : " #007bff",
                   }}
                 >
                   {loadIcon(text)}
@@ -383,20 +383,19 @@ export default function MiniDrawer() {
             <ListItem key={text} disablePadding sx={{ display: "block" }}>
               <ListItemButton
                 sx={{
-                  minHeight: 48,
                   justifyContent: open ? "initial" : "center",
                   px: 2.5,
                   borderRadius: 3,
-                  margin: "6px 0",
+                  margin: "8px 4px",
                   background: mainMenuControl === text
-                    ? "linear-gradient(90deg, #007bff 0%, #00c6ff 100%)"
+                    ? "linear-gradient(90deg,rgb(60, 73, 255) 0%,rgb(100, 180, 255) 100%)"
                     : "transparent",
-                  color: mainMenuControl === text ? "#fff" : "#007bff",
+                  color: mainMenuControl === text ? " #fff" : " #007bff",
                   fontWeight: mainMenuControl === text ? 900 : 700,
                   boxShadow: mainMenuControl === text ? "0 2px 8px rgba(0,123,255,0.10)" : "none",
                   "&:hover": {
-                    background: "linear-gradient(90deg, #007bff 0%, #00c6ff 100%)",
-                    color: "#fff",
+                    background: "linear-gradient(90deg,rgb(255, 145, 0) 0%,rgb(255, 212, 119) 100%)",
+                    color: " #fff",
                   }
                 }}
                 onClick={() => handleMainMenuControl(text)}
@@ -406,7 +405,7 @@ export default function MiniDrawer() {
                     minWidth: 0,
                     mr: open ? 3 : "auto",
                     justifyContent: "center",
-                    color: mainMenuControl === text ? "#fff" : "#007bff",
+                    color: mainMenuControl === text ? " #fff" : " #007bff",
                   }}
                 >
                   {loadIcon(text)}

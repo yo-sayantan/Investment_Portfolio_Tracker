@@ -5,6 +5,7 @@ import AddIcon from '@mui/icons-material/Add';
 import UploadIcon from '@mui/icons-material/Upload';
 import SearchIcon from '@mui/icons-material/Search';
 import RefreshIcon from '@mui/icons-material/Refresh';
+import InsightsIcon from '@mui/icons-material/Insights';
 import AddItemDialog from './AddItemDialog';
 import UploadFormDialog from './UploadFormDialog';
 import PieChartIcon from "@mui/icons-material/PieChart";
@@ -13,18 +14,17 @@ import ProfileAnalysis from './ProfileAnalysis';
 const useStyles = makeStyles({
     root: {
         flexGrow: 1,
-        marginBottom: '16px',
+        margin: '6px',
     },
     appBar: {
         boxShadow: 'none !important',
-        marginTop: '16px',
         backgroundColor: 'transparent !important',
-        color: '#333 !important',
+        color: ' #333333 !important',
     },
     searchPaper: {
         display: 'flex',
         alignItems: 'center',
-        padding: '8px 24px',
+        padding: '8px 15px',
         borderRadius: 40,
         background: 'linear-gradient(90deg, #e3f0ff 0%, #f8fafc 100%)',
         boxShadow: '0 4px 16px rgba(0,123,255,0.08)',
@@ -34,7 +34,7 @@ const useStyles = makeStyles({
             boxShadow: '0 8px 32px rgba(0,123,255,0.15)',
             borderColor: '#0056b3',
         },
-        minHeight: 60,
+        minHeight: 50,
     },
     searchInput: {
         flex: 1,
@@ -43,36 +43,57 @@ const useStyles = makeStyles({
         fontSize: 22,
         padding: '12px 0',
         outline: 'none',
-        color: '#222',
-        fontWeight: 600,
+        color: ' #222222',
+        fontWeight: 400,
     },
     buttonGroup: {
         display: 'flex',
         justifyContent: 'flex-end',
-        gap: '18px',
+        gap: '24px',
     },
     button: {
         background: 'linear-gradient(90deg, #007bff 0%, #00c6ff 100%) !important',
-        color: '#fff !important',
+        color: ' #ffffff !important',
         border: 'none !important',
-        borderRadius: 32,
-        minWidth: 56,
-        minHeight: 56,
-        fontSize: 24,
-        fontWeight: 700,
+        borderRadius: 8,
+        // minWidth: 120,
+        // minHeight: 72,
+        // fontSize: 156,
         boxShadow: '0 2px 8px rgba(0,123,255,0.12)',
         transition: 'background 0.2s, color 0.2s, box-shadow 0.2s',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 0,
         '&:hover': {
-            background: 'linear-gradient(90deg, #0056b3 0%, #00aaff 100%) !important',
-            color: '#fff !important',
+            background: 'linear-gradient(90deg,rgb(255, 145, 0) 0%,rgb(255, 212, 119) 100%) !important',
+            color: ' #ffffff !important',
             boxShadow: '0 4px 16px rgba(0,123,255,0.18)',
         },
+    },
+    icon: {
+        fontSize: '2.5rem !important',
+        borderRadius: 2,
+        color: 'rgb(255, 255, 255)',
+        boxShadow: '0 2px 8px rgba(0,123,255,0.10)',
+        padding: 0,
+        margin: 8,
+        transition: 'background 0.2s, color 0.2s',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
     },
-    icon: {
-        fontSize: 52,
+    iconActive: {
+        fontSize: '3rem !important',
+        borderRadius: 2,
+        background: ' #007bff',
+        color: ' #ffffff',
+        boxShadow: '0 4px 16px rgba(0,123,255,0.18)',
+        padding: 0,
+        margin: 0,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
     }
 });
 
@@ -120,7 +141,7 @@ const FundSearchBar = (props) => {
                     <Grid container alignItems="center" spacing={2}>
                         <Grid item xs={12} md={7}>
                             <Paper elevation={0} className={classes.searchPaper}>
-                                <SearchIcon color="primary" style={{ marginRight: 16, fontSize: 32, opacity: 0.8 }} />
+                                <SearchIcon className={classes.icon} style={{ marginRight: 16, opacity: 0.8 }} />
                                 <input
                                     className={classes.searchInput}
                                     type="text"
@@ -144,7 +165,7 @@ const FundSearchBar = (props) => {
                                 </Tooltip>
                                 <Tooltip title="Profile Analysis">
                                     <Button variant="outlined" className={classes.button} onClick={handleAnalysisClick}>
-                                        <PieChartIcon className={classes.icon} />
+                                        <InsightsIcon className={classes.icon} />
                                     </Button>
                                 </Tooltip>
                                 <Tooltip title="Add">
