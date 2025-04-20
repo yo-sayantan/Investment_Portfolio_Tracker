@@ -53,7 +53,9 @@ public class OrderService {
 			currentAmount += (fund.getCurrentAmount() != null) ? fund.getCurrentAmount() : 0.0;
 			investedAmount += (fund.getInvestedAmount() != null) ? fund.getInvestedAmount() : 0.0;
 			dayChange += (fund.getDay1ChangeAmount() != null) ? fund.getDay1ChangeAmount() : 0.0;
-			previousDayAmount = previousDayAmount + currentAmount - dayChange;
+			previousDayAmount = previousDayAmount
+					+ ((fund.getCurrentAmount() != null) ? fund.getCurrentAmount() : 0.0)
+					- ((fund.getDay1ChangeAmount() != null) ? fund.getDay1ChangeAmount() : 0.0);
 		}
 
 		Double returnAmount = currentAmount - investedAmount;
