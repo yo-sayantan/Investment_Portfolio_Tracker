@@ -15,12 +15,11 @@ public class EmailService implements SMSService {
     @Autowired
     private JavaMailSender mailSender;
 
-    @Override
-    public void sendSMS(String toEmail, String subject, String body) throws Exception {
+    public void sendEmail(String toEmail, String subject, String body) throws Exception {
         log.info("Sending email to: " + toEmail);
         try {
             SimpleMailMessage message = new SimpleMailMessage();
-            message.setFrom("fromemail@gmail.com");
+            message.setFrom("ricketycadet.sb@gmail.com");
             message.setTo(toEmail);
             message.setText(body);
             message.setSubject(subject);
@@ -29,5 +28,10 @@ public class EmailService implements SMSService {
             log.error("ERROR in mail sent method: ", e);
             throw new Exception("Error while sending email");
         }
+    }
+
+    @Override
+    public void sendSMS(String toEmail, String subject, String body) throws Exception {
+        throw new UnsupportedOperationException("Unimplemented method 'sendSMS'");
     }
 }

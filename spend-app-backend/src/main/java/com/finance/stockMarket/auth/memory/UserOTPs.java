@@ -26,7 +26,7 @@ public class UserOTPs {
 
     public void addOtp(String userId, OTPDetails token) throws Exception {
         if (otpMap.containsKey(userId) && otpMap.get(userId).getExpirationTime() > System.currentTimeMillis()) {
-            throw new Exception("user already exists");
+            throw new Exception("User already exists");
         }
         otpMap.put(userId, token);
     }

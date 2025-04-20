@@ -60,6 +60,7 @@ public class AuthenticationService {
 				.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
 		UserDetails user = userDetailsService.loadUserByUsername(request.getUsername());
 		var jwtToken = jwtService.generateToken(user);
+
 		saveUserToken(user, jwtToken);
 		removeUserPassword(user);
 		return new AuthenticationResponse(jwtToken, user);
@@ -85,6 +86,7 @@ public class AuthenticationService {
 		if (Tokens.tokenMap.get(token) == null) {
 			throw new Exception("token not found");
 		}
+
 		String userName = jwtService.extractUsername(token);
 		UserDetails user = userDetailsService.loadUserByUsername(userName);
 		removeUserPassword(user);
@@ -108,6 +110,7 @@ public class AuthenticationService {
 		user.setIsActive(false);
 		user = userRepo.save(user);
 		MapRoleUser mapRoleUser = saveMapRoleUser(user);
+
 		if (!sendOTPEmailandSave(request.getEmailId(), request.getUsername(), request.getFullName())) {
 			removeUserAndRoleMapping(user, mapRoleUser);
 			return new SignUpResponseDTO("Failed to send OTP. Please try again.", false);
@@ -128,10 +131,12 @@ public class AuthenticationService {
 		try {
 			log.info("sending otp for " + username);
 			OTPDetails otp = new OTPDetails(generateOTP(), OTP_EXPIRATION_TIME_MS);
-			UserOTPs.getInstance().addOtp(username, otp); // add otp
+			UserOTPs.getInstance().addOtp(username, otp);
 			String subject = fullName + "! Here is your OTP";
-			String body = otp.getOtp() + " is your OTP for Sugar Spend. Please do not share to anyone.\nArigato";
-			emailService.sendSMS(emailId, subject, body);
+			String body = otp.getOtp()
+					+ " is your OTP for Portfolio Tracker Application. Please do not share to anyone.\nSignup is valid for 5 minutes.\n\n"
+					+ "Thank you,\nPortfolio Tracker Team";
+			emailService.sendEmail(emailId, subject, body);
 		} catch (Exception e) {
 			log.error("Error while sending OTP.", e);
 			return false;
@@ -154,22 +159,22 @@ public class AuthenticationService {
 
 	public SignUpResponseDTO verifyotp(SignUpRequestDTO request) {
 		OTPDetails otp = UserOTPs.getInstance().getOtp(request.getUsername());
-		if (otp != null &&
-				(otp.getExpirationTime() > System.currentTimeMillis()
-						|| otp.getOtp().equals(request.getOtp()))) {
+
+		if (otp != null
+				&& (otp.getExpirationTime() > System.currentTimeMillis() || otp.getOtp().equals(request.getOtp()))) {
 			MFUser user = userRepo.findByUsername(request.getUsername());
 			user.setIsActive(true);
 			userRepo.save(user);
+
 			UserOTPs.getInstance().removeOtp(request.getUsername());
-			return new SignUpResponseDTO(request.getUsername(), request.getEmailId(),
-					"Signup successful please login", true);
+			return new SignUpResponseDTO(request.getUsername(), request.getEmailId(), "Signup successful please login",
+					true);
 		} else if (otp != null && otp.getExpirationTime() < System.currentTimeMillis()) {
 			UserOTPs.getInstance().removeOtp(request.getUsername());
-			return new SignUpResponseDTO(request.getUsername(), request.getEmailId(),
-					"OTP Expired", false);
+			return new SignUpResponseDTO(request.getUsername(), request.getEmailId(), "OTP Expired", false);
 		}
-		return new SignUpResponseDTO(request.getUsername(), request.getEmailId(),
-				"incorrect OTP", false);
+
+		return new SignUpResponseDTO(request.getUsername(), request.getEmailId(), "Incorrect OTP", false);
 	}
 
 }

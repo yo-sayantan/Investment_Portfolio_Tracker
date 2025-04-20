@@ -33,7 +33,6 @@ public class SaveGrowwBrokerFile extends SaveOrderService {
 	public void processFile(File file, MFUser user, String password) throws Exception {
 		try (InputStream inputStream = new FileInputStream(file);
 				Workbook workbook = new HSSFWorkbook(inputStream)) {
-			// Assuming you want to read data from the second sheet (index 1)
 			Sheet sheet = workbook.getSheetAt(1);
 
 			int skipLines = 4;

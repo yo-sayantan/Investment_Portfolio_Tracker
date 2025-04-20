@@ -8,6 +8,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.TreeMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -23,11 +27,6 @@ import com.finance.stockMarket.app.repo.OrderRepo;
 import com.finance.stockMarket.app.utils.MarketDataUtil;
 import com.finance.stockMarket.app.utils.MathUtil;
 import com.finance.stockMarket.constants.MFConstants;
-
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
 
 @Service
 public class OrderService {
@@ -49,18 +48,18 @@ public class OrderService {
 		Double currentAmount = 0.0;
 		Double investedAmount = 0.0;
 		Double dayChange = 0.0;
-		Double preveousDayAmount = 0.0;
+		Double previousDayAmount = 0.0;
 		for (FundData fund : fundData) {
-			currentAmount += fund.getCurrentAmount();
-			investedAmount += fund.getInvestedAmount();
-			dayChange += fund.getDay1ChangeAmount();
-			preveousDayAmount = preveousDayAmount + fund.getCurrentAmount() - fund.getDay1ChangeAmount();
+			currentAmount += (fund.getCurrentAmount() != null) ? fund.getCurrentAmount() : 0.0;
+			investedAmount += (fund.getInvestedAmount() != null) ? fund.getInvestedAmount() : 0.0;
+			dayChange += (fund.getDay1ChangeAmount() != null) ? fund.getDay1ChangeAmount() : 0.0;
+			previousDayAmount = previousDayAmount + currentAmount - dayChange;
 		}
 
 		Double returnAmount = currentAmount - investedAmount;
 		Double returnPercentage = returnAmount / investedAmount * 100;
 		Double xirr = findAvgXIRR(fundData, currentAmount);
-		Double day1Return = (currentAmount - preveousDayAmount) / preveousDayAmount * 100;
+		Double day1Return = (currentAmount - previousDayAmount) / previousDayAmount * 100;
 
 		executorService.shutdown();
 		try {
@@ -94,7 +93,6 @@ public class OrderService {
 				data.setId(id++);
 				list.add(data);
 			} catch (Exception e) {
-				// Handle exceptions
 				e.printStackTrace();
 			}
 		}
