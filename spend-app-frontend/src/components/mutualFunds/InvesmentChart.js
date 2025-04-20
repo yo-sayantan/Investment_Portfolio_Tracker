@@ -17,7 +17,7 @@ const CustomTooltip = ({ active, payload }) => {
         return (
             <div
                 style={{
-                    background: ' #fff',
+                    background: ' #ffffff',
                     border: '1px solid #e0e0e0',
                     borderRadius: 8,
                     padding: 12,
@@ -67,12 +67,12 @@ const useStyles = makeStyles({
         outline: 'none',
         '&:hover': {
             background: ' #007bff',
-            color: ' #fff',
+            color: ' #ffffff',
         },
     },
     activeButton: {
         background: ' #007bff',
-        color: ' #fff',
+        color: ' #ffffff',
         borderColor: ' #007bff',
     },
 });

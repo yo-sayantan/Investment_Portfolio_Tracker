@@ -49,7 +49,7 @@ const BarChartView = (props) => {
                     <XAxis dataKey="dataKey" />
                     <YAxis />
                     <Tooltip cursor={{fill: 'rgba(255, 255, 255, 0.09)'}}/>
-                    <Bar dataKey="amount" fill="#8884d8" />
+                    <Bar dataKey="amount" fill=" #8884d8" />
                 </BarChart>
             </ResponsiveContainer>
 

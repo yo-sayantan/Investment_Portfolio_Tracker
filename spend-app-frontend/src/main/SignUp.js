@@ -48,7 +48,7 @@ const useStyles = makeStyles(() => ({
         padding: '40px 32px',
         borderRadius: 18,
         boxShadow: "0 8px 32px rgba(0,123,255,0.12)",
-        background: " #fff",
+        background: " #ffffff",
         minWidth: 350,
         maxWidth: 400,
         width: "100%",

@@ -66,7 +66,7 @@ const PieChartView = (props) => {
                         <Label
                             value={`${totalAmount}`}  // Customize the label as needed
                             position="center"
-                            fill="#ffffff"  // Customize the color of the label
+                            fill=" #ffffff"  // Customize the color of the label
                             fontSize={24}  // Customize the font size of the label
                             fontWeight="bold"
                         />

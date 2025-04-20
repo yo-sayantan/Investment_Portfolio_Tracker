@@ -35,7 +35,7 @@ const UploadFormDialog = ({ open, onClose }) => {
                 event.target.value = null;
                 toast.error('Please select a valid .pdf file.', {
                     position: toast.POSITION.TOP_RIGHT,
-                    style: { backgroundColor: 'red', color: '#fff' },
+                    style: { backgroundColor: 'red', color: ' #ffffff' },
                 });
             }
         }
@@ -58,12 +58,12 @@ const UploadFormDialog = ({ open, onClose }) => {
                     if (response.status === 200) {
                         toast.success('Successfully uploaded file.', {
                             position: toast.POSITION.TOP_RIGHT,
-                            style: { backgroundColor: 'green', color: '#fff' },
+                            style: { backgroundColor: 'green', color: ' #ffffff' },
                         });
                     } else {
                         toast.error('Internal error while uploading file', {
                             position: toast.POSITION.TOP_RIGHT,
-                            style: { backgroundColor: 'red', color: '#fff' },
+                            style: { backgroundColor: 'red', color: ' #ffffff' },
                         });
                     }
                 })
@@ -71,7 +71,7 @@ const UploadFormDialog = ({ open, onClose }) => {
                     console.error('Error uploading file:', error);
                     toast.error('Internal error while uploading file', {
                         position: toast.POSITION.TOP_RIGHT,
-                        style: { backgroundColor: 'red', color: '#fff' },
+                        style: { backgroundColor: 'red', color: ' #ffffff' },
                     });
                 })
                 .finally(() => {
@@ -106,7 +106,7 @@ const UploadFormDialog = ({ open, onClose }) => {
                 sx={{
                     fontWeight: 900,
                     fontSize: "1.7rem",
-                    color: "#007bff",
+                    color: " #007bff",
                     textAlign: "center",
                     letterSpacing: 1.2,
                     background: "linear-gradient(90deg, #e3f0ff 0%, #f8fafc 100%)",
@@ -124,7 +124,7 @@ const UploadFormDialog = ({ open, onClose }) => {
                         fullWidth
                         sx={{
                             background: "linear-gradient(90deg, #007bff 0%, #00c6ff 100%)",
-                            color: "#fff",
+                            color: " #ffffff",
                             fontWeight: 600,
                             borderRadius: 2,
                             boxShadow: "0 2px 8px rgba(0,123,255,0.12)",
@@ -150,33 +150,33 @@ const UploadFormDialog = ({ open, onClose }) => {
                         value={password}
                         onChange={(event) => setPassword(event.target.value)}
                         sx={{
-                            background: "#fff",
+                            background: " #ffffff",
                             borderRadius: 2,
                             '& .MuiOutlinedInput-root': {
                                 borderRadius: 2,
                                 '& fieldset': {
-                                    borderColor: '#bdbdbd',
+                                    borderColor: ' #bdbdbd',
                                 },
                                 '&:hover fieldset': {
-                                    borderColor: '#007bff',
+                                    borderColor: ' #007bff',
                                     borderWidth: 2,
                                 },
                                 '&.Mui-focused fieldset': {
-                                    borderColor: '#007bff',
+                                    borderColor: ' #007bff',
                                     borderWidth: 2,
                                 },
                             }
                         }}
                         InputLabelProps={{
                             style: {
-                                background: "#fff",
+                                background: " #ffffff",
                                 padding: "0 6px",
                                 fontWeight: 500,
                                 fontSize: 18
                             }
                         }}
                         InputProps={{
-                            style: { fontWeight: 500, fontSize: 18, borderRadius: 12, background: "#fff" },
+                            style: { fontWeight: 500, fontSize: 18, borderRadius: 12, background: " #ffffff" },
                             endAdornment: (
                                 <InputAdornment position="end">
                                     <IconButton

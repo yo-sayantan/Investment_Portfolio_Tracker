@@ -297,7 +297,7 @@ const ManageMutualFund = () => {
                         onClick={handleRefresh}
                         sx={{
                             background: "linear-gradient(90deg, #007bff 0%, #00c6ff 100%)",
-                            color: "#fff",
+                            color: " #ffffff",
                             ml: 2,
                             '&:hover': {
                                 background: 'linear-gradient(90deg,rgb(255, 145, 0) 0%,rgb(255, 212, 119) 100%) !important',
@@ -347,14 +347,14 @@ const ManageMutualFund = () => {
                             fontSize: 18,
                             fontWeight: 500,
                             '& .MuiOutlinedInput-notchedOutline': {
-                                borderColor: '#bdbdbd',
+                                borderColor: ' #bdbdbd',
                             },
                             '&:hover .MuiOutlinedInput-notchedOutline': {
-                                borderColor: '#007bff',
+                                borderColor: ' #007bff',
                                 borderWidth: 2,
                             },
                             '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                borderColor: '#007bff',
+                                borderColor: ' #007bff',
                                 borderWidth: 2,
                             },
                         }}
@@ -384,7 +384,7 @@ const ManageMutualFund = () => {
                         },
                         '& .MuiDataGrid-toolbarContainer': {
                             background: " #f8fafc",
-                            color: "#007bff", // Make toolbar controls more visible
+                            color: " #007bff", // Make toolbar controls more visible
                             fontWeight: 700,
                             fontSize: 16,
                             minHeight: 48,

@@ -18,13 +18,13 @@ const useStyles = makeStyles(() => ({
   },
   spinner: {
     marginBottom: 24,
-    color: '#007bff !important',
+    color: ' #007bff !important',
     animation: '$spin 1.2s linear infinite',
     width: 70,
     height: 70,
   },
   loadingText: {
-    color: '#007bff',
+    color: ' #007bff',
     fontWeight: 700,
     fontSize: '1.5rem',
     letterSpacing: 1.2,

@@ -13,7 +13,7 @@ const COLORS = [
 const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
         return (
-            <Paper elevation={3} sx={{ p: 2, background: " #fff" }}>
+            <Paper elevation={3} sx={{ p: 2, background: " #ffffff" }}>
                 <Typography variant="subtitle2" color="text.primary">
                     {payload[0].name}
                 </Typography>

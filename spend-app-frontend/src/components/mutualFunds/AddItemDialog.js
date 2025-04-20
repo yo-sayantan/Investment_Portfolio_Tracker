@@ -67,13 +67,13 @@ const AddItemDialog = (props) => {
         axios.post(COMMON_URL + "app/save-order-detail", data).then((res) => {
             toast.success(res.data, {
                 position: toast.POSITION.TOP_RIGHT,
-                style: { backgroundColor: 'green', color: ' #fff' },
+                style: { backgroundColor: 'green', color: ' #ffffff' },
             });
             props.updateData();
         }).catch((error) => {
             toast.error(error.response.data, {
                 position: toast.POSITION.TOP_RIGHT,
-                style: { backgroundColor: 'red', color: ' #fff' },
+                style: { backgroundColor: 'red', color: ' #ffffff' },
             });
             props.setAddLoader(false);
         }).finally(() => {
@@ -143,7 +143,7 @@ const AddItemDialog = (props) => {
                                         <OutlinedInput
                                             label="Mutual Fund"
                                             sx={{
-                                                background: " #fff",
+                                                background: " #ffffff",
                                                 borderRadius: 2,
                                                 '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
                                                     borderColor: ' #007bff',
@@ -158,7 +158,7 @@ const AddItemDialog = (props) => {
                                     }
                                     fullWidth
                                     sx={{
-                                        background: " #fff",
+                                        background: " #ffffff",
                                         borderRadius: 2,
                                         '& .MuiOutlinedInput-notchedOutline': {
                                             borderColor: ' #bdbdbd',
@@ -199,16 +199,16 @@ const AddItemDialog = (props) => {
                                         }
                                     }}
                                 >
-                                    Invested Amount
+                                    Amount
                                 </InputLabel>
                                 <OutlinedInput
-                                    label="Invested Amount"
+                                    label="Amount"
                                     type="number"
                                     step="0.01"
                                     value={investedAmount}
                                     onChange={(e) => setInvestedAmount(e.target.value)}
                                     sx={{
-                                        background: " #fff",
+                                        background: " #ffffff",
                                         borderRadius: 2,
                                         '& .MuiOutlinedInput-notchedOutline': {
                                             borderColor: ' #bdbdbd',
@@ -252,7 +252,7 @@ const AddItemDialog = (props) => {
                                         <OutlinedInput
                                             label="Side (Buy/Sell)"
                                             sx={{
-                                                background: " #fff",
+                                                background: " #ffffff",
                                                 borderRadius: 2,
                                                 '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
                                                     borderColor: ' #007bff',
@@ -267,7 +267,7 @@ const AddItemDialog = (props) => {
                                     }
                                     fullWidth
                                     sx={{
-                                        background: " #fff",
+                                        background: " #ffffff",
                                         borderRadius: 2,
                                         '& .MuiOutlinedInput-notchedOutline': {
                                             borderColor: ' #bdbdbd',
@@ -298,7 +298,7 @@ const AddItemDialog = (props) => {
                                             fullWidth: true,
                                             variant: "outlined",
                                             sx: {
-                                                background: " #fff",
+                                                background: " #ffffff",
                                                 borderRadius: 2,
                                                 '& .MuiOutlinedInput-notchedOutline': {
                                                     borderColor: ' #bdbdbd',
