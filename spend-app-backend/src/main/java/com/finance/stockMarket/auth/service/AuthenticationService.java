@@ -116,7 +116,7 @@ public class AuthenticationService {
 			return new SignUpResponseDTO("Failed to send OTP. Please try again.", false);
 		}
 		return new SignUpResponseDTO(request.getUsername(), request.getEmailId(),
-				"OTP is sent to the registered email ID", true);
+				"OTP is sent to the registered Email ID", true);
 	}
 
 	private MapRoleUser saveMapRoleUser(MFUser user) {
@@ -129,10 +129,9 @@ public class AuthenticationService {
 
 	private boolean sendOTPEmailandSave(String emailId, String username, String fullName) {
 		try {
-			log.info("sending otp for " + username);
 			OTPDetails otp = new OTPDetails(generateOTP(), OTP_EXPIRATION_TIME_MS);
 			UserOTPs.getInstance().addOtp(username, otp);
-			String subject = fullName + "! Here is your OTP";
+			String subject = fullName + "! Here is your OTP - " + otp.getOtp();
 			String body = otp.getOtp()
 					+ " is your OTP for Portfolio Tracker Application. Please do not share to anyone.\nSignup is valid for 5 minutes.\n\n"
 					+ "Thank you,\nPortfolio Tracker Team";

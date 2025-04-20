@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AppBar, Toolbar, Button, InputAdornment, TextField, Grid, Tooltip, Paper } from '@mui/material';
+import { AppBar, Toolbar, Button, Grid, Tooltip, Paper } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import AddIcon from '@mui/icons-material/Add';
 import UploadIcon from '@mui/icons-material/Upload';
@@ -55,9 +55,9 @@ const useStyles = makeStyles({
         background: 'linear-gradient(90deg, #007bff 0%, #00c6ff 100%) !important',
         color: ' #ffffff !important',
         border: 'none !important',
-        borderRadius: 8,
+        borderRadius: '50% !important',
         boxShadow: '0 2px 8px rgba(0,123,255,0.12)',
-        transition: 'background 0.2s, color 0.2s, box-shadow 0.2s',
+        transition: 'all 0.3s ease',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -65,11 +65,12 @@ const useStyles = makeStyles({
         minWidth: 56,
         minHeight: 56,
         width: 56,
-        height: 56,
+        height: 64,
         '&:hover': {
             background: 'linear-gradient(90deg,rgb(255, 145, 0) 0%,rgb(255, 212, 119) 100%) !important',
             color: ' #ffffff !important',
             boxShadow: '0 4px 16px rgba(0,123,255,0.18)',
+            transform: 'scale(1.05)',
         },
     },
     icon: {
