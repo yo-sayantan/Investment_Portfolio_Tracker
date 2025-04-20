@@ -52,10 +52,9 @@ public class CamsKFinTechPDFPerserService extends SaveOrderService {
 
 	private CamsKFinTechDto extractText(String text) {
 		CamsKFinTechDto dto = new CamsKFinTechDto();
-
 		String[] lines = text.split("\n");
+		int lineNumber = 0;
 
-		// summary
 		String emailLine = "Email Id:";
 		String emailRegex = "\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}\\b";
 		String phoneLine = "Mobile:";
@@ -69,8 +68,6 @@ public class CamsKFinTechPDFPerserService extends SaveOrderService {
 
 		List<String> summary = new ArrayList<>();
 		Map<String, List<String>> details = new HashMap<>();
-
-		int lineNumber = 0;
 
 		while (lineNumber < lines.length) {
 			if (dto.getEmailId() == null && lines[lineNumber].startsWith(emailLine)) {
@@ -129,9 +126,9 @@ public class CamsKFinTechPDFPerserService extends SaveOrderService {
 
 	private void validateAndSaveIntoDB(CamsKFinTechDto camsKFinDto, MFUser user) throws Exception {
 		if (!camsKFinDto.getEmailId().equals(user.getEmail())
-				&& !camsKFinDto.getPhoneNumber().equals(user.getPhonenumber())) {
-			throw new Exception("The pdf data is not matched with database");
-		}
+		// && !camsKFinDto.getPhoneNumber().equals(user.getPhonenumber())) {
+		// throw new Exception("The pdf data is not matched with database");
+		// }
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
 
@@ -144,6 +141,7 @@ public class CamsKFinTechPDFPerserService extends SaveOrderService {
 				mf.setSchemeName(extractedFundName);
 				ord.setMutualFund(mf);
 				ord.setUser(user);
+
 				if (value.toLowerCase().contains("purchase") || value.toLowerCase().contains("investment")) {
 					ord.setSide(MFConstants.BUY);
 					String[] parts = value.split("\\s+");
@@ -159,8 +157,6 @@ public class CamsKFinTechPDFPerserService extends SaveOrderService {
 							parts[parts.length - 4].replaceAll("\\(", "").replaceAll("\\)", "").replaceAll(",", "")));
 					ord.setUnits(Double.parseDouble(
 							parts[parts.length - 3].replaceAll("\\(", "").replaceAll("\\)", "").replaceAll(",", "")));
-					ord.setNav(Double.parseDouble(
-							parts[parts.length - 2].replaceAll("\\(", "").replaceAll("\\)", "").replaceAll(",", "")));
 				} else {
 					continue;
 				}

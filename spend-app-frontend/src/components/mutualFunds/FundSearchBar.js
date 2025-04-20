@@ -48,7 +48,7 @@ const useStyles = makeStyles({
     buttonGroup: {
         display: 'flex',
         justifyContent: 'flex-end',
-        gap: '24px',
+        gap: '18px',
     },
     button: {
         background: 'linear-gradient(90deg, #007bff 0%, #00c6ff 100%) !important',
@@ -166,11 +166,11 @@ const FundSearchBar = (props) => {
                                         <AddIcon className={classes.icon} />
                                     </Button>
                                 </Tooltip>
-                                {/* <Tooltip title="Bulk Upload">
+                                <Tooltip title="Bulk Upload">
                                     <Button variant="outlined" onClick={handleUploadClick} className={classes.button}>
                                         <UploadIcon className={classes.icon} />
                                     </Button>
-                                </Tooltip> */}
+                                </Tooltip>
                             </div>
                         </Grid>
                     </Grid>
