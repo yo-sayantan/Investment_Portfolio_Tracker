@@ -15,7 +15,7 @@ const useStyles = makeStyles(() => ({
     background: 'linear-gradient(135deg, #f8fafc 60%, #e3f0ff 100%)',
     borderRadius: 24,
     boxShadow: '0 8px 32px rgba(0,123,255,0.10), 0 1.5px 8px rgba(0,0,0,0.04)',
-    padding: '32px 3vw 28px 3vw', // Responsive horizontal padding
+    padding: '22px 3vw 10px 3vw',
     margin: 'auto',
     transition: 'box-shadow 0.2s',
     border: '1.5px solid #e3eafc',
@@ -29,6 +29,7 @@ const useStyles = makeStyles(() => ({
     justifyContent: 'space-between',
     width: '100%',
     gap: 6,
+    paddingTop: 13,
   },
   dataPoint: {
     flex: 1,
@@ -37,12 +38,11 @@ const useStyles = makeStyles(() => ({
     alignItems: 'center',
     justifyContent: 'center',
     minWidth: 0,
-    padding: '0 2px',
   },
   label: {
     fontSize: '1.3rem',
     fontWeight: 900,
-    color: ' #222',
+    color: ' #222222',
     letterSpacing: 0.2,
     marginTop: 8,
     opacity: 0.85,
@@ -55,7 +55,7 @@ const useStyles = makeStyles(() => ({
     marginBottom: 0,
     textShadow: '0 1px 4px rgba(0,123,255,0.06)',
     wordBreak: 'break-word',
-    color: ' #222',
+    color: ' #222222',
     textAlign: 'center',
   },
 }));
@@ -80,7 +80,7 @@ const Nifty50Paper = (props) => {
             <Typography fontWeight="bold" fontSize="50px" className={classes.value} style={{ color }}>
                 {xirrValue}
             </Typography>
-            <Typography fontSize="25px" className={classes.label}>XIRR</Typography>
+            <Typography fontSize="22px" className={classes.label}>XIRR</Typography>
         </div>
       </Box>
     </Paper>

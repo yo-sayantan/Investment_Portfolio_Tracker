@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { LineChart, Line, YAxis, XAxis, Tooltip, Legend, ResponsiveContainer, ReferenceLine, CartesianGrid } from 'recharts';
 import { makeStyles } from '@mui/styles';
+import CircularProgress from '@mui/material/CircularProgress';
+import Typography from '@mui/material/Typography';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
 import { COMMON_URL } from '../../constants/URL';
@@ -39,19 +41,19 @@ const useStyles = makeStyles({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        width: '98%', // Wider chart
-        height: '60vh', // Slightly less tall for a modern look
-        background: ' #f8f9fa',
+        width: '98%',
+        height: '60vh',
+        background: "linear-gradient(90deg, #e3f0ff 0%, #f8fafc 100%)",
         borderRadius: 16,
         boxShadow: '0 2px 16px rgba(0,0,0,0.06)',
-        padding: 6, // Narrower padding
-        marginTop: 10, // Less margin at top
+        padding: 6,
+        marginTop: 10,
     },
     chartOptions: {
         display: 'flex',
         justifyContent: 'center',
         gap: '30px',
-        margin: '80px', // Narrower margin
+        margin: '80px',
     },
     button: {
         borderRadius: 20,
@@ -75,6 +77,32 @@ const useStyles = makeStyles({
         color: ' #ffffff',
         borderColor: ' #007bff',
     },
+    loadingContainer: {
+        minHeight: '60vh',
+        width: '80%',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    spinner: {
+        marginBottom: 24,
+        color: '#007bff !important',
+        animation: '$spin 1.2s linear infinite',
+        width: 70,
+        height: 70,
+    },
+    loadingText: {
+        color: '#007bff',
+        fontWeight: 700,
+        fontSize: '1.5rem',
+        letterSpacing: 1.2,
+        textShadow: '0 2px 8px rgba(0,123,255,0.10)',
+        margin: 0,
+    },
+    '@keyframes spin': {
+        '100%': { transform: 'rotate(360deg)' }
+    }
 });
 
 const InvestmentChart = () => {
@@ -82,9 +110,11 @@ const InvestmentChart = () => {
     const [cookies] = useCookies(['access_token']);
     const [data, setData] = useState([]);
     const classes = useStyles();
+    const [loading, setLoading] = useState(true);
 
     const fetchData = async () => {
         try {
+            setLoading(true);
             axios.defaults.headers.common['Authorization'] = cookies['access_token'];
             const res = await axios.get(COMMON_URL + "app/get-line-chart");
             if (res.status === 200) {
@@ -92,6 +122,8 @@ const InvestmentChart = () => {
             }
         } catch (error) {
             console.error('Error calling one or more APIs', error);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -110,61 +142,70 @@ const InvestmentChart = () => {
 
     return (
         <div className={classes.chartContainer}>
-            <div style={{ width: '100%', height: '180%' }}>
-                <ResponsiveContainer width="100%" height={700}>
-                    <LineChart data={filteredData} margin={{ top: 10, right: 10, left: 0, bottom: 10 }}>
-                        <CartesianGrid strokeDasharray="3 3" stroke=" #e0e0e0" />
-                        <XAxis
-                            dataKey="date"
-                            tickFormatter={formatDate}
-                            minTickGap={30}
-                            tick={{ fontSize: 13, fill: ' #888' }}
-                        />
-                        <YAxis
-                            tick={{ fontSize: 13, fill: ' #888' }}
-                            width={60}
-                            tickCount={10}
-                        />
-                        <Tooltip content={<CustomTooltip />} />
-                        <Legend
-                            verticalAlign="top"
-                            align="right"
-                            iconType="circle"
-                            wrapperStyle={{ paddingBottom: 8 }}
-                        />
-                        <Line
-                            type="monotone"
-                            dataKey="investedAmount"
-                            stroke=" #8884d8"
-                            strokeWidth={3}
-                            dot={false}
-                            activeDot={{ r: 6 }}
-                            name="Invested Amount"
-                        />
-                        <Line
-                            type="monotone"
-                            dataKey="currentAmount"
-                            stroke=" #82ca9d"
-                            strokeWidth={3}
-                            dot={false}
-                            activeDot={{ r: 6 }}
-                            name="Current Amount"
-                        />
-                        <ReferenceLine y={0} stroke=" #aaaaaa" strokeWidth={1} />
-                    </LineChart>
-                </ResponsiveContainer>
-            </div>
-            <div className={classes.chartOptions}>
-                {['1M', '6M', '1Y', 'All'].map((label) => (
-                    <button
-                        key={label}
-                        className={`${classes.button} ${timeframe === label ? classes.activeButton : ''}`}
-                        onClick={() => setTimeframe(label)}
-                    >
-                        {label}
-                    </button>
-                ))}
-            </div>
+            {loading ? (
+                <div className={classes.loadingContainer}>
+                    <CircularProgress className={classes.spinner} thickness={4.5} />
+                    <Typography className={classes.loadingText}>Loading...</Typography>
+                </div>
+            ) : (
+                <>
+                    <div style={{ width: '100%', height: '180%' }}>
+                        <ResponsiveContainer width="100%" height={700}>
+                            <LineChart data={filteredData} margin={{ top: 10, right: 10, left: 0, bottom: 10 }}>
+                                <CartesianGrid strokeDasharray="3 3" stroke=" #e0e0e0" />
+                                <XAxis
+                                    dataKey="date"
+                                    tickFormatter={formatDate}
+                                    minTickGap={30}
+                                    tick={{ fontSize: 13, fill: ' #888' }}
+                                />
+                                <YAxis
+                                    tick={{ fontSize: 13, fill: ' #888' }}
+                                    width={60}
+                                    tickCount={10}
+                                />
+                                <Tooltip content={<CustomTooltip />} />
+                                <Legend
+                                    verticalAlign="top"
+                                    align="right"
+                                    iconType="circle"
+                                    wrapperStyle={{ paddingBottom: 8 }}
+                                />
+                                <Line
+                                    type="monotone"
+                                    dataKey="investedAmount"
+                                    stroke=" #8884d8"
+                                    strokeWidth={3}
+                                    dot={false}
+                                    activeDot={{ r: 6 }}
+                                    name="Invested Amount"
+                                />
+                                <Line
+                                    type="monotone"
+                                    dataKey="currentAmount"
+                                    stroke=" #82ca9d"
+                                    strokeWidth={3}
+                                    dot={false}
+                                    activeDot={{ r: 6 }}
+                                    name="Current Amount"
+                                />
+                                <ReferenceLine y={0} stroke=" #aaaaaa" strokeWidth={1} />
+                            </LineChart>
+                        </ResponsiveContainer>
+                    </div>
+                    <div className={classes.chartOptions}>
+                        {['1M', '6M', '1Y', 'All'].map((label) => (
+                            <button
+                                key={label}
+                                className={`${classes.button} ${timeframe === label ? classes.activeButton : ''}`}
+                                onClick={() => setTimeframe(label)}
+                            >
+                                {label}
+                            </button>
+                        ))}
+                    </div>
+                </>
+            )}
         </div>
     );
 };

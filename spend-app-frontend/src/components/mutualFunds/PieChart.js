@@ -1,14 +1,35 @@
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { Paper, Box, Typography, CircularProgress } from "@mui/material";
+import { makeStyles } from "@mui/styles";
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import axios from "axios";
 import { COMMON_URL } from "../../constants/URL";
 
-// Define some colors for the pie slices
 const COLORS = [
     " #007bff", " #00c6ff", " #ff9140", " #82ca9d", " #8884d8", " #ffc658", " #e53935", " #1db954", " #ffb199", " #b71c1c"
 ];
+
+const useStyles = makeStyles(() => ({
+    spinner: {
+        marginBottom: 24,
+        color: ' #007bff !important',
+        animation: '$spin 1.2s linear infinite',
+        width: 70,
+        height: 70,
+    },
+    loadingText: {
+        color: ' #007bff',
+        fontWeight: 700,
+        fontSize: '1.5rem',
+        letterSpacing: 1.2,
+        textShadow: '0 2px 8px rgba(0,123,255,0.10)',
+        margin: 0,
+    },
+    '@keyframes spin': {
+        '100%': { transform: 'rotate(360deg)' }
+    }
+}));
 
 const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
@@ -30,6 +51,7 @@ const FundPieChart = () => {
     const [cookies] = useCookies(["access_token"]);
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
+    const classes = useStyles();
 
     const fetchData = async () => {
         try {
@@ -58,8 +80,9 @@ const FundPieChart = () => {
         <Box
             sx={{
                 width: "100%",
-                height: 1020,
+                height: 920,
                 display: "flex",
+                flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
                 background: "linear-gradient(90deg, #e3f0ff 0%, #f8fafc 100%)",
@@ -69,7 +92,10 @@ const FundPieChart = () => {
             }}
         >
             {loading ? (
-                <CircularProgress color="primary" />
+                <>
+                    <CircularProgress className={classes.spinner} thickness={4.5} />
+                    <Typography className={classes.loadingText}>Loading...</Typography>
+                </>
             ) : data.length === 0 ? (
                 <Typography color="text.secondary">No data available</Typography>
             ) : (
@@ -81,8 +107,8 @@ const FundPieChart = () => {
                             dataKey="value"
                             cx="50%"
                             cy="50%"
-                            outerRadius={440}
-                            innerRadius={220}
+                            outerRadius={380}
+                            innerRadius={200}
                             fill=" #007bff"
                             labelLine={false}
                         >

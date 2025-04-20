@@ -14,9 +14,9 @@ const useStyles = makeStyles(() => ({
         width: '100%',
         minHeight: 180,
         background: 'linear-gradient(135deg, #f8fafc 60%, #e3f0ff 100%)',
-        borderRadius: 24,
+        borderRadius: 32,
         boxShadow: '0 8px 32px rgba(0,123,255,0.10), 0 1.5px 8px rgba(0,0,0,0.04)',
-        padding: '32px 3vw 28px 3vw',
+        padding: '22px 3vw 10px 3vw',
         margin: 'auto',
         transition: 'box-shadow 0.2s',
         border: '1.5px solid #e3eafc',
@@ -30,6 +30,7 @@ const useStyles = makeStyles(() => ({
         justifyContent: 'space-between',
         width: '100%',
         gap: 6,
+        borderRadius: 32,
     },
     dataPoint: {
         flex: 1,
@@ -39,6 +40,7 @@ const useStyles = makeStyles(() => ({
         justifyContent: 'center',
         minWidth: 0,
         padding: '0 2px',
+        borderRadius: 24,
     },
     label: {
         fontSize: '1.3rem',

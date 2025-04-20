@@ -16,7 +16,7 @@ const useStyles = makeStyles(() => ({
         background: 'linear-gradient(135deg, #f8fafc 60%, #e3f0ff 100%)',
         borderRadius: 24,
         boxShadow: '0 8px 32px rgba(0,123,255,0.10), 0 1.5px 8px rgba(0,0,0,0.04)',
-        padding: '32px 3vw 28px 3vw', // Responsive horizontal padding
+        padding: '22px 3vw 10px 3vw',
         margin: 'auto',
         transition: 'box-shadow 0.2s',
         border: '1.5px solid #e3eafc',
@@ -25,18 +25,30 @@ const useStyles = makeStyles(() => ({
             borderColor: 'rgba(186, 199, 212, 0.47)',
         }
     },
+    label: {
+        fontSize: '1.3rem',
+        fontWeight: 900,
+        color: ' #222',
+        letterSpacing: 0.2,
+        marginTop: 8,
+        opacity: 0.85,
+        textAlign: 'center',
+      },
 }));
 
 const CurrentValuePaper = (props) => {
     const classes = useStyles();
+    let color = "inherit";
+    if (props.amount) {
+        color = props.amount >= 0 ? "rgb(4, 153, 56)" : "rgb(226, 42, 39)";
+    }
+
     return (
         <Paper elevation={3} className={classes.paper}>
-            <Typography variant="h6" color={props.isPositive ? "green" : "red"} fontWeight="bold" fontSize="45px">
+            <Typography fontWeight="bold" fontSize="50px" className={classes.value} style={{ color }}>
                 {RUPEE_SYMBOL + " " + props.amount}
             </Typography>
-            <Typography fontSize="20px">
-                Current Value
-            </Typography>
+            <Typography fontSize="22px" className={classes.label}>Current Value</Typography>
         </Paper>
     );
 }
