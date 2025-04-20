@@ -125,7 +125,7 @@ public class CamsKFinTechPDFPerserService extends SaveOrderService {
 	}
 
 	private void validateAndSaveIntoDB(CamsKFinTechDto camsKFinDto, MFUser user) throws Exception {
-		if (!camsKFinDto.getEmailId().equals(user.getEmail())
+		// if (!camsKFinDto.getEmailId().equals(user.getEmail())
 		// && !camsKFinDto.getPhoneNumber().equals(user.getPhonenumber())) {
 		// throw new Exception("The pdf data is not matched with database");
 		// }
