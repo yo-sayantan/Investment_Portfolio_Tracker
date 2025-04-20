@@ -284,7 +284,7 @@ const MutualFund = () => {
         <Loading />
         :
         <>
-          <Grid container spacing={3} paddingTop={6} justifyContent="center">
+          <Grid container spacing={3} paddingTop={1} justifyContent="center">
             <Grid item xs={12} md={3}>
               <CurrentValuePaper amount={currentValue} isPositive={isProfited} />
             </Grid>
@@ -297,7 +297,7 @@ const MutualFund = () => {
           </Grid>
           <Paper elevation={0} sx={{
             marginTop: 4,
-            background: "#fff",
+            background: " #ffffff",
             borderRadius: 4,
             boxShadow: "0 2px 16px rgba(0,123,255,0.08)",
             padding: { xs: 1, md: 2 }

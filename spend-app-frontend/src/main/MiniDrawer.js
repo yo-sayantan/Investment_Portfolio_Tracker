@@ -113,7 +113,7 @@ function loadIcon(data, filled = false) {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    background: " #fff",
+    background: " #ffffff",
     boxShadow: "0 2px 8px rgba(0,123,255,0.10)",
     color: " #007bff",
     fontSize: 28,
@@ -130,7 +130,7 @@ function loadIcon(data, filled = false) {
           : data === "Credit Cards"
           ? cyan[500]
           : " #007bff",
-      color: " #fff",
+      color: " #ffffff",
       boxShadow: "0 4px 16px rgba(0,123,255,0.18)",
     }),
     transition: "background 0.2s, color 0.2s",
@@ -231,7 +231,7 @@ export default function MiniDrawer() {
               sx={{
                 marginRight: 5,
                 ...(open && { display: "none" }),
-                background: " #fff",
+                background: " #ffffff",
                 borderRadius: 2,
                 boxShadow: "0 2px 8px rgba(0,123,255,0.10)",
               }}
@@ -247,7 +247,7 @@ export default function MiniDrawer() {
               sx={{
                 fontWeight: 700,
                 letterSpacing: 1.5,
-                color: " #fff",
+                color: " #ffffff",
                 textShadow: "0 2px 8px rgba(0,123,255,0.10)",
               }}
             >
@@ -260,7 +260,7 @@ export default function MiniDrawer() {
                 onClick={handleOpenUserMenu}
                 sx={{
                   p: 0,
-                  background: " #fff",
+                  background: " #ffffff",
                   borderRadius: 2,
                   boxShadow: "0 2px 8px rgba(0,123,255,0.10)",
                   ml: 2,
@@ -302,7 +302,7 @@ export default function MiniDrawer() {
                     color: " #007bff",
                     "&:hover": {
                       background: "linear-gradient(90deg,rgb(255, 145, 0) 0%,rgb(255, 212, 119) 100%)",
-                      color: " #fff",
+                      color: " #ffffff",
                     }
                   }}
                 >
@@ -352,7 +352,7 @@ export default function MiniDrawer() {
                   boxShadow: mainMenuControl === text ? "0 2px 8px rgba(0,123,255,0.10)" : "none",
                   "&:hover": {
                     background: "linear-gradient(90deg,rgb(255, 145, 0) 0%,rgb(255, 212, 119) 100%)",
-                    color: " #fff",
+                    color: " #ffffff",
                   }
                 }}
                 onClick={() => handleMainMenuControl(text)}
@@ -362,7 +362,7 @@ export default function MiniDrawer() {
                     minWidth: 0,
                     mr: open ? 3 : "auto",
                     justifyContent: "center",
-                    color: mainMenuControl === text ? " #fff" : " #007bff",
+                    color: mainMenuControl === text ? " #ffffff" : " #007bff",
                   }}
                 >
                   {loadIcon(text)}
@@ -390,12 +390,12 @@ export default function MiniDrawer() {
                   background: mainMenuControl === text
                     ? "linear-gradient(90deg,rgb(60, 73, 255) 0%,rgb(100, 180, 255) 100%)"
                     : "transparent",
-                  color: mainMenuControl === text ? " #fff" : " #007bff",
+                  color: mainMenuControl === text ? " #ffffff" : " #007bff",
                   fontWeight: mainMenuControl === text ? 900 : 700,
                   boxShadow: mainMenuControl === text ? "0 2px 8px rgba(0,123,255,0.10)" : "none",
                   "&:hover": {
                     background: "linear-gradient(90deg,rgb(255, 145, 0) 0%,rgb(255, 212, 119) 100%)",
-                    color: " #fff",
+                    color: " #ffffff",
                   }
                 }}
                 onClick={() => handleMainMenuControl(text)}
@@ -405,7 +405,7 @@ export default function MiniDrawer() {
                     minWidth: 0,
                     mr: open ? 3 : "auto",
                     justifyContent: "center",
-                    color: mainMenuControl === text ? " #fff" : " #007bff",
+                    color: mainMenuControl === text ? " #ffffff" : " #007bff",
                   }}
                 >
                   {loadIcon(text)}

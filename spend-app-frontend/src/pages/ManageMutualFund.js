@@ -4,6 +4,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import Button from "@mui/material/Button";
+import RefreshIcon from "@mui/icons-material/Refresh";
 import DialogActions from "@mui/material/DialogActions";
 import axios from "axios";
 import { COMMON_URL } from "../constants/URL";
@@ -69,11 +70,61 @@ const ManageMutualFund = () => {
     }, [search, data]);
 
     const columns = [
-        { field: "amcName", headerName: "AMC Name", flex: 1, minWidth: 120 },
-        { field: "schemeName", headerName: "Scheme Name", flex: 1.5, minWidth: 180 },
-        { field: "option", headerName: "Option", flex: 1, minWidth: 100 },
-        { field: "planType", headerName: "Plan Type", flex: 1, minWidth: 100 },
-        { field: "schemeCode", headerName: "Scheme Code", flex: 1, minWidth: 120 },
+        {
+            field: "amcName",
+            headerName: "AMC Name",
+            flex: 1,
+            minWidth: 120,
+            renderCell: (params) => (
+                <Box sx={{ whiteSpace: 'normal', wordBreak: 'break-word', lineHeight: 1.3 }}>
+                    {params.value}
+                </Box>
+            ),
+        },
+        {
+            field: "schemeName",
+            headerName: "Scheme Name",
+            flex: 1.5,
+            minWidth: 800,
+            renderCell: (params) => (
+                <Box sx={{ whiteSpace: 'normal', wordBreak: 'break-word', lineHeight: 1.3 }}>
+                    {params.value}
+                </Box>
+            ),
+        },
+        {
+            field: "option",
+            headerName: "Option",
+            flex: 1,
+            minWidth: 200,
+            renderCell: (params) => (
+                <Box sx={{ whiteSpace: 'normal', wordBreak: 'break-word', lineHeight: 1.3 }}>
+                    {params.value}
+                </Box>
+            ),
+        },
+        {
+            field: "planType",
+            headerName: "Plan Type",
+            flex: 1,
+            maxWidth: 200,
+            renderCell: (params) => (
+                <Box sx={{ whiteSpace: 'normal', wordBreak: 'break-word', lineHeight: 1.3 }}>
+                    {params.value}
+                </Box>
+            ),
+        },
+        {
+            field: "schemeCode",
+            headerName: "Scheme Code",
+            flex: 1,
+            maxWidth: 200,
+            renderCell: (params) => (
+                <Box sx={{ whiteSpace: 'normal', wordBreak: 'break-word', lineHeight: 1.3 }}>
+                    {params.value}
+                </Box>
+            ),
+        },
         // {
         //     field: "actions",
         //     headerName: "Actions",
@@ -201,19 +252,36 @@ const ManageMutualFund = () => {
         return userData && userData.authorities && userData.authorities[0].authority === "admin";
     };
 
+    const handleRefresh = async () => {
+        setIsLoading(true);
+        try {
+            axios.defaults.headers.common['Authorization'] = cookies['access_token'];
+            const dbData = await axios.get(COMMON_URL + "app/get-mutualfunds");
+            if (dbData.status === 200 && dbData.data) {
+                setData(dbData.data);
+            }
+        } catch (error) {
+            console.error('Error refreshing data', error);
+        }
+        setIsLoading(false);
+    };
+
     return (
-        <Box sx={{
-            width: "100%",
-            paddingTop: 6,
-            background: "linear-gradient(120deg, #f8fafc 80%, #e3f0ff 100%)",
-            minHeight: "100vh"
-        }}>
+        <Box 
+        // sx={{
+        //     width: "100%",
+        //     padding: 2,
+        //     background: "linear-gradient(120deg, #f8fafc 80%, #e3f0ff 100%)",
+        //     minHeight: "100vh"
+        // }}
+        >
             <Paper elevation={3} sx={{
                 p: { xs: 2, sm: 4 },
                 m: { xs: 1, sm: 4 },
                 borderRadius: 4,
                 boxShadow: "0 8px 32px rgba(0,123,255,0.10)",
-                background: "#fff"
+                background: " #ffffff",
+                padding: 2,
             }}>
                 <Box sx={{
                     display: "flex",
@@ -221,16 +289,32 @@ const ManageMutualFund = () => {
                     alignItems: "center",
                     mb: 3
                 }}>
-                    <Typography variant="h4" fontWeight={900} color="#007bff">
+                    <Typography variant="h4" fontWeight={900} color=" #007bff">
                         Mutual Funds History
                     </Typography>
+                    <IconButton
+                        aria-label="refresh"
+                        onClick={handleRefresh}
+                        sx={{
+                            background: "linear-gradient(90deg, #007bff 0%, #00c6ff 100%)",
+                            color: "#fff",
+                            ml: 2,
+                            '&:hover': {
+                                background: 'linear-gradient(90deg,rgb(255, 145, 0) 0%,rgb(255, 212, 119) 100%) !important',
+                                color: ' #ffffff !important',
+                                boxShadow: '0 4px 16px rgba(0,123,255,0.18)',
+                            }
+                        }}
+                    >
+                        <RefreshIcon />
+                    </IconButton>
                     {/* <Button
                         variant="contained"
                         startIcon={<AddIcon />}
                         onClick={() => handleDialog("add")}
                         sx={{
                             background: "linear-gradient(90deg, #007bff 0%, #00c6ff 100%)",
-                            color: "#fff",
+                            color: " #ffffff",
                             fontWeight: 700,
                             borderRadius: 2,
                             px: 3,
@@ -251,14 +335,14 @@ const ManageMutualFund = () => {
                     alignItems: "center",
                     gap: 2
                 }}>
-                    <SearchIcon sx={{ color: "#007bff", fontSize: 28 }} />
+                    <SearchIcon sx={{ color: " #007bff", fontSize: 28 }} />
                     <OutlinedInput
                         placeholder="Search by AMC, Scheme Name or Code"
                         value={search}
                         onChange={e => setSearch(e.target.value)}
                         sx={{
                             width: 350,
-                            background: "#f8fafc",
+                            background: " #f8fafc",
                             borderRadius: 2,
                             fontSize: 18,
                             fontWeight: 500,
@@ -283,12 +367,12 @@ const ManageMutualFund = () => {
                     <Box sx={{
                         width: "100%",
                         '& .MuiDataGrid-root': {
-                            background: "#fff",
+                            background: " #ffffff",
                             borderRadius: 2,
                         },
                         '& .MuiDataGrid-columnHeaders': {
                             background: "linear-gradient(90deg, #e3f0ff 0%, #f8fafc 100%)",
-                            color: "#007bff",
+                            color: " #007bff",
                             fontWeight: 700,
                             fontSize: 18,
                         },
@@ -296,10 +380,25 @@ const ManageMutualFund = () => {
                             fontSize: 16,
                         },
                         '& .MuiDataGrid-footerContainer': {
-                            background: "#f8fafc",
+                            background: " #f8fafc",
                         },
                         '& .MuiDataGrid-toolbarContainer': {
-                            background: "#f8fafc",
+                            background: " #f8fafc",
+                            color: "#007bff", // Make toolbar controls more visible
+                            fontWeight: 700,
+                            fontSize: 16,
+                            minHeight: 48,
+                            '& .MuiButton-root, & .MuiInputBase-root, & .MuiSvgIcon-root': {
+                                color: " #007bff !important", // Buttons, icons, and inputs in toolbar
+                                fontWeight: 700,
+                            },
+                            '& .MuiInputBase-input': {
+                                color: " #222222 !important",
+                                fontWeight: 600,
+                            },
+                            '& .MuiSvgIcon-root': {
+                                fontSize: 24,
+                            },
                         }
                     }}>
                         <DataGrid
@@ -312,7 +411,7 @@ const ManageMutualFund = () => {
                             components={{
                                 Toolbar: GridToolbar,
                                 NoRowsOverlay: () => (
-                                    <Box sx={{ p: 4, textAlign: "center", color: "#888" }}>
+                                    <Box sx={{ p: 4, textAlign: "center", color: " #888" }}>
                                         No mutual funds found.
                                     </Box>
                                 ),
@@ -339,7 +438,7 @@ const ManageMutualFund = () => {
             <Dialog open={isDialogOpen} onClose={() => setDialogOpen(false)} maxWidth="xs" fullWidth>
                 <DialogTitle sx={{
                     fontWeight: 700,
-                    color: "#007bff",
+                    color: " #007bff",
                     background: "linear-gradient(90deg, #e3f0ff 0%, #f8fafc 100%)"
                 }}>
                     Add Mutual Fund
@@ -350,7 +449,7 @@ const ManageMutualFund = () => {
                             position: 'absolute',
                             right: 8,
                             top: 8,
-                            color: "#888"
+                            color: " #888888"
                         }}
                     >
                         <CloseIcon />
@@ -363,17 +462,17 @@ const ManageMutualFund = () => {
                                 <FormControl fullWidth variant="outlined">
                                     <InputLabel
                                         sx={{
-                                            background: "#fff",
+                                            background: " #ffffff",
                                             px: 0.5,
-                                            color: "#007bff",
+                                            color: " #007bff",
                                             fontWeight: 600,
                                             zIndex: 2,
                                             '&.Mui-focused': {
-                                                color: "#007bff",
-                                                background: "#fff",
+                                                color: " #007bff",
+                                                background: " #ffffff",
                                             },
                                             '&.MuiInputLabel-shrink': {
-                                                background: "#fff",
+                                                background: " #ffffff",
                                             }
                                         }}
                                     >
@@ -385,18 +484,18 @@ const ManageMutualFund = () => {
                                         value={schemeCode}
                                         onChange={e => setSchemeCode(e.target.value)}
                                         sx={{
-                                            background: "#fff",
+                                            background: " #ffffff",
                                             borderRadius: 2,
                                             fontWeight: 600,
                                             '& .MuiOutlinedInput-notchedOutline': {
-                                                borderColor: '#bdbdbd',
+                                                borderColor: ' #bdbdbd',
                                             },
                                             '&:hover .MuiOutlinedInput-notchedOutline': {
-                                                borderColor: '#007bff',
+                                                borderColor: ' #007bff',
                                                 borderWidth: 2,
                                             },
                                             '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                                borderColor: '#007bff',
+                                                borderColor: ' #007bff',
                                                 borderWidth: 2,
                                             },
                                         }}
@@ -423,7 +522,7 @@ const ManageMutualFund = () => {
                                     disabled={isAnyFieldEmpty()}
                                     sx={{
                                         background: "linear-gradient(90deg, #007bff 0%, #00c6ff 100%)",
-                                        color: "#fff",
+                                        color: " #ffffff",
                                         fontWeight: 700,
                                         fontSize: "1.1rem",
                                         borderRadius: 2,
@@ -444,7 +543,7 @@ const ManageMutualFund = () => {
                                     onClick={() => setDialogOpen(false)}
                                     sx={{
                                         background: "linear-gradient(90deg, #e53935 0%, #ffb199 100%)",
-                                        color: "#fff",
+                                        color: " #ffffff",
                                         fontWeight: 700,
                                         fontSize: "1.1rem",
                                         borderRadius: 2,
@@ -464,7 +563,6 @@ const ManageMutualFund = () => {
                     </form>
                 </DialogContent>
             </Dialog>
-            {/* ...delete dialog remains unchanged... */}
         </Box>
     );
 };

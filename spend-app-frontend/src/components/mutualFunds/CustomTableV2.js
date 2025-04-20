@@ -94,7 +94,7 @@ const useStyles = makeStyles(() => ({
     },
     pagination: {
         "& .MuiTablePagination-toolbar": {
-            background: " #f8fafc",
+            background: "transparent",
             color: " #007bff",
             fontWeight: 600,
         },

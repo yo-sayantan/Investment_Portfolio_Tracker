@@ -8,7 +8,6 @@ import RefreshIcon from '@mui/icons-material/Refresh';
 import InsightsIcon from '@mui/icons-material/Insights';
 import AddItemDialog from './AddItemDialog';
 import UploadFormDialog from './UploadFormDialog';
-import PieChartIcon from "@mui/icons-material/PieChart";
 import ProfileAnalysis from './ProfileAnalysis';
 
 const useStyles = makeStyles({
@@ -25,14 +24,14 @@ const useStyles = makeStyles({
         display: 'flex',
         alignItems: 'center',
         padding: '8px 15px',
-        borderRadius: 40,
-        background: 'linear-gradient(90deg, #e3f0ff 0%, #f8fafc 100%)',
+        borderRadius: 200,
+        background: 'linear-gradient(90deg,rgb(177, 210, 248) 0%, #f8fafc 100%)',
         boxShadow: '0 4px 16px rgba(0,123,255,0.08)',
         border: '2px solid #007bff',
         transition: 'box-shadow 0.2s, border-color 0.2s',
         '&:focus-within': {
             boxShadow: '0 8px 32px rgba(0,123,255,0.15)',
-            borderColor: '#0056b3',
+            borderColor: ' #0056b3',
         },
         minHeight: 50,
     },
@@ -56,9 +55,6 @@ const useStyles = makeStyles({
         color: ' #ffffff !important',
         border: 'none !important',
         borderRadius: 8,
-        // minWidth: 120,
-        // minHeight: 72,
-        // fontSize: 156,
         boxShadow: '0 2px 8px rgba(0,123,255,0.12)',
         transition: 'background 0.2s, color 0.2s, box-shadow 0.2s',
         display: 'flex',
@@ -73,11 +69,8 @@ const useStyles = makeStyles({
     },
     icon: {
         fontSize: '2.5rem !important',
-        borderRadius: 2,
         color: 'rgb(255, 255, 255)',
-        boxShadow: '0 2px 8px rgba(0,123,255,0.10)',
         padding: 0,
-        margin: 8,
         transition: 'background 0.2s, color 0.2s',
         display: 'flex',
         alignItems: 'center',
@@ -141,7 +134,7 @@ const FundSearchBar = (props) => {
                     <Grid container alignItems="center" spacing={2}>
                         <Grid item xs={12} md={7}>
                             <Paper elevation={0} className={classes.searchPaper}>
-                                <SearchIcon className={classes.icon} style={{ marginRight: 16, opacity: 0.8 }} />
+                                <SearchIcon className={classes.icon} style={{ marginRight: 20, opacity: 0.9 }} />
                                 <input
                                     className={classes.searchInput}
                                     type="text"
