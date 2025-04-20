@@ -4,6 +4,7 @@ A modern, full-stack application designed to help you manage and visualize your 
 ===============================================
 
 🚀 Features
+
 Real-time Portfolio Dashboard
 
 Track your total investment value
@@ -30,6 +31,7 @@ Real-time data updates
 ===============================================
 
 💻 Technology Stack
+
 Frontend
 
 React.js with Material UI
@@ -51,6 +53,7 @@ Encrypted data transmission
 ===============================================
 
 🌟 Why Investment Portfolio Tracker?
+
 Simplified Portfolio Management
 
 All your mutual fund investments in one place
@@ -70,6 +73,7 @@ Comprehensive portfolio overview
 ===============================================
 
 🚀 Getting Started
+
 Create an account
 Upload your CAMS/KFintech statements
 Access your organized portfolio instantly
@@ -78,6 +82,7 @@ Track your investments in real-time
 ===============================================
 
 🔒 Security
+
 Your financial data's security is our top priority. We implement:
 
 End-to-end encryption
@@ -88,16 +93,19 @@ Regular security updates
 ===============================================
 
 📞 Support
+
 For any queries or support, please reach out to [sayantanbiswas10000@gmail.com]
 
 ===============================================
 
 🛠 Installation
+
 Install the Docker file
 
 ===============================================
 
 📄 License
+
 GNU General Public License v3.0 
 
 Simplify your mutual fund investment tracking today with Investment Portfolio Tracker!
