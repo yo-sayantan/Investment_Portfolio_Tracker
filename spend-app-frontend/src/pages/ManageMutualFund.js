@@ -290,7 +290,7 @@ const ManageMutualFund = () => {
                     mb: 3
                 }}>
                     <Typography variant="h4" fontWeight={900} color=" #007bff">
-                        Mutual Funds History
+                        Manage Mutual Funds
                     </Typography>
                     <IconButton
                         aria-label="refresh"

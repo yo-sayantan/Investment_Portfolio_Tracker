@@ -121,7 +121,7 @@ function loadIcon(data, filled = false) {
       background:
         data === "Mutual Funds"
           ? blue[500]
-          : data === "Funds History"
+          : data === "Manage Funds"
           ? green[500]
           : data === "Budget Viewer"
           ? orange[500]
@@ -139,7 +139,7 @@ function loadIcon(data, filled = false) {
   const icons = {
     // "Budget Viewer": <AttachMoneyIcon sx={iconStyles} />,
     "Mutual Funds": <EqualizerIcon sx={iconStyles} />,
-    "Funds History": <TableChartIcon sx={iconStyles} />,
+    "Manage Funds": <TableChartIcon sx={iconStyles} />,
     // "Expenses": <AddCardIcon sx={iconStyles} />,
     // "Credit Cards": <CreditCardIcon sx={iconStyles} />,
   };
@@ -157,7 +157,7 @@ export default function MiniDrawer() {
   const actions = bindActionCreators(actionCreators, dispatch);
   const upperMenus = ["Log Out"]  // ["Profile", "Settings", "Log Out"];
   const sideMenus = ["Mutual Funds"]  // "Budget Viewer", "Expenses", "Credit Cards"];
-  const adminMenus = ["Funds History"];
+  const adminMenus = ["Manage Funds"];
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -172,7 +172,7 @@ export default function MiniDrawer() {
   // else if (mainMenuControl === "Budget Viewer") control = <BudgetViewer />
   // else if (mainMenuControl === "Expenses") control = <Expenses />
   // else if (mainMenuControl === "Credit Cards") control = <CreditCards />;
-  else if (mainMenuControl === "Funds History") control = <ManageMutualFund />;
+  else if (mainMenuControl === "Manage Funds") control = <ManageMutualFund />;
 
   const handleMainMenuControl = (value) => {
     setMainMenuControl(value);

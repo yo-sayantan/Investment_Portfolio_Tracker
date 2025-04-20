@@ -61,6 +61,10 @@ const useStyles = makeStyles({
         alignItems: 'center',
         justifyContent: 'center',
         padding: 0,
+        minWidth: 56,
+        minHeight: 56,
+        width: 56,
+        height: 56,
         '&:hover': {
             background: 'linear-gradient(90deg,rgb(255, 145, 0) 0%,rgb(255, 212, 119) 100%) !important',
             color: ' #ffffff !important',
