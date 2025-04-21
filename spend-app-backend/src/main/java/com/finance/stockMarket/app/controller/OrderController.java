@@ -44,7 +44,6 @@ public class OrderController extends BaseController {
 
 	private final ApplicationContext context;
 
-	@Autowired
 	public OrderController(ApplicationContext context) {
 		this.context = context;
 	}
@@ -85,7 +84,11 @@ public class OrderController extends BaseController {
 				directory.mkdirs();
 			}
 
-			String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+			String originalFilename = file.getOriginalFilename();
+			if (originalFilename == null) {
+				throw new IllegalArgumentException("File name cannot be null");
+			}
+			String fileName = StringUtils.cleanPath(originalFilename);
 
 			Path filePath = Paths.get(uploadDirectory, fileName);
 			Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
@@ -99,5 +102,4 @@ public class OrderController extends BaseController {
 					.body("Error uploading file: " + e.getMessage());
 		}
 	}
-
 }

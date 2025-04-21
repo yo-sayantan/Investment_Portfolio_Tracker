@@ -262,9 +262,7 @@ const MutualFund = () => {
         setSoldRows(newArray);
         setIsLoading(false);
       }
-
     } catch (error) {
-      // Handle errors if any of the API calls fail
       console.error('Error calling one or more APIs', error);
     }
   };
@@ -273,7 +271,6 @@ const MutualFund = () => {
     fetchData();
   }, []);
 
-  // Modern background for the whole page
   return (
     <Box sx={{
       minHeight: "100vh",
@@ -289,7 +286,13 @@ const MutualFund = () => {
               <CurrentValuePaper amount={currentValue} isPositive={isProfited} />
             </Grid>
             <Grid item xs={12} md={6}>
-              <DetailedPaper investedAmount={investedValue} totalReturn={returnValue} day1Change={day1Change} isPositive={isProfited} isDayPositive={isDayProfited} />
+              <DetailedPaper 
+                investedAmount={investedValue} 
+                totalReturn={returnValue} 
+                day1Change={day1Change} 
+                isPositive={isProfited} 
+                isDayPositive={isDayProfited} 
+              />
             </Grid>
             <Grid item xs={12} md={3}>
               <Nifty50Paper xirr={XIRR} isPositive={isProfited} />

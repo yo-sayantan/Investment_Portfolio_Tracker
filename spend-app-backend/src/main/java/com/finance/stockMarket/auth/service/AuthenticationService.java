@@ -119,12 +119,25 @@ public class AuthenticationService {
 				"OTP is sent to the registered Email ID", true);
 	}
 
-	private MapRoleUser saveMapRoleUser(MFUser user) {
-		MFRole role = roleRepo.getReferenceById(2);
-		MapRoleUser mapRoleUser = new MapRoleUser();
-		mapRoleUser.setRole(role);
-		mapRoleUser.setUser(user);
-		return mapRoleUserRepo.save(mapRoleUser);
+	public SignUpResponseDTO verifyotp(SignUpRequestDTO request) {
+		OTPDetails otp = UserOTPs.getInstance().getOtp(request.getUsername());
+
+		if (otp != null
+				&& (otp.getExpirationTime() > System.currentTimeMillis() || otp.getOtp().equals(request.getOtp()))) {
+			MFUser user = userRepo.findByUsername(request.getUsername());
+			user.setIsActive(true);
+			userRepo.save(user);
+
+			UserOTPs.getInstance().removeOtp(request.getUsername());
+			return new SignUpResponseDTO(request.getUsername(), request.getEmailId(),
+					"Signup successful please login",
+					true);
+		} else if (otp != null && otp.getExpirationTime() < System.currentTimeMillis()) {
+			UserOTPs.getInstance().removeOtp(request.getUsername());
+			return new SignUpResponseDTO(request.getUsername(), request.getEmailId(), "OTP Expired", false);
+		}
+
+		return new SignUpResponseDTO(request.getUsername(), request.getEmailId(), "Incorrect OTP", false);
 	}
 
 	private boolean sendOTPEmailandSave(String emailId, String username, String fullName) {
@@ -133,7 +146,8 @@ public class AuthenticationService {
 			UserOTPs.getInstance().addOtp(username, otp);
 			String subject = fullName + "! Here is your OTP - " + otp.getOtp();
 			String body = otp.getOtp()
-					+ " is your OTP for Portfolio Tracker Application. Please do not share to anyone.\nSignup is valid for 5 minutes.\n\n"
+					+ " is your OTP for Portfolio Tracker Application. Please do not share to anyone."
+					+ "\nSignup is valid for 5 minutes.\n\n"
 					+ "Thank you,\nPortfolio Tracker Team";
 			emailService.sendEmail(emailId, subject, body);
 		} catch (Exception e) {
@@ -156,24 +170,11 @@ public class AuthenticationService {
 		userRepo.delete(user);
 	}
 
-	public SignUpResponseDTO verifyotp(SignUpRequestDTO request) {
-		OTPDetails otp = UserOTPs.getInstance().getOtp(request.getUsername());
-
-		if (otp != null
-				&& (otp.getExpirationTime() > System.currentTimeMillis() || otp.getOtp().equals(request.getOtp()))) {
-			MFUser user = userRepo.findByUsername(request.getUsername());
-			user.setIsActive(true);
-			userRepo.save(user);
-
-			UserOTPs.getInstance().removeOtp(request.getUsername());
-			return new SignUpResponseDTO(request.getUsername(), request.getEmailId(), "Signup successful please login",
-					true);
-		} else if (otp != null && otp.getExpirationTime() < System.currentTimeMillis()) {
-			UserOTPs.getInstance().removeOtp(request.getUsername());
-			return new SignUpResponseDTO(request.getUsername(), request.getEmailId(), "OTP Expired", false);
-		}
-
-		return new SignUpResponseDTO(request.getUsername(), request.getEmailId(), "Incorrect OTP", false);
+	private MapRoleUser saveMapRoleUser(MFUser user) {
+		MFRole role = roleRepo.getReferenceById(2);
+		MapRoleUser mapRoleUser = new MapRoleUser();
+		mapRoleUser.setRole(role);
+		mapRoleUser.setUser(user);
+		return mapRoleUserRepo.save(mapRoleUser);
 	}
-
 }
